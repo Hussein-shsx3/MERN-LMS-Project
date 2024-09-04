@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+  * {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+  :root {
+    --color-background: #f3f3f3;
+    --text-color: #888888;
+    --title-color: #5b5b59;
+  }
+}
