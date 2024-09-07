@@ -12,7 +12,7 @@
 
   :root {
     --color-background: #f3f3f3;
-    --text-color: #797f88;
+    --text-color: #676a6f;
     --title-color: #374151;
     --icons-color: #777575;
     --border-color: #e5e7eb;
@@ -24,10 +24,16 @@
 
   .active::after {
     content: "";
-    @apply absolute w-full md:w-[55%] h-[100%] md:h-[1.5px] bg-black md:bg-title bottom-0 md:bottom-[-5px] left-0 md:left-[23%] z-[-1]
+    @apply absolute w-full md:w-[55%] h-[100%] md:h-[1.8px] bg-black md:bg-title bottom-0 md:bottom-[-5px] left-0 md:left-[23%] z-[-1]
   }
 
   .active {
     @apply text-white md:text-title
+  }
+
+  .fontTitle{
+    font-family: Prata, serif;
+    font-weight: 400;
+    font-style: normal;
   }
 }

@@ -9,7 +9,7 @@ const Header = ({ active }) => {
       <img src="./images/logo.png" alt="" className="w-36" />
       <nav
         id="nav"
-        className="absolute  md:relative top-0 right-0 bg-white w-full md:w-auto flex gap-0 md:gap-6 items-center flex-col md:flex-row h-[100dvh] z-10 translate-x-[800px] md:translate-x-0 transition-transform duration-200"
+        className="absolute  md:relative top-0 right-0 bg-white w-full md:w-auto flex gap-0 md:gap-6 items-center flex-col md:flex-row h-[100dvh] md:h-auto z-10 translate-x-[800px] md:translate-x-0 transition-transform duration-200"
       >
         <button
           className="w-full text-left flex items-center md:hidden py-[15px] pl-2"
@@ -38,7 +38,7 @@ const Header = ({ active }) => {
       </nav>
       <div className="flex items-center text-icons text-[26px] gap-4">
         <i className="bx bx-search"></i>
-        <i class="bx bx-user"></i>
+        <i className="bx bx-user"></i>
         <div className="relative flex justify-center items-center">
           <i className="bx bx-shopping-bag"></i>
           <span className="absolute bottom-[-3px] right-[-3px] bg-black w-4 h-4 rounded-[100%] text-[9px] text-white flex justify-center items-center">
