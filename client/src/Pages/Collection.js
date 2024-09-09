@@ -5,13 +5,13 @@ import Performance from "../Components/performance";
 import Subscribe from "../Components/subscribe";
 import Footer from "../Components/footer";
 
-const Home = () => {
+const Collection = () => {
   return (
     <section className="relative w-full min-h-[100dvh] flex justify-center overflow-hidden">
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
         <Header
-          active1="active"
-          active2=""
+          active1=""
+          active2="active"
           active3=""
           active4=""
         />
@@ -163,4 +163,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Collection;

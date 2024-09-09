@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Header = ({ active }) => {
+const Header = (props) => {
   const hidden = () => {
     document.getElementById("nav").classList.toggle("translate-x-[800px]");
   };
@@ -17,28 +18,30 @@ const Header = ({ active }) => {
         >
           <i className="bx bx-chevron-left text-[27px] text-text"></i> Back
         </button>
-        <a href="." className={`navLink ${active} `}>
+        <Link to="/" className={`navLink ${props.active1}`}>
           HOME
-        </a>
-        <a href="." className="navLink">
+        </Link>
+        <Link to="/collection" className={`navLink ${props.active2}`}>
           COLLECTION
-        </a>
-        <a href="." className="navLink">
+        </Link>
+        <Link to="/about" className={`navLink ${props.active3}`}>
           ABOUT
-        </a>
-        <a href="." className="navLink">
+        </Link>
+        <Link to="/contact" className={`navLink ${props.active4}`}>
           CONTACT
-        </a>
-        <a
-          href="."
+        </Link>
+        <Link
+          to="/"
           className="border-[1px] border-borderColor text-title text-[13px] font-medium rounded-3xl py-[7px] px-[18px]"
         >
           Admin Panel
-        </a>
+        </Link>
       </nav>
       <div className="flex items-center text-icons text-[26px] gap-4">
         <i className="bx bx-search"></i>
-        <i className="bx bx-user"></i>
+        <Link to="/signIn">
+          <i className="bx bx-user"></i>
+        </Link>
         <div className="relative flex justify-center items-center">
           <i className="bx bx-shopping-bag"></i>
           <span className="absolute bottom-[-3px] right-[-3px] bg-black w-4 h-4 rounded-[100%] text-[9px] text-white flex justify-center items-center">
