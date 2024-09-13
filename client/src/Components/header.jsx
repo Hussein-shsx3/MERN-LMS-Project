@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/authSlice";
+import Cookies from "universal-cookie";
 
 const Header = (props) => {
+  const dispatch = useDispatch();
+
+  const cookies = new Cookies();
+
+  const Logout = () => {
+    dispatch(logout());
+  };
+
   const hidden = () => {
     document.getElementById("nav").classList.toggle("translate-x-[800px]");
   };
@@ -39,9 +50,22 @@ const Header = (props) => {
       </nav>
       <div className="flex items-center text-icons text-[26px] gap-4">
         <i className="bx bx-search"></i>
-        <Link to="/signIn">
-          <i className="bx bx-user"></i>
-        </Link>
+        {cookies.get("token") === undefined ? (
+          <Link
+            to="/signIn"
+            className="relative flex justify-center items-center"
+          >
+            <i className="bx bx-user"></i>
+          </Link>
+        ) : (
+          <Link
+            to="/signIn"
+            onClick={Logout}
+            className="relative flex justify-center items-center"
+          >
+            <i className="bx bx-log-out"></i>
+          </Link>
+        )}
         <div className="relative flex justify-center items-center">
           <i className="bx bx-shopping-bag"></i>
           <span className="absolute bottom-[-3px] right-[-3px] bg-black w-4 h-4 rounded-[100%] text-[9px] text-white flex justify-center items-center">
