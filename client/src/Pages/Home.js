@@ -46,7 +46,7 @@ const Home = () => {
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the.
           </p>
-          <div className="w-full flex flex-wrap gap-5 items-center justify-center py-14">
+          <div className="w-full flex flex-wrap gap-4 items-center justify-center py-14">
             <Product
               img="./images/ssxprqccnjbwyblb0edb.png"
               name="Men Round Neck Pure Cotton T-shirt"
@@ -108,7 +108,7 @@ const Home = () => {
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the.
           </p>
-          <div className="w-full flex flex-wrap items-center justify-center gap-5 py-14">
+          <div className="w-full flex flex-wrap items-center justify-center gap-4 py-14">
             <Product
               img="./images/xgx4xzvddpido94vs6em.png"
               name="Men Round Neck Pure Cotton T-shirt"
