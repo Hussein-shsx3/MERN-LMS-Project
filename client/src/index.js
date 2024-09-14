@@ -7,6 +7,7 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import SignUp from "./Pages/signUp";
 import SignIn from "./Pages/signIn";
+import Product from "./Pages/Product";
 
 import { Provider } from "react-redux";
 import { storeApp } from "./Store";
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/signUp",
     element: <SignUp />,
+  },
+  {
+    path: "/product/:id",
+    element: <Product />,
   },
 ]);
 
