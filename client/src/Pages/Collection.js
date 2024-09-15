@@ -1,80 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import Product from "../Components/product";
 import { products } from "../data/data";
 
 const Collection = () => {
+  const [filters, setFilters] = useState({
+    categories: [],
+    types: [],
+  });
+
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    setFilters((prevFilters) => {
+      const existingValues = prevFilters[name];
+      if (checked) {
+        return { ...prevFilters, [name]: [...existingValues, value] };
+      } else {
+        return {
+          ...prevFilters,
+          [name]: existingValues.filter((val) => val !== value),
+        };
+      }
+    });
+  };
+
+  const filteredProducts = products.filter((product) => {
+    const categoryMatch = filters.categories.length
+      ? filters.categories.includes(product.category)
+      : true;
+    const typeMatch = filters.types.length
+      ? filters.types.includes(product.subCategory)
+      : true;
+    return categoryMatch && typeMatch;
+  });
+
   return (
     <section className="relative w-full min-h-[100dvh] flex justify-center overflow-hidden">
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
         <Header active1="" active2="active" active3="" active4="" />
         <hr className="w-full" />
         <div className="w-full flex flex-col md:flex-row py-10 justify-between">
-          <div className="w-[18%] flex flex-col gap-6">
+          <div className="w-full md:w-[18%] flex flex-col gap-6 mb-5">
             <p className="text-[20px] text-title">FILTERS</p>
-            <form
-              action=""
-              className="w-full flex flex-col border-[1px] border-gray-300 py-3 pl-5 gap-[7px]"
-            >
+            <form className="w-full flex flex-col border-[1px] border-gray-300 py-3 pl-5 gap-[7px]">
               <p className="text-[14px] text-title">CATEGORIES</p>
-              <div className="flex gap-1">
-                <input type="checkbox" value="Men" name="Men" id="Men" />
-                <label htmlFor="Men" className="text-text text-[14px]">
-                  Men
-                </label>
-              </div>
-              <div className="flex gap-1">
-                <input type="checkbox" value="Women" name="Women" id="Women" />
-                <label htmlFor="Women" className="text-text text-[14px]">
-                  Women
-                </label>
-              </div>
-              <div className="flex gap-1">
-                <input type="checkbox" value="Kids" name="Kids" id="Kids" />
-                <label htmlFor="Kids" className="text-text text-[14px]">
-                  Kids
-                </label>
-              </div>
+              {["Men", "Women", "Kids"].map((category) => (
+                <div className="flex gap-1" key={category}>
+                  <input
+                    type="checkbox"
+                    value={category}
+                    name="categories"
+                    onChange={handleCheckboxChange}
+                  />
+                  <label className="text-text text-[14px]">{category}</label>
+                </div>
+              ))}
             </form>
-            <form
-              action=""
-              className="w-full flex flex-col border-[1px] border-gray-300 py-3 pl-5 gap-[7px]"
-            >
+            <form className="w-full flex flex-col border-[1px] border-gray-300 py-3 pl-5 gap-[7px]">
               <p className="text-[14px] text-title">TYPE</p>
-              <div className="flex gap-1">
-                <input
-                  type="checkbox"
-                  value="Topwear"
-                  name="Topwear"
-                  id="Topwear"
-                />
-                <label htmlFor="Topwear" className="text-text text-[14px]">
-                  Topwear
-                </label>
-              </div>
-              <div className="flex gap-1">
-                <input
-                  type="checkbox"
-                  value="Bottomwear"
-                  name="Bottomwear"
-                  id="Bottomwear"
-                />
-                <label htmlFor="Bottomwear" className="text-text text-[14px]">
-                  Bottomwear
-                </label>
-              </div>
-              <div className="flex gap-1">
-                <input
-                  type="checkbox"
-                  value="Winterwear"
-                  name="Winterwear"
-                  id="Winterwear"
-                />
-                <label htmlFor="Winterwear" className="text-text text-[14px]">
-                  Winterwear
-                </label>
-              </div>
+              {["Topwear", "Bottomwear", "Winterwear"].map((type) => (
+                <div className="flex gap-1" key={type}>
+                  <input
+                    type="checkbox"
+                    value={type}
+                    name="types"
+                    onChange={handleCheckboxChange}
+                  />
+                  <label className="text-text text-[14px]">{type}</label>
+                </div>
+              ))}
             </form>
           </div>
           <div className="w-full md:w-[79%] flex flex-col gap-6">
@@ -85,19 +80,15 @@ const Collection = () => {
               <span className="w-[40px] h-[2px] bg-title border-none" />
             </div>
             <div className="w-full flex flex-wrap justify-center md:justify-start gap-4">
-              {products.map((product, index) =>
-                product.bestseller === false ? (
-                  <Product
-                    key={index}
-                    id={product._id}
-                    image={product.image}
-                    name={product.name}
-                    price={product.price}
-                  />
-                ) : (
-                  ""
-                )
-              )}
+              {filteredProducts.map((product) => (
+                <Product
+                  key={product._id}
+                  id={product._id}
+                  image={product.image}
+                  name={product.name}
+                  price={product.price}
+                />
+              ))}
             </div>
           </div>
         </div>

@@ -18,7 +18,11 @@ const Header = (props) => {
   };
   return (
     <header className=" w-full max-h-20 py-5 flex justify-between items-center">
-      <img src="./images/logo.png" alt="" className="w-36" />
+      <img
+        src={props.logo ? props.logo : "./images/logo.png"}
+        alt=""
+        className="w-36"
+      />
       <nav
         id="nav"
         className="absolute  md:relative top-0 right-0 bg-white w-full md:w-auto flex gap-0 md:gap-6 items-center flex-col md:flex-row h-[100dvh] md:h-auto z-10 translate-x-[800px] md:translate-x-0 transition-transform duration-200"

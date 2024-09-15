@@ -1,10 +1,14 @@
 import React from "react";
 
-const Footer = () => {
+const Footer = (props) => {
   return (
     <footer className="flex flex-col md:flex-row justify-center md:justify-between items-start pt-36 pb-10 border-b-[1px] gap-6">
       <div className="flex flex-col gap-4">
-        <img src="./images/logo.png" alt="" className="w-32" />
+        <img
+          src={props.logo ? props.logo : "./images/logo.png"}
+          alt=""
+          className="w-32"
+        />
         <p className="text-text text-[14px] w-full md:w-4/5">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
