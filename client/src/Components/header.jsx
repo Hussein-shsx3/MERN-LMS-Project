@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 import Cookies from "universal-cookie";
+import { searchToggle } from "../redux/searchSlice";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -16,6 +17,11 @@ const Header = (props) => {
   const hidden = () => {
     document.getElementById("nav").classList.toggle("translate-x-[800px]");
   };
+
+  const searchDisaplay = () => {
+    dispatch(searchToggle());
+  };
+
   return (
     <header className=" w-full max-h-20 py-5 flex justify-between items-center">
       <img
@@ -53,7 +59,12 @@ const Header = (props) => {
         </Link>
       </nav>
       <div className="flex items-center text-icons text-[26px] gap-4">
-        <i className="bx bx-search"></i>
+        <Link to="/collection">
+          <i
+            className="bx bx-search cursor-pointer"
+            onClick={searchDisaplay}
+          ></i>
+        </Link>
         {cookies.get("token") === undefined ? (
           <Link
             to="/signIn"

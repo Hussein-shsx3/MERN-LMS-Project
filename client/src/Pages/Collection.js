@@ -3,6 +3,7 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import Product from "../Components/product";
 import { products } from "../data/data";
+import Search from "../Components/search";
 
 const Collection = () => {
   const [filters, setFilters] = useState({
@@ -40,6 +41,7 @@ const Collection = () => {
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
         <Header active1="" active2="active" active3="" active4="" />
         <hr className="w-full" />
+        <Search />
         <div className="w-full flex flex-col md:flex-row py-10 justify-between">
           <div className="w-full md:w-[18%] flex flex-col gap-6 mb-5">
             <p className="text-[20px] text-title">FILTERS</p>
