@@ -47,7 +47,7 @@ const SignUp = () => {
   }, [status, error, navigate]);
 
   return (
-    <section className="relative w-full min-h-[100dvh] flex justify-center overflow-hidden">
+    <section className="relative w-full flex justify-center overflow-hidden">
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
         <ToastContainer />
         <Header />

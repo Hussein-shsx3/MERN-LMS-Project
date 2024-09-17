@@ -14,19 +14,18 @@ const Collection = () => {
         industry. Lorem Ipsum has been the.
       </p>
       <div className="w-full flex flex-wrap gap-4 items-center justify-center py-14">
-        {products.map((product, index) =>
-          product.bestseller === false ? (
+        {products
+          .filter((product) => !product.bestseller)
+          .slice(0, 10)
+          .map((product) => (
             <Product
-              key={index}
+              key={product._id}
               id={product._id}
               image={product.image}
               name={product.name}
               price={product.price}
             />
-          ) : (
-            ""
-          )
-        )}
+          ))}
       </div>
     </div>
   );

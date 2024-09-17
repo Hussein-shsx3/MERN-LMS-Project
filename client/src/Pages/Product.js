@@ -28,7 +28,13 @@ const Product = () => {
             ))}
           </div>
           <img
-            src={mainImage ? mainImage : MProduct.image[0]}
+            src={
+              MProduct.image.includes(mainImage)
+                ? mainImage
+                  ? mainImage
+                  : MProduct.image[0]
+                : MProduct.image[0]
+            }
             alt=""
             className="w-full md:w-[39%] ml-0 md:ml-3 mt-2 md:mt-0"
           />
@@ -101,9 +107,14 @@ const Product = () => {
             <span className="w-[40px] h-[2px] bg-title border-none" />
           </p>
           <div className="w-full flex flex-wrap items-center justify-center md:justify-start gap-4 pt-6">
-            {products.map((product, index) =>
-              product.category === MProduct.category &&
-              product._id !== MProduct._id ? (
+            {products
+              .filter(
+                (product) =>
+                  product.category === MProduct.category &&
+                  product._id !== MProduct._id
+              )
+              .slice(0, 5)
+              .map((product, index) => (
                 <BProduct
                   key={index}
                   id={product._id}
@@ -111,10 +122,7 @@ const Product = () => {
                   name={product.name}
                   price={product.price}
                 />
-              ) : (
-                ""
-              )
-            )}
+              ))}
           </div>
         </div>
         <Footer logo="../images/logo.png" />

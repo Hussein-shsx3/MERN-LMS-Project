@@ -3,13 +3,23 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import Product from "../Components/product";
 import { products } from "../data/data";
-import Search from "../Components/search";
+import { useDispatch, useSelector } from "react-redux";
+import { searchToggle } from "../redux/searchSlice";
 
 const Collection = () => {
   const [filters, setFilters] = useState({
     categories: [],
     types: [],
   });
+
+  const searchD = useSelector((state) => state.search);
+  const dispatch = useDispatch();
+
+  const searchDisaplay = () => {
+    dispatch(searchToggle());
+  };
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
@@ -26,6 +36,10 @@ const Collection = () => {
     });
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const filteredProducts = products.filter((product) => {
     const categoryMatch = filters.categories.length
       ? filters.categories.includes(product.category)
@@ -33,15 +47,36 @@ const Collection = () => {
     const typeMatch = filters.types.length
       ? filters.types.includes(product.subCategory)
       : true;
-    return categoryMatch && typeMatch;
+    const searchMatch = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return categoryMatch && typeMatch && searchMatch;
   });
 
   return (
-    <section className="relative w-full min-h-[100dvh] flex justify-center overflow-hidden">
+    <section className="relative w-full flex justify-center overflow-hidden">
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
         <Header active1="" active2="active" active3="" active4="" />
         <hr className="w-full" />
-        <Search />
+        <div
+          className={`w-full flex ${searchD.display} justify-center items-center py-5 bg-gray-50 border-b-[1px] gap-2 `}
+          id="search"
+        >
+          <div className="flex justify-center items-center w-[50%] h-[38px] border-[1px] border-gray-400 rounded-[50px] ">
+            <input
+              type="text"
+              className="outline-none w-[90%] h-[38px] text-sm bg-transparent"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <i className="bx bx-search text-[22px] text-text translate-y-[2px] cursor-pointer"></i>
+          </div>
+          <i
+            className="bx bx-x text-[25px] text-text cursor-pointer"
+            onClick={searchDisaplay}
+          ></i>
+        </div>
         <div className="w-full flex flex-col md:flex-row py-10 justify-between">
           <div className="w-full md:w-[18%] flex flex-col gap-6 mb-5">
             <p className="text-[20px] text-title">FILTERS</p>

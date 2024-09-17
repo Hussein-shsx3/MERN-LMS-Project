@@ -3,10 +3,10 @@ import React from "react";
 const Subscribe = () => {
   return (
     <form className="w-full flex flex-col justify-center items-center gap-3 text-center">
-      <p className="text-2xl text-title font-medium">
+      <p className="text-xl md:text-2xl text-title font-medium">
         Subscribe now & get 20% off
       </p>
-      <p className="text-text font-medium">
+      <p className="text-sm md:text-base text-text font-medium">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry.
       </p>
@@ -15,12 +15,12 @@ const Subscribe = () => {
           type="email"
           required
           placeholder="Enter your email"
-          className="w-[80%] h-[48px] outline-none border-borderColor border-[1px] pl-3"
+          className="w-[79%] h-[47px] outline-none border-borderColor border-[1px] pl-3 text-sm md:text-base"
         />
         <input
           type="submit"
           value="SUBSCRIBE"
-          className="bg-black text-white text-xs w-[20%] h-[48px]"
+          className="bg-black text-white w-[21%] h-[47px] text-xs md:text-sm"
         />
       </div>
     </form>

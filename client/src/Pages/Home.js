@@ -8,7 +8,7 @@ import Collection from "../Components/collection";
 
 const Home = () => {
   return (
-    <section className="relative w-full min-h-[100dvh] flex justify-center overflow-hidden">
+    <section className="relative w-full flex justify-center overflow-hidden">
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
         <Header active1="active" active2="" active3="" active4="" />
         <div className="w-full flex flex-col md:flex-row border-[1px] border-text">
@@ -54,9 +54,6 @@ const Home = () => {
         </div>
         <Subscribe />
         <Footer />
-        <p className="text-title text-[15px] py-4">
-          Copyright 2024@ greatstack.dev - All Right Reserved.
-        </p>
       </div>
     </section>
   );
