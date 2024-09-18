@@ -21,6 +21,7 @@ const authSlice = createSlice({
       state.status = "idle";
       cookies.remove("user");
       cookies.remove("token");
+      cookies.remove("isAdmin");
     },
     clearStatus: (state) => {
       state.status = "idle";
@@ -37,6 +38,7 @@ const authSlice = createSlice({
         state.user = action.payload.userDetails;
         state.token = action.payload.token;
         cookies.set("token", action.payload.token, { path: "/" });
+        cookies.set("isAdmin", action.payload.isAdmin, { path: "/" });
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
@@ -50,6 +52,9 @@ const authSlice = createSlice({
         state.user = action.payload.userDetails;
         state.token = action.payload.token;
         cookies.set("token", action.payload.token, { path: "/" });
+        cookies.set("isAdmin", action.payload.userDetails.isAdmin, {
+          path: "/",
+        });
       })
       .addCase(auth.rejected, (state, action) => {
         state.status = "failed";

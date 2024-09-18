@@ -51,12 +51,16 @@ const Header = (props) => {
         <Link to="/contact" className={`navLink ${props.active4}`}>
           CONTACT
         </Link>
-        <Link
-          to="/"
-          className="border-[1px] border-borderColor text-title text-[13px] font-medium rounded-3xl py-[7px] px-[18px]"
-        >
-          Admin Panel
-        </Link>
+        {cookies.get("token") && cookies.get("isAdmin") ? (
+          <Link
+            to="/admin/add"
+            className="border-[1px] border-borderColor text-title text-[13px] font-medium rounded-3xl py-[7px] px-[18px]"
+          >
+            Admin Panel
+          </Link>
+        ) : (
+          ""
+        )}
       </nav>
       <div className="flex items-center text-icons text-[26px] gap-4">
         <Link to="/collection">

@@ -8,6 +8,11 @@ import Contact from "./Pages/Contact";
 import SignUp from "./Pages/signUp";
 import SignIn from "./Pages/signIn";
 import Product from "./Pages/Product";
+import Admin from "./Pages/Admin";
+
+import AddItems from "./Components/addItems";
+import ListItems from "./Components/listItems";
+import OrdersItems from "./Components/ordersItems";
 
 import { Provider } from "react-redux";
 import { storeApp } from "./Store";
@@ -41,6 +46,24 @@ const router = createBrowserRouter([
   {
     path: "/product/:id",
     element: <Product />,
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
+    children: [
+      {
+        path: "add",
+        element: <AddItems />,
+      },
+      {
+        path: "list",
+        element: <ListItems />,
+      },
+      {
+        path: "orders",
+        element: <OrdersItems />,
+      },
+    ],
   },
 ]);
 
