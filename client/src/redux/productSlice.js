@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProduct, getProducts, deleteProduct } from "./productThunks";
+import { createProduct, getProducts, deleteProduct } from "../Api/ProductApi";
 
 const productSlice = createSlice({
-  name: "products",
+  name: "product",
   initialState: {
     products: [],
-    loading: false,
+    status: "idle",
     error: null,
   },
   reducers: {},
@@ -13,43 +13,43 @@ const productSlice = createSlice({
     builder
       // Create Product
       .addCase(createProduct.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(createProduct.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "succeeded";
         state.products.push(action.payload);
       })
       .addCase(createProduct.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "failed";
         state.error = action.payload;
       })
       // Get Products
       .addCase(getProducts.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(getProducts.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "succeeded";
         state.products = action.payload;
       })
       .addCase(getProducts.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "failed";
         state.error = action.payload;
       })
       // Delete Product
       .addCase(deleteProduct.pending, (state) => {
-        state.loading = true;
+        state.status = "loading";
         state.error = null;
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "succeeded";
         state.products = state.products.filter(
           (product) => product._id !== action.meta.arg //?
         );
       })
       .addCase(deleteProduct.rejected, (state, action) => {
-        state.loading = false;
+        state.status = "failed";
         state.error = action.payload;
       });
   },

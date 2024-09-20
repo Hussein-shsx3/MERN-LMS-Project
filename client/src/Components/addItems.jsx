@@ -1,10 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createProduct } from "../Api/ProductApi";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddItems = () => {
   const fileInputRefs = [useRef(), useRef(), useRef(), useRef()];
-  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+  const { status, error } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    images: [],
     name: "",
     description: "",
     category: "Men",
@@ -12,6 +16,7 @@ const AddItems = () => {
     price: "",
     sizes: [],
     isBestseller: false,
+    images: [],
   });
 
   const handleInputChange = (e) => {
@@ -31,32 +36,55 @@ const AddItems = () => {
     }));
   };
 
-  const handleFileClick = (index) => {
-    fileInputRefs[index].current.click(); // Trigger the file input click
-  };
-
   const handleFileChange = (e, index) => {
-    const file = e.target.files[0];
-    if (file && file.size <= MAX_FILE_SIZE) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const imageData = event.target.result;
-        setFormData((prevData) => {
-          const updatedImages = [...prevData.images];
-          updatedImages[index] = imageData;
-          return { ...prevData, images: updatedImages };
-        });
-      };
-      reader.readAsDataURL(file); // Read the file as a data URL
-    } else {
-      alert("File size exceeds the 2MB limit");
-    }
+    const files = Array.from(e.target.files);
+    setFormData((prevData) => {
+      const updatedImages = [...prevData.images];
+      updatedImages[index] = files[0];
+      return { ...prevData, images: updatedImages };
+    });
   };
 
-  console.log(formData);
+  const handleFileClick = (index) => {
+    fileInputRefs[index].current.click();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.images.length === 0) {
+      toast.error("You must input at least one image");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("subCategory", formData.subCategory);
+    formDataToSend.append("price", formData.price);
+    formDataToSend.append("isBestseller", formData.isBestseller);
+    formData.sizes.forEach((size) => formDataToSend.append("sizes", size));
+    formData.images.forEach((image) => {
+      if (image) formDataToSend.append("images", image);
+    });
+
+    dispatch(createProduct(formDataToSend));
+  };
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      toast.success("Product added successfully!");
+    } else if (status === "failed") {
+      toast.error(error || "Failed to add product.");
+    }
+  }, [status, error]);
 
   return (
-    <form className="pl-10 pt-6 space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="pl-5 md:pl-10 py-6 flex flex-col w-full pt-6 space-y-4"
+    >
+      <ToastContainer />
       <p className="text-title mb-3">Upload Image</p>
       <div className="flex flex-row gap-2">
         {fileInputRefs.map((ref, index) => (
@@ -67,13 +95,16 @@ const AddItems = () => {
               hidden
               onChange={(e) => handleFileChange(e, index)}
             />
-            <div
+            <img
+              src={
+                !formData.images[index]
+                  ? "../images/imgB.png"
+                  : URL.createObjectURL(formData.images[index])
+              }
+              alt=""
+              className="w-[80px]"
               onClick={() => handleFileClick(index)}
-              className="flex flex-col justify-center items-center py-4 px-5 bg-slate-50 text-text border-[1px] cursor-pointer"
-            >
-              <i className="bx bx-cloud-upload text-2xl text-text"></i>
-              <p className="text-sm translate-y-[-2px]">Upload</p>
-            </div>
+            />
           </div>
         ))}
       </div>
@@ -87,6 +118,7 @@ const AddItems = () => {
           onChange={handleInputChange}
           placeholder="Type here"
           className="border p-2 w-full"
+          required
         />
       </div>
 
@@ -98,6 +130,7 @@ const AddItems = () => {
           onChange={handleInputChange}
           placeholder="Write content here"
           className="border p-2 w-full"
+          required
         />
       </div>
 
@@ -139,6 +172,7 @@ const AddItems = () => {
             onChange={handleInputChange}
             placeholder="25"
             className="border p-2 text-text"
+            required
           />
         </div>
       </div>
@@ -151,7 +185,7 @@ const AddItems = () => {
               key={size}
               type="button"
               onClick={() => handleSizeChange(size)}
-              className={`border p-2 text-title ${
+              className={`border py-1 px-3 text-title ${
                 formData.sizes.includes(size) ? "bg-pink-100" : ""
               }`}
             >
@@ -173,9 +207,18 @@ const AddItems = () => {
         </label>
       </div>
 
-      <button type="submit" className="bg-black text-white py-3 px-9 mt-4">
-        ADD
-      </button>
+      {status === "loading" ? (
+        <div className="w-full h-[45px] flex justify-center">
+          <span className="loader"></span>
+        </div>
+      ) : (
+        <button
+          type="submit"
+          className="bg-black text-white py-3 px-9 mt-4 w-[110px]"
+        >
+          ADD
+        </button>
+      )}
     </form>
   );
 };

@@ -23,7 +23,7 @@ dotenv.config();
 app.use("/api/register", registerRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
-app.use("/api/products", productsRoute);
+app.use("/api/product", productsRoute);
 
 app.use(errorHandler);
 app.use(notFound);

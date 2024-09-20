@@ -36,6 +36,11 @@
     font-weight: 400;
     font-style: normal;
   }
+
+  /** Active Admin **/
+  .activeA{
+    @apply border-pink-300 bg-pink-100
+  }
 }
 
 /** Loader **/

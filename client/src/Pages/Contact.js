@@ -13,7 +13,7 @@ const Contact = () => {
           <span className="text-text">CONTACT </span> US{" "}
           <span className="w-[40px] h-[2px] bg-title border-none" />
         </p>
-        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-10">
+        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-10 mb-20">
           <img
             src="./images/contact_img-CyOum2vk.png"
             alt=""

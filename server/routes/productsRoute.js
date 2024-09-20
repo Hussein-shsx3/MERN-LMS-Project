@@ -2,51 +2,51 @@ import express from "express";
 import Product from "../models/Product.js";
 import { isAdmin } from "../middleware/adminMiddleware.js";
 import { auth } from "../middleware/tokenMiddleware.js";
+import upload from "../middleware/multerMiddleware.js";
 
 const router = express.Router();
 
 //* Create a new product
-router.post("/", isAdmin, auth, async (req, res, next) => {
-  try {
-    const {
-      name,
-      description,
-      images,
-      category,
-      subCategory,
-      price,
-      sizes,
-      isBestseller,
-    } = req.body;
-    const newProduct = new Product(
-      name,
-      description,
-      images,
-      category,
-      subCategory,
-      price,
-      sizes,
-      isBestseller
-    );
-    await newProduct.save();
-    res.status(201).json({ message: "Product created successfully" });
-  } catch (err) {
-    next(err);
+router.post(
+  "/",
+  auth,
+  isAdmin,
+  upload.single("image"),
+  async (req, res, next) => {
+    try {
+      // const {
+      //   name,
+      //   description,
+      //   category,
+      //   subCategory,
+      //   price,
+      //   sizes,
+      //   isBestseller,
+      // } = req.body;
+
+      console.log("Body:", req.body);
+      console.log("File:", req.file);
+
+      res.status(201).json({ message: "Product created successfully" });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 //* Get all products
-router.get("/", isAdmin, auth, async (req, res, next) => {
+router.get("/", auth, isAdmin, async (req, res, next) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
 
 //* Get a single product by ID
-router.get("/:id", isAdmin, auth, async (req, res, next) => {
+router.get("/:id", auth, isAdmin, async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
@@ -59,7 +59,7 @@ router.get("/:id", isAdmin, auth, async (req, res, next) => {
 });
 
 //* Update a product by ID
-router.put("/:id", isAdmin, auth, async (req, res, next) => {
+router.put("/:id", auth, isAdmin, async (req, res, next) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -78,7 +78,7 @@ router.put("/:id", isAdmin, auth, async (req, res, next) => {
 });
 
 //* Delete a product by ID
-router.delete("/:id", isAdmin, auth, async (req, res, next) => {
+router.delete("/:id", auth, isAdmin, async (req, res, next) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
