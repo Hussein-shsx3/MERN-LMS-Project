@@ -3,6 +3,7 @@ import Product from "../models/Product.js";
 import { isAdmin } from "../middleware/adminMiddleware.js";
 import { auth } from "../middleware/tokenMiddleware.js";
 import upload from "../middleware/multerMiddleware.js";
+import cloudinary from "../config/cloudinaryConfig.js";
 
 const router = express.Router();
 
@@ -11,23 +12,43 @@ router.post(
   "/",
   auth,
   isAdmin,
-  upload.single("image"),
+  upload.array("images", 4),
   async (req, res, next) => {
     try {
-      // const {
-      //   name,
-      //   description,
-      //   category,
-      //   subCategory,
-      //   price,
-      //   sizes,
-      //   isBestseller,
-      // } = req.body;
+      const {
+        name,
+        description,
+        category,
+        subCategory,
+        price,
+        sizes,
+        isBestseller,
+      } = req.body;
 
-      console.log("Body:", req.body);
-      console.log("File:", req.file);
+      // Upload images to Cloudinary
+      const imageUploadPromises = req.files.map((file) =>
+        cloudinary.uploader.upload(file.path)
+      );
 
-      res.status(201).json({ message: "Product created successfully" });
+      const imageResponses = await Promise.all(imageUploadPromises);
+      const imageUrls = imageResponses.map((response) => response.secure_url);
+
+      const product = new Product({
+        name,
+        description,
+        category,
+        subCategory,
+        price,
+        sizes,
+        isBestseller: isBestseller === "true",
+        images: imageUrls,
+      });
+
+      await product.save();
+
+      res
+        .status(201)
+        .json({ message: "Product created successfully", product });
     } catch (err) {
       next(err);
     }
