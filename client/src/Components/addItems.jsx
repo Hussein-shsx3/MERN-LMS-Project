@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../Api/ProductApi";
-import "react-toastify/dist/ReactToastify.css";
+import { setStatus } from "../redux/productSlice";
 import { ToastContainer, toast } from "react-toastify";
 
 const AddItems = () => {
@@ -74,10 +74,12 @@ const AddItems = () => {
   useEffect(() => {
     if (status === "succeeded") {
       toast.success("Product added successfully!");
+      dispatch(setStatus());
     } else if (status === "failed") {
       toast.error(error || "Failed to add product.");
+      dispatch(setStatus());
     }
-  }, [status, error]);
+  }, [status, error, dispatch]);
 
   return (
     <form

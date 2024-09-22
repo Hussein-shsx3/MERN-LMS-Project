@@ -51,10 +51,8 @@ const authSlice = createSlice({
         state.status = "succeeded";
         state.user = action.payload.userDetails;
         state.token = action.payload.token;
-        cookies.set("token", action.payload.token, { path: "/" });
-        cookies.set("isAdmin", action.payload.userDetails.isAdmin, {
-          path: "/",
-        });
+        cookies.set("token", action.payload.token);
+        cookies.set("isAdmin", action.payload.userDetails.isAdmin);
       })
       .addCase(auth.rejected, (state, action) => {
         state.status = "failed";

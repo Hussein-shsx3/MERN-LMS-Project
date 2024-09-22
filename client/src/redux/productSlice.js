@@ -6,9 +6,15 @@ const productSlice = createSlice({
   initialState: {
     products: [],
     status: "idle",
+    statusGet: "idle",
+    statusDelete: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setStatus: (state) => {
+      state.status = "idle";
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Create Product
@@ -18,7 +24,6 @@ const productSlice = createSlice({
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products.push(action.payload);
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.status = "failed";
@@ -26,34 +31,36 @@ const productSlice = createSlice({
       })
       // Get Products
       .addCase(getProducts.pending, (state) => {
-        state.status = "loading";
+        state.statusGet = "loading";
         state.error = null;
       })
       .addCase(getProducts.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.statusGet = "succeeded";
         state.products = action.payload;
       })
       .addCase(getProducts.rejected, (state, action) => {
-        state.status = "failed";
+        state.statusGet = "failed";
         state.error = action.payload;
       })
       // Delete Product
       .addCase(deleteProduct.pending, (state) => {
-        state.status = "loading";
+        state.statusDelete = "loading";
         state.error = null;
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.statusDelete = "succeeded";
         state.products = state.products.filter(
           (product) => product._id !== action.meta.arg //?
         );
       })
       .addCase(deleteProduct.rejected, (state, action) => {
-        state.status = "failed";
+        state.statusDelete = "failed";
         state.error = action.payload;
       });
   },
 });
+
+export const { setStatus } = productSlice.actions;
 
 export default productSlice.reducer;
 

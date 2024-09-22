@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import Product from "../Components/product";
-import { products } from "../data/data";
 import { useDispatch, useSelector } from "react-redux";
 import { searchToggle } from "../redux/searchSlice";
+import { getProducts } from "../Api/ProductApi";
+import { ToastContainer, toast } from "react-toastify";
 
 const Collection = () => {
   const [filters, setFilters] = useState({
@@ -13,7 +14,15 @@ const Collection = () => {
   });
 
   const searchD = useSelector((state) => state.search);
+  const { products, error, statusGet } = useSelector((state) => state.product);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+    if (statusGet === "failed") {
+      toast.error(error || "Server Error");
+    }
+  }, [dispatch, statusGet, error]);
 
   const searchDisaplay = () => {
     dispatch(searchToggle());
@@ -56,6 +65,7 @@ const Collection = () => {
   return (
     <section className="relative w-full flex justify-center overflow-hidden">
       <div className="container w-full flex flex-col items-center px-2 md:px-0">
+        <ToastContainer />
         <Header active1="" active2="active" active3="" active4="" />
         <hr className="w-full" />
         <div
@@ -121,7 +131,7 @@ const Collection = () => {
                 <Product
                   key={product._id}
                   id={product._id}
-                  image={product.image}
+                  image={product.images}
                   name={product.name}
                   price={product.price}
                 />

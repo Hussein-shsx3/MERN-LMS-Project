@@ -56,7 +56,7 @@ router.post(
 );
 
 //* Get all products
-router.get("/", auth, isAdmin, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);

@@ -5,6 +5,7 @@ import Subscribe from "../Components/subscribe";
 import Footer from "../Components/footer";
 import BestSellers from "../Components/bestSellers";
 import Collection from "../Components/collection";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   return (

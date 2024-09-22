@@ -1,7 +1,14 @@
-import React from "react";
-import { products } from "../data/data";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../Api/ProductApi";
 
 const ListItems = () => {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.products);
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
   return (
     <div className="pl-5 md:pl-10 py-6 flex flex-col w-full ">
       <p className="text-title">All Products List</p>
@@ -22,7 +29,11 @@ const ListItems = () => {
               className="w-full border-[1px] flex flex-wrap md:flex-row items-center justify-between text-left p-1 text-sm text-text"
             >
               <td className="w-[10%] min-w-[50px]">
-                <img src={product.image} alt="" className="w-[85%] md:w-[70%]" />
+                <img
+                  src={product.images[0]}
+                  alt=""
+                  className="w-[85%] md:w-[70%]"
+                />
               </td>
               <td className="w-[40%] min-w-[140px]">{product.name}</td>
               <td className="w-[10%] min-w-[50px]">{product.category}</td>

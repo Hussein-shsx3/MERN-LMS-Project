@@ -85,12 +85,12 @@ const Header = (props) => {
             <i className="bx bx-log-out"></i>
           </Link>
         )}
-        <div className="relative flex justify-center items-center">
+        <Link to="/cart" className="relative flex justify-center items-center">
           <i className="bx bx-shopping-bag"></i>
           <span className="absolute bottom-[-3px] right-[-3px] bg-black w-4 h-4 rounded-[100%] text-[9px] text-white flex justify-center items-center">
             0
           </span>
-        </div>
+        </Link>
         <i className="bx bx-menu-alt-right flex md:hidden" onClick={hidden}></i>
       </div>
     </header>

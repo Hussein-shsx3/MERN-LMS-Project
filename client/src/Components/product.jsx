@@ -9,7 +9,7 @@ const Product = ({ image, name, price, id }) => {
     >
       <div className="w-[215px] md:w-[230px] h-[265px] md:h-[275px] overflow-hidden mb-[10px]">
         <img
-          src={image[0]}
+          src={image}
           alt=""
           className="object-cover w-[215px] md:w-[230px] h-[265px] md:h-[275px] hover:scale-[1.1] transition-all duration-200"
         />
