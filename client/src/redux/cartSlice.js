@@ -4,6 +4,7 @@ const initialState = {
   items: [],
   totalAmount: 0,
   shippingFee: 10,
+  status: "idle",
 };
 
 const cartSlice = createSlice({
@@ -23,6 +24,7 @@ const cartSlice = createSlice({
       }
 
       state.totalAmount += action.payload.price;
+      state.status = "succeeded";
     },
     removeItem: (state, action) => {
       const existingItem = state.items.find(
@@ -42,6 +44,7 @@ const cartSlice = createSlice({
       }
 
       state.totalAmount -= action.payload.price;
+      state.status = "succeeded";
     },
   },
 });

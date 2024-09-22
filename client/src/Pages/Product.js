@@ -7,21 +7,49 @@ import BProduct from "../Components/product";
 import { getProducts } from "../Api/ProductApi";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { addItem } from "../redux/cartSlice";
 
 const Product = () => {
   const { id } = useParams();
   const [mainImage, setMainImage] = useState("");
+  const [PCart, setPCart] = useState({
+    id: "",
+    image: "",
+    name: "",
+    price: "",
+    size: "",
+    quantity: "",
+  });
 
-  const { products, error, statusGet } = useSelector((state) => state.product);
+  const { products } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const MProduct = products.find((product) => product._id === id);
+  const { items } = useSelector((state) => state.cart);
+
+  const handelChange = (size) => {
+    setPCart({
+      ...PCart,
+      size,
+      id: MProduct._id,
+      name: MProduct.name,
+      price: MProduct.price,
+    });
+  };
+
+  console.log(items);
+
+  const addToCart = () => {
+    if (PCart.size.length > 0 && PCart.id.length > 0) {
+      dispatch(addItem(PCart));
+      toast("Product added successfully to cart");
+    } else {
+      toast.error("Select Product Size");
+    }
+  };
 
   useEffect(() => {
     dispatch(getProducts());
-    if (statusGet === "failed") {
-      toast.error(error || "Server Error");
-    }
-  }, [dispatch, statusGet, error]);
+  }, [dispatch]);
 
   if (!MProduct) {
     return (
@@ -82,13 +110,20 @@ const Product = () => {
               <div className="flex flex-row gap-2 mt-3">
                 {MProduct.sizes.map((size, index) => {
                   return (
-                    <button key={index} className="bg-gray-100 px-4 py-2">
+                    <button
+                      key={index}
+                      className="bg-gray-100 px-4 py-2 focus:border-[1px] focus:border-pink-200"
+                      onClick={() => handelChange(size)}
+                    >
                       {size}
                     </button>
                   );
                 })}
               </div>
-              <button className="bg-black text-white w-[38%] h-[45px] my-6 text-sm lg:text-base">
+              <button
+                className="bg-black text-white w-[38%] h-[45px] my-6 text-sm lg:text-base"
+                onClick={addToCart}
+              >
                 ADD TO CART
               </button>
               <hr className="w-full mb-3" />

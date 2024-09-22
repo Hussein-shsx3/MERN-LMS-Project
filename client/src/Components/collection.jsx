@@ -2,22 +2,17 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../Api/ProductApi";
 import Product from "../Components/product";
-import { ToastContainer, toast } from "react-toastify";
 
 const Collection = () => {
   const dispatch = useDispatch();
-  const { products, error, statusGet } = useSelector((state) => state.product);
+  const { products } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProducts());
-    if (statusGet === "failed") {
-      toast.error(error || "Server Error");
-    }
-  }, [dispatch, statusGet, error]);
+  }, [dispatch]);
 
   return (
     <div className="w-full flex flex-col items-center mt-16">
-      <ToastContainer />
       <p className="text-title text-3xl flex flex-row items-center gap-2">
         <span className="text-text">LATEST </span> COLLECTIONS{" "}
         <span className="w-[40px] h-[2px] bg-title border-none" />
