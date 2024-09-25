@@ -33,6 +33,7 @@ const Product = () => {
       id: MProduct._id,
       name: MProduct.name,
       price: MProduct.price,
+      image: MProduct.images[0],
     });
   };
 
@@ -41,7 +42,7 @@ const Product = () => {
   const addToCart = () => {
     if (PCart.size.length > 0 && PCart.id.length > 0) {
       dispatch(addItem(PCart));
-      toast("Product added successfully to cart");
+      toast.success("Product added successfully to cart");
     } else {
       toast.error("Select Product Size");
     }

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
 import Cookies from "universal-cookie";
 import { searchToggle } from "../redux/searchSlice";
 
 const Header = (props) => {
   const dispatch = useDispatch();
+  const { items } = useSelector((state) => state.cart);
 
   const cookies = new Cookies();
 
@@ -88,7 +89,7 @@ const Header = (props) => {
         <Link to="/cart" className="relative flex justify-center items-center">
           <i className="bx bx-shopping-bag"></i>
           <span className="absolute bottom-[-3px] right-[-3px] bg-black w-4 h-4 rounded-[100%] text-[9px] text-white flex justify-center items-center">
-            0
+            {items.length}
           </span>
         </Link>
         <i className="bx bx-menu-alt-right flex md:hidden" onClick={hidden}></i>
