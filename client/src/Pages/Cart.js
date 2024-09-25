@@ -3,6 +3,7 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import { useSelector, useDispatch } from "react-redux";
 import { removeItem } from "../redux/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -73,9 +74,12 @@ const Cart = () => {
               <span>${(totalAmount + shippingFee).toFixed(2)}</span>
             </strong>
           </p>
-          <button className="bg-black text-white w-[180px] h-[40px] text-sm md:text-xs">
+          <Link
+            to="/order"
+            className="bg-black text-white w-[180px] h-[40px] text-base md:text-sm flex justify-center items-center"
+          >
             PROCEED TO CHECKOUT
-          </button>
+          </Link>
         </div>
         <Footer />
       </div>

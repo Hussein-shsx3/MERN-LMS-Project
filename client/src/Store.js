@@ -3,6 +3,7 @@ import authSlice from "./redux/authSlice";
 import displaySlice from "./redux/searchSlice";
 import productSlice from "./redux/productSlice";
 import cartSlice from "./redux/cartSlice";
+import orderSlice from "./redux/orderSlice";
 
 export const storeApp = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const storeApp = configureStore({
     search: displaySlice,
     product: productSlice,
     cart: cartSlice,
+    order: orderSlice,
   },
 });

@@ -10,6 +10,7 @@ import SignIn from "./Pages/signIn";
 import Product from "./Pages/Product";
 import Admin from "./Pages/Admin";
 import Cart from "./Pages/Cart";
+import Order from "./Pages/Order";
 
 import AddItems from "./Components/addItems";
 import ListItems from "./Components/listItems";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/order",
+    element: <Order />,
   },
   {
     path: "/admin",
