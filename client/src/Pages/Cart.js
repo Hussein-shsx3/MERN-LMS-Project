@@ -76,7 +76,7 @@ const Cart = () => {
           </p>
           <Link
             to="/order"
-            className="bg-black text-white w-[180px] h-[40px] text-base md:text-sm flex justify-center items-center"
+            className="bg-black text-white w-[180px] h-[40px] text-xs md:text-sm flex justify-center items-center"
           >
             PROCEED TO CHECKOUT
           </Link>
