@@ -12,11 +12,13 @@ const orderSchema = new Schema({
   phone: String,
   items: [
     {
-      product: {
+      id: {
         type: Schema.Types.ObjectId,
         ref: "Product",
         required: true,
       },
+      name: { type: String, required: true },
+      image: { type: String, required: true },
       quantity: {
         type: Number,
         required: true,

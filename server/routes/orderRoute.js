@@ -6,7 +6,7 @@ import { auth } from "../middleware/tokenMiddleware.js";
 const router = express.Router();
 
 // Create a new order
-router.post("/create", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const {
       firstName,
@@ -45,26 +45,22 @@ router.post("/create", async (req, res) => {
       .status(201)
       .json({ message: "Order placed successfully", order: savedOrder });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Failed to place order", error: err.message });
+    next(err);
   }
 });
 
 // Get all orders
-router.get("/", auth, isAdmin, async (req, res) => {
+router.get("/", auth, isAdmin, async (req, res, next) => {
   try {
-    const orders = await Order.find().populate("items.product");
+    const orders = await Order.find().populate("items.id");
     res.json(orders);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch orders", error: err.message });
+    next(err);
   }
 });
 
 // Get a specific order by ID
-router.get("/:orderId", auth, isAdmin, async (req, res) => {
+router.get("/:orderId", auth, isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.orderId).populate(
       "items.product"
@@ -74,14 +70,12 @@ router.get("/:orderId", auth, isAdmin, async (req, res) => {
     }
     res.json(order);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch order", error: err.message });
+    next(err);
   }
 });
 
 // Delete an order by ID
-router.delete("/:orderId", auth, isAdmin, async (req, res) => {
+router.delete("/:orderId", auth, isAdmin, async (req, res, next) => {
   try {
     const deletedOrder = await Order.findByIdAndDelete(req.params.orderId);
     if (!deletedOrder) {
@@ -89,9 +83,7 @@ router.delete("/:orderId", auth, isAdmin, async (req, res) => {
     }
     res.json({ message: "Order deleted successfully" });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Failed to delete order", error: err.message });
+    next(err);
   }
 });
 
