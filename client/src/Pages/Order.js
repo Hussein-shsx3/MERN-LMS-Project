@@ -6,8 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { createOrder } from "../Api/orderApi";
 import { resetStatus } from "../redux/orderSlice";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Order = () => {
+  const nav = useNavigate();
   const cookies = new Cookies();
   const token = cookies.get("token");
   const dispatch = useDispatch();
@@ -55,8 +57,9 @@ const Order = () => {
     if (status === "succeeded") {
       toast.success("Order was successfully created");
       dispatch(resetStatus());
+      nav("/myOrders");
     }
-  }, [status, dispatch]);
+  }, [status, dispatch, nav]);
 
   return (
     <section className="relative w-full flex justify-center overflow-hidden">

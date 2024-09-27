@@ -75,6 +75,27 @@ router.get("/myOrders", auth, async (req, res, next) => {
   }
 });
 
+// edit orderStatus
+router.put("/:orderId/status", auth, async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { orderStatus } = req.body;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    order.orderStatus = orderStatus;
+    await order.save();
+
+    res.json({ message: "Order status updated", order });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Delete an order by ID
 router.delete("/:orderId", auth, isAdmin, async (req, res, next) => {
   try {

@@ -1,7 +1,10 @@
-// features/order/orderSlice.js
-
 import { createSlice } from "@reduxjs/toolkit";
-import { createOrder, fetchOrders, deleteOrder } from "../Api/orderApi";
+import {
+  createOrder,
+  fetchOrders,
+  deleteOrder,
+  fetchOrdersByUserId,
+} from "../Api/orderApi";
 
 const orderSlice = createSlice({
   name: "order",
@@ -40,6 +43,18 @@ const orderSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      }) // Fetch MyOrders
+      .addCase(fetchOrdersByUserId.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(fetchOrdersByUserId.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.orders = action.payload;
+      })
+      .addCase(fetchOrdersByUserId.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

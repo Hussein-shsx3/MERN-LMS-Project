@@ -37,6 +37,11 @@ const orderSchema = new Schema({
   paymentMethod: String,
   totalAmount: Number,
   shippingFee: Number,
+  orderStatus: {
+    type: String,
+    enum: ["Placed", "Processing", "Shipped", "Delivered"],
+    default: "Placed",
+  },
   createdAt: {
     type: Date,
     default: Date.now,
