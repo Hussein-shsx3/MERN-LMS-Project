@@ -12,7 +12,32 @@ const createOrder = createAsyncThunk(
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/orders`,
-        orderData
+        orderData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+const fetchOrdersByUserId = createAsyncThunk(
+  "order/fetchOrdersByUserId",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/orders/myOrders`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -61,4 +86,4 @@ const deleteOrder = createAsyncThunk(
   }
 );
 
-export { createOrder, fetchOrders, deleteOrder };
+export { createOrder, fetchOrders, deleteOrder, fetchOrdersByUserId };

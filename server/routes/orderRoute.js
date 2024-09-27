@@ -6,7 +6,7 @@ import { auth } from "../middleware/tokenMiddleware.js";
 const router = express.Router();
 
 // Create a new order
-router.post("/", async (req, res, next) => {
+router.post("/", auth, async (req, res, next) => {
   try {
     const {
       firstName,
@@ -25,6 +25,7 @@ router.post("/", async (req, res, next) => {
     } = req.body;
 
     const newOrder = new Order({
+      userId: req.user.id,
       firstName,
       lastName,
       email,
@@ -59,16 +60,16 @@ router.get("/", auth, isAdmin, async (req, res, next) => {
   }
 });
 
-// Get a specific order by ID
-router.get("/:orderId", auth, isAdmin, async (req, res, next) => {
+// Get orders by user Id
+router.get("/myOrders", auth, async (req, res, next) => {
   try {
-    const order = await Order.findById(req.params.orderId).populate(
-      "items.product"
+    const orders = await Order.find({ userId: req.user.id }).populate(
+      "items.id"
     );
-    if (!order) {
+    if (!orders) {
       return res.status(404).json({ message: "Order not found" });
     }
-    res.json(order);
+    res.json(orders);
   } catch (err) {
     next(err);
   }

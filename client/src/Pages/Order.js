@@ -5,8 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { createOrder } from "../Api/orderApi";
 import { resetStatus } from "../redux/orderSlice";
+import Cookies from "universal-cookie";
 
 const Order = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("token");
   const dispatch = useDispatch();
   const { items, totalAmount, shippingFee } = useSelector(
     (state) => state.cart
@@ -41,6 +44,8 @@ const Order = () => {
     e.preventDefault();
     if (items.length === 0) {
       toast.error("Please select a product first");
+    } else if (!token) {
+      toast.error("You must login first");
     } else {
       dispatch(createOrder(formData));
     }
@@ -52,8 +57,6 @@ const Order = () => {
       dispatch(resetStatus());
     }
   }, [status, dispatch]);
-
-  console.log(formData);
 
   return (
     <section className="relative w-full flex justify-center overflow-hidden">
