@@ -5,7 +5,6 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("token");
 
-// Async thunk to create an order
 const createOrder = createAsyncThunk(
   "order/createOrder",
   async (orderData, thunkAPI) => {
@@ -30,7 +29,6 @@ const fetchOrdersByUserId = createAsyncThunk(
   "order/fetchOrdersByUserId",
   async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.token;
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/orders/myOrders`,
         {
@@ -46,7 +44,6 @@ const fetchOrdersByUserId = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch orders
 const fetchOrders = createAsyncThunk(
   "order/fetchOrders",
   async (_, thunkAPI) => {
@@ -66,7 +63,26 @@ const fetchOrders = createAsyncThunk(
   }
 );
 
-// Async thunk to delete an order
+const updateOrderStatus = createAsyncThunk(
+  "order/updateOrderStatus",
+  async ({ orderId, orderStatus }, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/orders/${orderId}/status`,
+        { orderStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const deleteOrder = createAsyncThunk(
   "order/deleteOrder",
   async (orderId, thunkAPI) => {
@@ -86,4 +102,4 @@ const deleteOrder = createAsyncThunk(
   }
 );
 
-export { createOrder, fetchOrders, deleteOrder, fetchOrdersByUserId };
+export { createOrder, fetchOrders, deleteOrder, fetchOrdersByUserId,updateOrderStatus };

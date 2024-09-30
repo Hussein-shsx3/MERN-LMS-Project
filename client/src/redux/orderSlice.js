@@ -4,6 +4,7 @@ import {
   fetchOrders,
   deleteOrder,
   fetchOrdersByUserId,
+  updateOrderStatus,
 } from "../Api/orderApi";
 
 const orderSlice = createSlice({
@@ -45,7 +46,8 @@ const orderSlice = createSlice({
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      }) // Fetch MyOrders
+      })
+      // Fetch My Orders
       .addCase(fetchOrdersByUserId.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -55,6 +57,25 @@ const orderSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(fetchOrdersByUserId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Update Order Status
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const updatedOrder = action.payload.order;
+        const index = state.orders.findIndex(
+          (order) => order._id === updatedOrder._id
+        );
+        if (index !== -1) {
+          state.orders[index] = updatedOrder;
+        }
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

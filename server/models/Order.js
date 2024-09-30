@@ -39,7 +39,7 @@ const orderSchema = new Schema({
   shippingFee: Number,
   orderStatus: {
     type: String,
-    enum: ["Placed", "Processing", "Shipped", "Delivered"],
+    enum: ["Order Placed", "Packing", "Shipped", "Delivered"],
     default: "Placed",
   },
   createdAt: {
