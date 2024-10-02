@@ -22,19 +22,18 @@ const BestSellers = () => {
         industry. Lorem Ipsum has been the.
       </p>
       <div className="w-full flex flex-wrap items-center justify-center gap-4 py-14">
-        {products.map((product, index) =>
-          product.bestseller === true ? (
+        {products
+          .filter((product) => !product.isBestseller)
+          .slice(5, 10)
+          .map((product, index) => (
             <Product
               key={index}
               id={product._id}
-              image={product.image}
+              image={product.images[0]}
               name={product.name}
               price={product.price}
             />
-          ) : (
-            ""
-          )
-        )}
+          ))}
       </div>
     </div>
   );
