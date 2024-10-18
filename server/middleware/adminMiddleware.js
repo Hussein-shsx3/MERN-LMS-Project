@@ -4,7 +4,7 @@ import User from "../models/User.js";
 const isAdmin = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
-    if (user.isAdmin !== true) {
+    if (user.role !== "admin") {
       return res.status(403).json({ message: "Access denied" });
     }
     next();
