@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(
 dotenv.config();
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 app.use(errorHandler);
 app.use(notFound);
