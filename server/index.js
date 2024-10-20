@@ -6,13 +6,15 @@ import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import courseRoutes from "./routes/courseRoutes.js";
+import lectureRoutes from "./routes/lectureRoutes.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://e-commerce-1-fgi3.onrender.com"],
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
@@ -21,6 +23,8 @@ dotenv.config();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/course", courseRoutes);
+app.use("/api", lectureRoutes);
 
 app.use(errorHandler);
 app.use(notFound);
