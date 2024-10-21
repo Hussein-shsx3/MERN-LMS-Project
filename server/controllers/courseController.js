@@ -104,7 +104,7 @@ export const enrollInCourse = async (req, res) => {
     const userId = req.user.id;
 
     const course = await Course.findById(courseId);
-    const findUser = await User.findById(req.user.id);
+    const findUser = await User.findById(userId);
 
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
@@ -125,6 +125,7 @@ export const enrollInCourse = async (req, res) => {
     course.students.push(userId);
     findUser.coursesEnrolled.push(course._id);
     await course.save();
+    await findUser.save();
 
     return res
       .status(200)

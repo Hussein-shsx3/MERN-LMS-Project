@@ -18,7 +18,9 @@ export const getAllUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     //* Find user
-    const findUser = await User.findById(req.user.id).select("-password");
+    const findUser = await User.findById(req.user.id)
+      .select("-password")
+      .populate("coursesEnrolled", "title");
     if (!findUser) {
       return res.status(404).send("Users not found!");
     } else {
@@ -57,4 +59,3 @@ export const deleteUser = async (req, res, next) => {
     next(err);
   }
 };
-
