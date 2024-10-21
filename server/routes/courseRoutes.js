@@ -5,10 +5,11 @@ import {
   getCourse,
   updateCourse,
   deleteCourse,
+  enrollInCourse
 } from "../controllers/courseController.js";
 import { isAdminOrTeacher } from "../middleware/adminOrTeacherMiddleware.js";
 import { auth } from "../middleware/tokenMiddleware.js";
-import { upload } from "../middleware/multerMiddleware.js";
+import upload from "../middleware/multerMiddleware.js";
 
 const router = express.Router();
 
@@ -21,5 +22,7 @@ router.get("/:id", auth, getCourse);
 router.put("/:id", auth, isAdminOrTeacher, updateCourse);
 
 router.delete("/:id", auth, isAdminOrTeacher, deleteCourse);
+
+router.post("/enroll/:courseId", auth, enrollInCourse);
 
 export default router;

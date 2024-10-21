@@ -24,7 +24,7 @@ dotenv.config();
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/course", courseRoutes);
-app.use("/api", lectureRoutes);
+app.use("/api/lecture", lectureRoutes);
 
 app.use(errorHandler);
 app.use(notFound);

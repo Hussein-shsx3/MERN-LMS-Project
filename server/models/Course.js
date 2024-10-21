@@ -10,10 +10,11 @@ const courseSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true }, 
+    image: { type: String, required: true },
     teacher: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     lectures: [lectureSchema],
+    price: { type: Number, required: true },
   },
   { timestamps: true }
 );
