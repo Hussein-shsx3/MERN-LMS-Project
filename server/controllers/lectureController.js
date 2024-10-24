@@ -2,7 +2,7 @@ import Course from "../models/Course.js";
 
 export const addLecture = async (req, res, next) => {
   const { courseId } = req.params;
-  const { lectureNumber, title, videoUrl } = req.body;
+  const { lectureNumber, title, videoUrl, isFree } = req.body;
 
   try {
     const course = await Course.findById(courseId);
@@ -19,6 +19,7 @@ export const addLecture = async (req, res, next) => {
       lectureNumber,
       title,
       videoUrl,
+      isFree: course.price > 0 ? isFree : true,
     };
 
     course.lectures.push(newLecture);
@@ -33,7 +34,7 @@ export const addLecture = async (req, res, next) => {
 
 export const updateLecture = async (req, res, next) => {
   const { courseId, lectureNumber } = req.params;
-  const { title, videoUrl } = req.body;
+  const { title, videoUrl, isFree } = req.body;
 
   try {
     const course = await Course.findById(courseId);
@@ -47,6 +48,8 @@ export const updateLecture = async (req, res, next) => {
 
     if (title) course.lectures[lectureIndex].title = title;
     if (videoUrl) course.lectures[lectureIndex].videoUrl = videoUrl;
+    if (isFree)
+      course.lectures[lectureIndex].isFree = course.price > 0 ? isFree : true;
 
     await course.save();
 

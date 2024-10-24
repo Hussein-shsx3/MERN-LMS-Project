@@ -4,6 +4,7 @@ const lectureSchema = new mongoose.Schema({
   lectureNumber: { type: Number, required: true },
   title: { type: String, required: true },
   videoUrl: { type: String, required: true },
+  isFree: { type: Boolean, required: true },
 });
 
 const courseSchema = new mongoose.Schema(

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, auth } from "../Api/authApi";
+import { register, login } from "../Api/authApi";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
@@ -19,9 +19,8 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.status = "idle";
-      cookies.remove("user");
       cookies.remove("token");
-      cookies.remove("isAdmin");
+      cookies.remove("role");
     },
     clearStatus: (state) => {
       state.status = "idle";
@@ -35,26 +34,27 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.user = action.payload.userDetails;
-        state.token = action.payload.token;
-        cookies.set("token", action.payload.token, { path: "/" });
-        cookies.set("isAdmin", action.payload.isAdmin, { path: "/" });
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
-      .addCase(auth.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(auth.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.user = action.payload.userDetails;
+        state.user = action.payload.user;
         state.token = action.payload.token;
-        cookies.set("token", action.payload.token);
-        cookies.set("isAdmin", action.payload.userDetails.isAdmin);
+        cookies.set("token", action.payload.token, {
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+          maxAge: 3600,
+        });
+        cookies.set("role", action.payload.user.role);
       })
-      .addCase(auth.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

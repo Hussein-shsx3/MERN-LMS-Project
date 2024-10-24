@@ -17,11 +17,11 @@ router.post("/", auth, isAdminOrTeacher, upload.single("image"), createCourse);
 
 router.get("/", auth, getAllCourses);
 
-router.get("/:id", auth, getCourse);
+router.get("/:courseId", auth, getCourse);
 
-router.put("/:id", auth, isAdminOrTeacher, updateCourse);
+router.put("/:courseId", auth, isAdminOrTeacher, updateCourse);
 
-router.delete("/:id", auth, isAdminOrTeacher, deleteCourse);
+router.delete("/:courseId", auth, isAdminOrTeacher, deleteCourse);
 
 router.post("/enroll/:courseId", auth, enrollInCourse);
 

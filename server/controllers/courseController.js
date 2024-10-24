@@ -63,12 +63,12 @@ export const getCourse = async (req, res, next) => {
 
 // Update a course
 export const updateCourse = async (req, res, next) => {
-  const { id } = req.params;
+  const { courseId } = req.params;
   const { title, description, teacher } = req.body;
 
   try {
     const course = await Course.findByIdAndUpdate(
-      id,
+      courseId,
       { title, description, teacher },
       { new: true }
     );
@@ -82,10 +82,10 @@ export const updateCourse = async (req, res, next) => {
 
 // Delete a course
 export const deleteCourse = async (req, res, next) => {
-  const { id } = req.params;
+  const { courseId } = req.params;
 
   try {
-    const course = await Course.findByIdAndDelete(id);
+    const course = await Course.findByIdAndDelete(courseId);
     if (!course) return res.status(404).json({ message: "Course not found" });
 
     // Optionally delete associated lectures
