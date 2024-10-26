@@ -4,7 +4,15 @@ import User from "../models/User.js";
 
 // Create a new course
 export const createCourse = async (req, res) => {
-  const { title, description, price } = req.body;
+  const {
+    title,
+    description,
+    price,
+    category,
+    whatWillYouLearn,
+    duration = "0",
+    skillLevel = "All Levels",
+  } = req.body;
   const file = req.file;
 
   if (!file) {
@@ -20,6 +28,12 @@ export const createCourse = async (req, res) => {
       image: result.secure_url,
       teacher: req.user.id,
       price,
+      category,
+      whatWillYouLearn: Array.isArray(whatWillYouLearn)
+        ? whatWillYouLearn
+        : [whatWillYouLearn],
+      duration,
+      skillLevel,
     });
 
     await course.save();
@@ -33,8 +47,8 @@ export const createCourse = async (req, res) => {
 export const getAllCourses = async (req, res, next) => {
   try {
     const courses = await Course.find()
-      .populate("lectures")
-      .populate("teacher", "name");
+      .populate("teacher", "name")
+      .populate("students", "name");
     res.status(200).json(courses);
   } catch (err) {
     next(err);
@@ -47,7 +61,8 @@ export const getCourse = async (req, res, next) => {
 
   try {
     const course = await Course.findById(courseId)
-      .populate("teacher students")
+      .populate("teacher", "name")
+      .populate("students", "name")
       .exec();
 
     if (!course) return res.status(404).json({ message: "Course not found" });
@@ -64,14 +79,33 @@ export const getCourse = async (req, res, next) => {
 // Update a course
 export const updateCourse = async (req, res, next) => {
   const { courseId } = req.params;
-  const { title, description, teacher } = req.body;
+  const {
+    title,
+    description,
+    teacher,
+    category,
+    whatWillYouLearn,
+    duration,
+    skillLevel,
+  } = req.body;
 
   try {
-    const course = await Course.findByIdAndUpdate(
-      courseId,
-      { title, description, teacher },
-      { new: true }
-    );
+    const updatedFields = {
+      title,
+      description,
+      teacher,
+      category,
+      whatWillYouLearn: Array.isArray(whatWillYouLearn)
+        ? whatWillYouLearn
+        : [whatWillYouLearn],
+      duration,
+      skillLevel,
+    };
+
+    const course = await Course.findByIdAndUpdate(courseId, updatedFields, {
+      new: true,
+    });
+
     if (!course) return res.status(404).json({ message: "Course not found" });
 
     res.status(200).json({ message: "Course updated successfully", course });
@@ -97,7 +131,7 @@ export const deleteCourse = async (req, res, next) => {
   }
 };
 
-// In your course creation controller
+// Enroll in a course
 export const enrollInCourse = async (req, res) => {
   try {
     const { courseId } = req.params;

@@ -1,8 +1,9 @@
 import Course from "../models/Course.js";
 
+// Add a new lecture to a course
 export const addLecture = async (req, res, next) => {
   const { courseId } = req.params;
-  const { lectureNumber, title, videoUrl, isFree } = req.body;
+  const { lectureNumber, title, videoUrl, isFree, duration } = req.body;
 
   try {
     const course = await Course.findById(courseId);
@@ -20,9 +21,16 @@ export const addLecture = async (req, res, next) => {
       title,
       videoUrl,
       isFree: course.price > 0 ? isFree : true,
+      duration: duration || "0",
     };
 
+    // Add the new lecture to the lectures array
     course.lectures.push(newLecture);
+
+    // Update the course's total duration
+    course.duration = String(
+      parseFloat(course.duration) + parseFloat(duration || "0")
+    );
 
     await course.save();
 
@@ -34,7 +42,7 @@ export const addLecture = async (req, res, next) => {
 
 export const updateLecture = async (req, res, next) => {
   const { courseId, lectureNumber } = req.params;
-  const { title, videoUrl, isFree } = req.body;
+  const { title, videoUrl, isFree, duration } = req.body;
 
   try {
     const course = await Course.findById(courseId);
@@ -46,10 +54,27 @@ export const updateLecture = async (req, res, next) => {
     if (lectureIndex === -1)
       return res.status(404).json({ message: "Lecture not found" });
 
-    if (title) course.lectures[lectureIndex].title = title;
-    if (videoUrl) course.lectures[lectureIndex].videoUrl = videoUrl;
-    if (isFree)
-      course.lectures[lectureIndex].isFree = course.price > 0 ? isFree : true;
+    const lecture = course.lectures[lectureIndex];
+
+    // Calculate the duration difference if the duration is being updated
+    if (duration) {
+      const oldDuration = parseFloat(lecture.duration || "0");
+      const newDuration = parseFloat(duration);
+
+      // Update course total duration by adding the difference
+      course.duration = String(
+        parseFloat(course.duration) + (newDuration - oldDuration)
+      );
+
+      // Update the lecture duration
+      lecture.duration = duration;
+    }
+
+    if (title) lecture.title = title;
+    if (videoUrl) lecture.videoUrl = videoUrl;
+    if (typeof isFree === "boolean") {
+      lecture.isFree = course.price > 0 ? isFree : true;
+    }
 
     await course.save();
 
@@ -59,6 +84,7 @@ export const updateLecture = async (req, res, next) => {
   }
 };
 
+// Delete a lecture from a course
 export const deleteLecture = async (req, res, next) => {
   const { courseId, lectureNumber } = req.params;
 
