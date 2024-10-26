@@ -3,12 +3,9 @@ import User from "../models/User.js";
 // Get all users
 export const getAllUsers = async (req, res, next) => {
   try {
-    const findUsers = await User.find().select("-password");
-    if (!findUsers) {
-      return res.status(404).send("Users not found!");
-    } else {
-      return res.status(200).json(findUsers);
-    }
+    const users = await User.find().select("-password");
+    if (!users) return res.status(404).json({ message: "Users not found!" });
+    res.status(200).json(users);
   } catch (err) {
     next(err);
   }
@@ -17,15 +14,11 @@ export const getAllUsers = async (req, res, next) => {
 // Get one user
 export const getUser = async (req, res, next) => {
   try {
-    //* Find user
-    const findUser = await User.findById(req.user.id)
+    const user = await User.findById(req.user.id)
       .select("-password")
       .populate("coursesEnrolled", "title");
-    if (!findUser) {
-      return res.status(404).send("Users not found!");
-    } else {
-      return res.status(200).json(findUser);
-    }
+    if (!user) return res.status(404).json({ message: "User not found!" });
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
@@ -37,8 +30,17 @@ export const updateUser = async (req, res, next) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    user.name = req.body.name || user.name;
+    user.firstName = req.body.firstName || user.firstName;
+    user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
+    user.picture = req.body.picture || user.picture;
+    user.bio = req.body.bio || user.bio;
+    user.socialLinks = {
+      github: req.body.github || user.socialLinks.github,
+      youtube: req.body.youtube || user.socialLinks.youtube,
+      facebook: req.body.facebook || user.socialLinks.facebook,
+      twitter: req.body.twitter || user.socialLinks.twitter,
+    };
 
     await user.save();
     res.status(200).json(user);

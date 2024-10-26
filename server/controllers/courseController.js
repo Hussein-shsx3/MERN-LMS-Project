@@ -132,7 +132,7 @@ export const deleteCourse = async (req, res, next) => {
 };
 
 // Enroll in a course
-export const enrollInCourse = async (req, res) => {
+export const enrollInCourse = async (req, res, next) => {
   try {
     const { courseId } = req.params;
     const userId = req.user.id;
@@ -165,6 +165,6 @@ export const enrollInCourse = async (req, res) => {
       .status(200)
       .json({ message: "Enrolled successfully in the course" });
   } catch (error) {
-    return res.status(500).json({ message: "Server error", error });
+    next(err);
   }
 };

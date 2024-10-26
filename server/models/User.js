@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: {
@@ -11,6 +12,14 @@ const userSchema = new mongoose.Schema(
       default: "student",
     },
     coursesEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+    picture: { type: String },
+    bio: { type: String },
+    socialLinks: {
+      github: { type: String, default: "" },
+      youtube: { type: String, default: "" },
+      facebook: { type: String, default: "" },
+      twitter: { type: String, default: "" },
+    },
   },
   { timestamps: true }
 );
