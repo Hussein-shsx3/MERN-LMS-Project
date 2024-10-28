@@ -4,22 +4,22 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  updateUserImage,
 } from "../controllers/userController.js";
 import { auth } from "../middleware/tokenMiddleware.js";
 import { isAdmin } from "../middleware/adminMiddleware.js";
+import upload from "../middleware/multerMiddleware.js";
 
 const router = express.Router();
 
-// Get all users (admin-only)
 router.get("/getAllUsers", auth, isAdmin, getAllUsers);
 
-// Get one user (admin or the user themselves)
 router.get("/getUser", auth, getUser);
 
-// Update user (admin or the user themselves)
 router.put("/", auth, updateUser);
 
-// Delete user (admin-only)
+router.put("/image", auth, upload.single("picture"), updateUserImage);
+
 router.delete("/:id", auth, isAdmin, deleteUser);
 
 export default router;

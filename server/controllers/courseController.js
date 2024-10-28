@@ -11,7 +11,7 @@ export const createCourse = async (req, res) => {
     category,
     whatWillYouLearn,
     duration = "0",
-    skillLevel = "All Levels",
+    skillLevel = skillLevel || "All Levels",
   } = req.body;
   const file = req.file;
 
@@ -79,36 +79,50 @@ export const getCourse = async (req, res, next) => {
 // Update a course
 export const updateCourse = async (req, res, next) => {
   const { courseId } = req.params;
-  const {
-    title,
-    description,
-    teacher,
-    category,
-    whatWillYouLearn,
-    duration,
-    skillLevel,
-  } = req.body;
 
   try {
-    const updatedFields = {
-      title,
-      description,
-      teacher,
-      category,
-      whatWillYouLearn: Array.isArray(whatWillYouLearn)
-        ? whatWillYouLearn
-        : [whatWillYouLearn],
-      duration,
-      skillLevel,
-    };
-
-    const course = await Course.findByIdAndUpdate(courseId, updatedFields, {
-      new: true,
-    });
-
+    const course = await Course.findById(courseId);
     if (!course) return res.status(404).json({ message: "Course not found" });
 
+    const whatWillYouLearn = Array.isArray(req.body.whatWillYouLearn)
+      ? req.body.whatWillYouLearn
+      : [req.body.whatWillYouLearn];
+
+    course.title = req.body.title || course.title;
+    course.description = req.body.description || course.description;
+    course.category = req.body.category || course.category;
+    course.whatWillYouLearn = whatWillYouLearn || course.whatWillYouLearn;
+    course.skillLevel = req.body.skillLevel || course.skillLevel;
+
+    await course.save();
+
     res.status(200).json({ message: "Course updated successfully", course });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Update course image
+export const updateCourseImage = async (req, res, next) => {
+  const { courseId } = req.params;
+
+  try {
+    const course = await Course.findById(courseId);
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    const file = req.file;
+    if (!file)
+      return res.status(400).json({ message: "Image file is required" });
+
+    const result = await cloudinary.uploader.upload(file.path);
+
+    course.image = result.secure_url;
+
+    await course.save();
+
+    res
+      .status(200)
+      .json({ message: "Course image updated successfully", course });
   } catch (err) {
     next(err);
   }

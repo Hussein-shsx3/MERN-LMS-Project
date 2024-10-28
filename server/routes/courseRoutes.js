@@ -5,7 +5,8 @@ import {
   getCourse,
   updateCourse,
   deleteCourse,
-  enrollInCourse
+  enrollInCourse,
+  updateCourseImage,
 } from "../controllers/courseController.js";
 import { isAdminOrTeacher } from "../middleware/adminOrTeacherMiddleware.js";
 import { auth } from "../middleware/tokenMiddleware.js";
@@ -20,6 +21,14 @@ router.get("/", auth, getAllCourses);
 router.get("/:courseId", auth, getCourse);
 
 router.put("/:courseId", auth, isAdminOrTeacher, updateCourse);
+
+router.put(
+  "/image/:courseId",
+  auth,
+  isAdminOrTeacher,
+  upload.single("image"),
+  updateCourseImage
+);
 
 router.delete("/:courseId", auth, isAdminOrTeacher, deleteCourse);
 

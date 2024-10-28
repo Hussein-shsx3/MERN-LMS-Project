@@ -98,7 +98,15 @@ export const deleteLecture = async (req, res, next) => {
     if (lectureIndex === -1)
       return res.status(404).json({ message: "Lecture not found" });
 
+    const deletedLectureDuration = parseFloat(
+      course.lectures[lectureIndex].duration || "0"
+    );
+
     course.lectures.splice(lectureIndex, 1);
+
+    course.duration = String(
+      parseFloat(course.duration) - deletedLectureDuration
+    );
 
     await course.save();
 

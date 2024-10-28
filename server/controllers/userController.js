@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import cloudinary from "../config/cloudinaryConfig.js";
 
 // Get all users
 export const getAllUsers = async (req, res, next) => {
@@ -33,7 +34,6 @@ export const updateUser = async (req, res, next) => {
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
-    user.picture = req.body.picture || user.picture;
     user.bio = req.body.bio || user.bio;
     user.socialLinks = {
       github: req.body.github || user.socialLinks.github,
@@ -41,6 +41,25 @@ export const updateUser = async (req, res, next) => {
       facebook: req.body.facebook || user.socialLinks.facebook,
       twitter: req.body.twitter || user.socialLinks.twitter,
     };
+
+    await user.save();
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Update user image
+export const updateUserImage = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const file = req.file;
+
+    const result = await cloudinary.uploader.upload(file.path);
+
+    user.picture = result.secure_url;
 
     await user.save();
     res.status(200).json(user);

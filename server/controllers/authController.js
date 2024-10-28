@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 export const registerUser = async (req, res, next) => {
-  const { name, email, password, role } = req.body;
+  const { firstName, lastName, email, password, role } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser)
@@ -12,7 +12,8 @@ export const registerUser = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const roleSelect = email === process.env.ADMIN_EMAIL ? "admin" : role;
     const newUser = await User.create({
-      name,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
       role: roleSelect,
