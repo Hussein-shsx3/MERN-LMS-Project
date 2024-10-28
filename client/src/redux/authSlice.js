@@ -4,6 +4,14 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
+// Cookie options
+const cookieOptions = {
+  path: "/",
+  secure: true,
+  sameSite: "strict",
+  maxAge: 3600,
+};
+
 const initialState = {
   user: null,
   token: cookies.get("token") || null,
@@ -19,6 +27,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.status = "idle";
+      state.error = null;
       cookies.remove("token");
       cookies.remove("role");
     },
@@ -26,41 +35,43 @@ const authSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(register.fulfilled, (state) => {
         state.status = "succeeded";
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
+        state.error =
+          action.payload || "Registration failed. Please try again.";
       })
       .addCase(login.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = action.payload.user;
         state.token = action.payload.token;
-        cookies.set("token", action.payload.token, {
-          path: "/",
-          secure: true,
-          sameSite: "strict",
-          maxAge: 3600,
-        });
+        cookies.set("token", action.payload.token, cookieOptions);
         cookies.set("role", action.payload.user.role);
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
+        state.error =
+          action.payload || "Login failed. Please check your credentials.";
       });
   },
 });
 
-export const { logout, clearStatus } = authSlice.actions;
+export const { logout, clearStatus, clearError } = authSlice.actions;
 
 export default authSlice.reducer;

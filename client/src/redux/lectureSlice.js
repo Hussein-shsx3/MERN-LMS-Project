@@ -4,7 +4,9 @@ import { createLecture, updateLecture, deleteLecture } from "../Api/lectureApi";
 const initialState = {
   lectures: [],
   lecture: null,
-  status: "idle",
+  createStatus: "idle",
+  updateStatus: "idle",
+  deleteStatus: "idle",
   error: null,
 };
 
@@ -15,28 +17,36 @@ const lectureSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    clearStatus: (state) => {
+      state.createStatus = "idle";
+      state.updateStatus = "idle";
+      state.deleteStatus = "idle";
+    },
   },
   extraReducers: (builder) => {
+    // Create Lecture
     builder
       .addCase(createLecture.pending, (state) => {
-        state.status = "loading";
+        state.createStatus = "loading";
         state.error = null;
       })
       .addCase(createLecture.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.createStatus = "succeeded";
         state.lectures.push(action.payload);
       })
       .addCase(createLecture.rejected, (state, action) => {
-        state.status = "failed";
+        state.createStatus = "failed";
         state.error = action.payload;
       });
+
+    // Update Lecture
     builder
       .addCase(updateLecture.pending, (state) => {
-        state.status = "loading";
+        state.updateStatus = "loading";
         state.error = null;
       })
       .addCase(updateLecture.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.updateStatus = "succeeded";
         const index = state.lectures.findIndex(
           (lecture) => lecture._id === action.payload._id
         );
@@ -45,27 +55,29 @@ const lectureSlice = createSlice({
         }
       })
       .addCase(updateLecture.rejected, (state, action) => {
-        state.status = "failed";
+        state.updateStatus = "failed";
         state.error = action.payload;
       });
+
+    // Delete Lecture
     builder
       .addCase(deleteLecture.pending, (state) => {
-        state.status = "loading";
+        state.deleteStatus = "loading";
         state.error = null;
       })
       .addCase(deleteLecture.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.deleteStatus = "succeeded";
         state.lectures = state.lectures.filter(
           (lecture) => lecture._id !== action.payload._id
         );
       })
       .addCase(deleteLecture.rejected, (state, action) => {
-        state.status = "failed";
+        state.deleteStatus = "failed";
         state.error = action.payload;
       });
   },
 });
 
-export const { clearError } = lectureSlice.actions;
+export const { clearError, clearStatus } = lectureSlice.actions;
 
 export default lectureSlice.reducer;

@@ -5,6 +5,12 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("token");
 
+const authHeaders = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
 // Fetch all courses
 const fetchCourses = createAsyncThunk(
   "course/fetchCourses",
@@ -43,11 +49,7 @@ const createCourse = createAsyncThunk(
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/course`,
         courseData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        authHeaders
       );
       return response.data;
     } catch (error) {
@@ -64,11 +66,7 @@ const enrollInCourse = createAsyncThunk(
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/course/enroll/${courseId}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        authHeaders
       );
       return response.data;
     } catch (error) {
@@ -85,9 +83,30 @@ const deleteCourse = createAsyncThunk(
       const response = await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/course/${courseId}`,
         {},
+        authHeaders
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Update course image
+export const updateCourseImage = createAsyncThunk(
+  "course/updateCourseImage",
+  async ({ courseId, imageFile }, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/course/image/${courseId}`,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -104,4 +123,5 @@ export {
   createCourse,
   enrollInCourse,
   deleteCourse,
+  updateCourseImage,
 };

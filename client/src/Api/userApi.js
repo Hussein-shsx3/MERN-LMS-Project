@@ -5,6 +5,12 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("token");
 
+const authHeaders = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
 // Fetch all users
 export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
@@ -12,11 +18,7 @@ export const getAllUsers = createAsyncThunk(
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/user/getAllUsers`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        authHeaders
       );
       return response.data;
     } catch (error) {
@@ -30,11 +32,7 @@ export const getUser = createAsyncThunk("user/getUser", async (_, thunkAPI) => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/user/getUser`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      authHeaders
     );
     return response.data;
   } catch (error) {
@@ -42,7 +40,7 @@ export const getUser = createAsyncThunk("user/getUser", async (_, thunkAPI) => {
   }
 });
 
-// Update a user (admin or user themselves)
+// Update user data (supports text fields, not images)
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (userData, thunkAPI) => {
@@ -50,9 +48,30 @@ export const updateUser = createAsyncThunk(
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}/api/user`,
         userData,
+        authHeaders
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Update user image (new function to match /api/user/image route)
+export const updateUserImage = createAsyncThunk(
+  "user/updateUserImage",
+  async (imageFile, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append("picture", imageFile); 
+
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/user/image`,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -70,11 +89,7 @@ export const deleteUser = createAsyncThunk(
     try {
       const response = await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/user/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        authHeaders
       );
       return response.data;
     } catch (error) {

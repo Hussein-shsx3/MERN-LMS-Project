@@ -4,7 +4,9 @@ import { getAllUsers, getUser, updateUser, deleteUser } from "../Api/userApi"; /
 const initialState = {
   users: [],
   user: null,
-  status: "idle",
+  fetchStatus: "idle",
+  updateStatus: "idle",
+  deleteStatus: "idle",
   error: null,
 };
 
@@ -15,65 +17,80 @@ const userSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    clearStatus: (state) => {
+      state.fetchStatus = "idle";
+      state.updateStatus = "idle";
+      state.deleteStatus = "idle";
+    },
   },
   extraReducers: (builder) => {
+    // Fetch all users
     builder
       .addCase(getAllUsers.pending, (state) => {
-        state.status = "loading";
+        state.fetchStatus = "loading";
         state.error = null;
       })
       .addCase(getAllUsers.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.users = action.payload; 
+        state.fetchStatus = "succeeded";
+        state.users = action.payload;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
-        state.status = "failed";
+        state.fetchStatus = "failed";
         state.error = action.payload;
       });
+
+    // Fetch a single user
     builder
       .addCase(getUser.pending, (state) => {
-        state.status = "loading";
+        state.fetchStatus = "loading";
         state.error = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload; 
+        state.fetchStatus = "succeeded";
+        state.user = action.payload;
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.status = "failed";
+        state.fetchStatus = "failed";
         state.error = action.payload;
       });
+
+    // Update a user
     builder
       .addCase(updateUser.pending, (state) => {
-        state.status = "loading";
+        state.updateStatus = "loading";
         state.error = null;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.updateStatus = "succeeded";
         state.user = action.payload;
+        state.users = state.users.map((user) =>
+          user._id === action.payload._id ? action.payload : user
+        );
       })
       .addCase(updateUser.rejected, (state, action) => {
-        state.status = "failed";
+        state.updateStatus = "failed";
         state.error = action.payload;
       });
+
+    // Delete a user
     builder
       .addCase(deleteUser.pending, (state) => {
-        state.status = "loading";
+        state.deleteStatus = "loading";
         state.error = null;
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.deleteStatus = "succeeded";
         state.users = state.users.filter(
           (user) => user._id !== action.payload._id
         );
       })
       .addCase(deleteUser.rejected, (state, action) => {
-        state.status = "failed";
+        state.deleteStatus = "failed";
         state.error = action.payload;
       });
   },
 });
 
-export const { clearError } = userSlice.actions;
+export const { clearError, clearStatus } = userSlice.actions;
 
 export default userSlice.reducer;
