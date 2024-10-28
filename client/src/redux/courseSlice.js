@@ -7,7 +7,7 @@ import {
   deleteCourse,
   updateCourseImage,
   updateCourse,
-} from "../Api/courseApi"; // Adjust the path to your API functions
+} from "../Api/courseApi";
 
 const initialState = {
   courses: [],

@@ -17,7 +17,8 @@ const fetchCourses = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/course`
+        `${process.env.REACT_APP_API_URL}/api/course`,
+        authHeaders
       );
       return response.data;
     } catch (error) {
@@ -32,7 +33,8 @@ const fetchCourseById = createAsyncThunk(
   async (courseId, thunkAPI) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/course/${courseId}`
+        `${process.env.REACT_APP_API_URL}/api/course/${courseId}`,
+        authHeaders
       );
       return response.data;
     } catch (error) {
@@ -75,6 +77,43 @@ const enrollInCourse = createAsyncThunk(
   }
 );
 
+// Create a new course (admin only)
+const updateCourse = createAsyncThunk(
+  "course/createCourse",
+  async ({ courseId, courseData }, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/course/${courseId}`,
+        courseData,
+        authHeaders
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Update course image
+const updateCourseImage = createAsyncThunk(
+  "course/updateCourseImage",
+  async ({ courseId, imageFile }, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/course/image/${courseId}`,
+        formData,
+        authHeaders
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // Delete a course
 const deleteCourse = createAsyncThunk(
   "course/deleteCourse",
@@ -92,31 +131,6 @@ const deleteCourse = createAsyncThunk(
   }
 );
 
-// Update course image
-export const updateCourseImage = createAsyncThunk(
-  "course/updateCourseImage",
-  async ({ courseId, imageFile }, thunkAPI) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", imageFile);
-
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/course/image/${courseId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
-
 export {
   fetchCourses,
   fetchCourseById,
@@ -124,4 +138,5 @@ export {
   enrollInCourse,
   deleteCourse,
   updateCourseImage,
+  updateCourse,
 };

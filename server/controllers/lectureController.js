@@ -4,6 +4,7 @@ import Course from "../models/Course.js";
 export const addLecture = async (req, res, next) => {
   const { courseId } = req.params;
   const { lectureNumber, title, videoUrl, isFree, duration } = req.body;
+  console.log("Incoming data:", req.body); // Log incoming request body
 
   try {
     const course = await Course.findById(courseId);
@@ -24,10 +25,8 @@ export const addLecture = async (req, res, next) => {
       duration: duration || "0",
     };
 
-    // Add the new lecture to the lectures array
     course.lectures.push(newLecture);
 
-    // Update the course's total duration
     course.duration = String(
       parseFloat(course.duration) + parseFloat(duration || "0")
     );

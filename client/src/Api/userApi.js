@@ -63,17 +63,12 @@ export const updateUserImage = createAsyncThunk(
   async (imageFile, thunkAPI) => {
     try {
       const formData = new FormData();
-      formData.append("picture", imageFile); 
+      formData.append("picture", imageFile);
 
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}/api/user/image`,
         formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        authHeaders
       );
       return response.data;
     } catch (error) {
