@@ -5,10 +5,9 @@ module.exports = {
     extend: {
       colors: {
         background: "var(--color-background)",
+        primary:"var(--color-primary)",
         title: "var(--title-color)",
         text: "var(--text-color)",
-        icons: "var(--icons-color)",
-        borderColor: "var(--border-color)",
       },
       screens: {
         sm: "540px",

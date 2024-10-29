@@ -79,7 +79,7 @@ const enrollInCourse = createAsyncThunk(
 
 // Create a new course (admin only)
 const updateCourse = createAsyncThunk(
-  "course/createCourse",
+  "course/updateCourse",
   async ({ courseId, courseData }, thunkAPI) => {
     try {
       const response = await axios.put(

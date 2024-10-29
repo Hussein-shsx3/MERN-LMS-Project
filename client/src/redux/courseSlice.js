@@ -17,6 +17,7 @@ const initialState = {
   updateStatus: "idle",
   enrollStatus: "idle",
   deleteStatus: "idle",
+  updateImageStatus: "idle", // Separate status for image update
   error: null,
 };
 
@@ -27,12 +28,18 @@ const courseSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-    clearStatus: (state) => {
-      state.fetchStatus = "idle";
-      state.createStatus = "idle";
-      state.updateStatus = "idle";
-      state.enrollStatus = "idle";
-      state.deleteStatus = "idle";
+    clearStatus: (state, action) => {
+      const { statusType } = action.payload;
+      if (statusType) {
+        state[statusType] = "idle";
+      } else {
+        state.fetchStatus = "idle";
+        state.createStatus = "idle";
+        state.updateStatus = "idle";
+        state.updateImageStatus = "idle";
+        state.enrollStatus = "idle";
+        state.deleteStatus = "idle";
+      }
     },
   },
   extraReducers: (builder) => {
@@ -101,18 +108,18 @@ const courseSlice = createSlice({
     // Update course image
     builder
       .addCase(updateCourseImage.pending, (state) => {
-        state.updateStatus = "loading";
+        state.updateImageStatus = "loading";
         state.error = null;
       })
       .addCase(updateCourseImage.fulfilled, (state, action) => {
-        state.updateStatus = "succeeded";
+        state.updateImageStatus = "succeeded";
         const updatedCourse = state.courses.find(
           (course) => course._id === action.payload._id
         );
         if (updatedCourse) updatedCourse.image = action.payload.image;
       })
       .addCase(updateCourseImage.rejected, (state, action) => {
-        state.updateStatus = "failed";
+        state.updateImageStatus = "failed";
         state.error = action.payload;
       });
 
