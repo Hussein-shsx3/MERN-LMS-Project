@@ -13,8 +13,8 @@
   :root {
     --color-background: white;
     --color-primary: rgb(26, 115, 232);
-    --text-color: #9a9a9d;
-    --title-color: black;
+    --text-color: #737376;
+    --title-color: rgb(49, 49, 49);
   }
 
   .link {
