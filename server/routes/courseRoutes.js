@@ -16,9 +16,9 @@ const router = express.Router();
 
 router.post("/", auth, isAdminOrTeacher, upload.single("image"), createCourse);
 
-router.get("/", auth, getAllCourses);
+router.get("/", getAllCourses);
 
-router.get("/:courseId", auth, getCourse);
+router.get("/:courseId", getCourse);
 
 router.put("/:courseId", auth, isAdminOrTeacher, updateCourse);
 

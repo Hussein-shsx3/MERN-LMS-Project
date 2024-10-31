@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../Api/userApi";
+import { fetchCourses } from "../Api/courseApi";
+import SearchBar from "./searchBar";
 import {
   Dialog,
   DialogPanel,
@@ -52,15 +54,66 @@ const products = [
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const user = useSelector((state) => state.user.user);
   const courses = useSelector((state) => state.cart.courses);
-  console.log(user);
+  const AllCourses = useSelector((state) => state.course.courses);
   const dispatch = useDispatch();
+
+  const toggleSearchBar = () => {
+    const search = document.getElementById("searchBar");
+    search.classList.toggle("toggleSearchBar");
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredCourses = AllCourses.filter((course) =>
+    course.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const coursesToDisplay = searchTerm
+    ? filteredCourses
+    : AllCourses.slice(0, 4);
+
+  console.log(user);
+
   useEffect(() => {
     dispatch(getUser());
+    dispatch(fetchCourses());
   }, [dispatch]);
+
   return (
-    <header className="bg-white w-full">
+    <header className="relative bg-white w-full">
+      <div
+        id="searchBar"
+        className="absolute toggleSearchBar w-full h-[100dvh] z-[1] transition-all duration-500 backdrop-blur-sm bg-white/30"
+      >
+        <i
+          className="bx bx-x absolute text-2xl text-text border-[1px] rounded-full h-[47px] w-[47px] flex justify-center items-center top-6 md:top-10 xl:top-7 right-8 md:right-14 xl:right-12 transition-all duration-300 hover:rotate-45"
+          onClick={toggleSearchBar}
+        ></i>
+        <div className="w-full h-[77dvh] md:h-[72dvh] bg-white flex flex-col items-center pt-20 overflow-hidden">
+          <div className="w-[95%] md:w-[85%] lg:w-[70%] flex flex-col gap-6 md:gap-9 ">
+            <div className="bg-white border-[1px] w-full h-[45px] flex justify-center items-center gap-3 rounded-md focus-within:searchBar">
+              <i className="bx bx-search cursor-pointer text-[20px] text-title"></i>
+              <input
+                type="text"
+                placeholder="What you are looking for?"
+                className="w-[93%] outline-none h-[45px] bg-transparent"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </div>
+            <div className="scrollSearch w-full flex h-[54dvh] md:h-auto flex-wrap flex-row md:flex-col items-center md:items-start justify-start gap-4 md:gap-0 md:justify-between overflow-y-scroll md:overflow-hidden">
+              {coursesToDisplay.map((course, index) => (
+                <SearchBar course={course} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
       <nav
         aria-label="Global"
         className="mx-auto flex w-[95%] items-center justify-between p-6 lg:px-8"
@@ -73,14 +126,13 @@ const Header = () => {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1  text-title">
+            <PopoverButton className="flex items-center gap-x-1  text-title outline-none">
               Categories
               <ChevronDownIcon
                 aria-hidden="true"
                 className="h-5 w-5 flex-none text-gray-400"
               />
             </PopoverButton>
-
             <PopoverPanel
               transition
               className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
@@ -115,7 +167,10 @@ const Header = () => {
         </PopoverGroup>
         <div className="flex items-center gap-4 lg:flex-1 lg:justify-end">
           <div className="text-[25px] text-text flex flex-row items-center gap-3 mr-2">
-            <i className="bx bx-search cursor-pointer"></i>
+            <i
+              className="bx bx-search cursor-pointer"
+              onClick={toggleSearchBar}
+            ></i>
             <hr className="bg-gray-300 w-[1px] h-[40px] cursor-pointer" />
             <Link to="" className="relative flex">
               <i className="bx bx-cart cursor-pointer"></i>

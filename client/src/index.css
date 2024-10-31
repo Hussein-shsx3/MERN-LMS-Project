@@ -30,6 +30,22 @@
   }
 
   #menu:hover .menuShadow {
-    @apply  top-[90px] opacity-100 flex
+    @apply top-[90px] opacity-100 flex
+  }
+
+  .scrollSearch::-webkit-scrollbar {
+    @apply hidden
+  }
+
+  .searchBar {
+    box-shadow: 0px 0px 3px var(--color-primary);
+  }
+
+  .course-card:hover .course-image {
+    transform: scale(1.1);
+  }
+
+  .toggleSearchBar {
+    @apply translate-y-[-130vh] opacity-0
   }
 }
