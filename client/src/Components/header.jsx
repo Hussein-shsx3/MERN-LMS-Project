@@ -85,7 +85,7 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <header className="relative bg-white w-full">
+    <header className="relative bg-white w-full shadow-sm">
       <div
         id="searchBar"
         className="absolute toggleSearchBar w-full h-[100dvh] z-[1] transition-all duration-500 backdrop-blur-sm bg-white/30"
@@ -180,7 +180,7 @@ const Header = () => {
             </Link>
           </div>
           <div className="hidden lg:flex items-center gap-4">
-            <button className="bg-primary text-white px-5 py-2 rounded-[8px]">
+            <button className="bg-primary text-white px-5 py-2 rounded-[20px]">
               Enroll Now
             </button>
             {user !== null ? (
@@ -196,7 +196,7 @@ const Header = () => {
             ) : (
               <Link
                 to=""
-                className="bg-primary text-white px-5 py-2 rounded-[8px]"
+                className="bg-primary text-white px-5 py-2 rounded-[20px]"
               >
                 Login
               </Link>
