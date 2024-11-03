@@ -4,11 +4,9 @@ import Main from "../Components/main";
 
 const Home = () => {
   return (
-    <section className="relative w-full flex flex-col items-center overflow-hidden">
-      <div className="relative min-h-[150dvh] w-full flex flex-col items-center px-2 md:px-0">
-        <Header />
-        <Main />
-      </div>
+    <section className="relative w-full min-h-[150dvh] flex flex-col items-center overflow-hidden">
+      <Header />
+      <Main />
     </section>
   );
 };
