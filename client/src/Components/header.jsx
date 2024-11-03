@@ -85,7 +85,7 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <header className="relative bg-white w-full shadow-sm">
+    <header className="container relative bg-white w-full shadow-sm z-10">
       <div
         id="searchBar"
         className="absolute toggleSearchBar w-full h-[100dvh] z-[1] transition-all duration-500 backdrop-blur-sm bg-white/30"
@@ -116,10 +116,10 @@ const Header = () => {
       </div>
       <nav
         aria-label="Global"
-        className="mx-auto flex w-[95%] items-center justify-between p-6 lg:px-8"
+        className="flex w-full items-center justify-between py-6 gap-5"
       >
         <div className="flex lg:flex-1">
-          <a href="." className="-m-1.5 p-1.5">
+          <a href="." className="">
             <span className="sr-only">Your Company</span>
             <img alt="" src="./images/logo.png" className="h-7 w-auto" />
           </a>
