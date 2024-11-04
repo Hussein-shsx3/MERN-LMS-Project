@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../Components/header";
 import Main from "../Components/main";
 import TopCategories from "../Components/topCategories";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const Home = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1600, once: true });
+  });
   return (
-    <section className="relative w-full min-h-[150dvh] flex flex-col items-center overflow-hidden">
+    <section className="relative w-full flex flex-col items-center">
       <Header />
       <Main />
       <TopCategories />

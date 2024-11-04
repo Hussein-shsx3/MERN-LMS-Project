@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         background: "var(--color-background)",
-        primary:"var(--color-primary)",
+        primary: "var(--color-primary)",
         title: "var(--title-color)",
         text: "var(--text-color)",
       },
@@ -15,6 +15,9 @@ module.exports = {
         lg: "1000px",
         xl: "1290px",
         "2xl": "1400",
+      },
+      animation: {
+        scrollH: "scroll 1s",
       },
     },
   },

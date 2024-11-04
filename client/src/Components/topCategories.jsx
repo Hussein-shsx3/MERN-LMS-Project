@@ -48,8 +48,13 @@ const TopCategories = () => {
   return (
     <section className="w-full flex flex-col items-center justify-center py-20">
       <div className="container relative w-[95%] md:w-full flex flex-col items-center gap-2">
-        <p className="text-primary text-lg">Top Categories</p>
-        <div className="text-3xl md:text-5xl font-medium mb-9 flex gap-[5px]">
+        <p className="text-primary text-lg" data-aos="fade-up">
+          Top Categories
+        </p>
+        <div
+          className="text-3xl md:text-5xl font-medium mb-9 flex gap-[5px]"
+          data-aos="fade-up"
+        >
           <p>Most demanding</p>
           <p className="text-primary relative flex justify-center">
             Categories
@@ -61,7 +66,10 @@ const TopCategories = () => {
           </p>
           .
         </div>
-        <div className="w-full flex flex-wrap justify-center items-center gap-5">
+        <div
+          className="w-full flex flex-wrap justify-center items-center gap-5"
+          data-aos="fade-up"
+        >
           {categories.map((category, index) => (
             <div
               key={index}

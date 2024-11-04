@@ -50,6 +50,24 @@
   }
 
   .gategory:hover {
-    @apply border-primary text-primary translate-y-[-5px]  
+    @apply border-primary text-primary translate-y-[-5px]
   }
+
+  @keyframes scroll {
+    0% {
+      transform: translateY(-190px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .headerScroll {
+    position: sticky;
+    top: 0px;
+    animation: scroll 0.6s ;
+  }
+
+
 }
