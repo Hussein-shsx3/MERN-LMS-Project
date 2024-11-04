@@ -124,9 +124,9 @@ const Header = () => {
             <img alt="" src="./images/logo.png" className="h-7 w-auto" />
           </a>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+        <PopoverGroup className="hidden lg:flex gap-0 lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1  text-title outline-none">
+            <PopoverButton className="flex items-center gap-x-1  text-title outline-none hover:text-primary">
               Categories
               <ChevronDownIcon
                 aria-hidden="true"
@@ -141,10 +141,10 @@ const Header = () => {
                 {products.map((item) => (
                   <div
                     key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
+                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50 text-title hover:text-primary"
                   >
                     <div className="flex-auto">
-                      <a href={item.href} className="block  text-title">
+                      <a href={item.href} className="block">
                         {item.name}
                         <span className="absolute inset-0" />
                       </a>
@@ -155,32 +155,32 @@ const Header = () => {
               </div>
             </PopoverPanel>
           </Popover>
-          <Link to="/" className=" text-title">
+          <Link to="/" className=" text-title hover:text-primary">
             Home
           </Link>
-          <Link to="#" className=" text-title">
+          <Link to="#" className=" text-title hover:text-primary">
             All Courses
           </Link>
-          <Link to="#" className=" text-title">
+          <Link to="#" className=" text-title hover:text-primary">
             My Courses
           </Link>
         </PopoverGroup>
         <div className="flex items-center gap-4 lg:flex-1 lg:justify-end">
           <div className="text-[25px] text-text flex flex-row items-center gap-3 mr-2">
             <i
-              className="bx bx-search cursor-pointer"
+              className="bx bx-search cursor-pointer hover:text-primary"
               onClick={toggleSearchBar}
             ></i>
             <hr className="bg-gray-300 w-[1px] h-[40px] cursor-pointer" />
-            <Link to="" className="relative flex">
+            <Link to="" className="relative flex hover:text-primary">
               <i className="bx bx-cart cursor-pointer"></i>
               <span className="absolute top-[-8px] right-[-10px] text-xs bg-primary text-white w-[22px] h-[22px] flex justify-center items-center rounded-full">
                 {courses.length}
               </span>
             </Link>
           </div>
-          <div className="hidden lg:flex items-center gap-4">
-            <button className="bg-primary text-white px-5 py-2 rounded-[20px]">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-4 text-sm xl:text-base">
+            <button className="min-w-[90px] bg-primary text-white px-1 xl:px-5 py-2 rounded-[20px]">
               Enroll Now
             </button>
             {user !== null ? (
@@ -239,7 +239,7 @@ const Header = () => {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 text-title hover:bg-gray-50">
+                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 text-title hover:bg-gray-50 hover:text-primary">
                     Categories
                     <ChevronDownIcon
                       aria-hidden="true"
@@ -252,7 +252,7 @@ const Header = () => {
                         key={item.name}
                         as="a"
                         href={item.href}
-                        className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 text-title hover:bg-gray-50"
+                        className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 text-title hover:bg-gray-50 hover:text-primary"
                       >
                         {item.name}
                       </DisclosureButton>
@@ -261,19 +261,19 @@ const Header = () => {
                 </Disclosure>
                 <Link
                   to=""
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50 hover:text-primary"
                 >
                   Home
                 </Link>
                 <Link
                   to=""
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50 hover:text-primary"
                 >
                   All Courses
                 </Link>
                 <Link
                   to=""
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50 hover:text-primary"
                 >
                   My Courses
                 </Link>
@@ -294,13 +294,13 @@ const Header = () => {
                         alt=""
                         className="w-[38px] h-[38px] rounded-full"
                       />
-                      <Link to="" className="">
+                      <Link to="" className="hover:text-primary">
                         log out
                       </Link>
                     </>
                   </Link>
                 ) : (
-                  <Link to="" className="">
+                  <Link to="" className="hover:text-primary">
                     Login
                   </Link>
                 )}

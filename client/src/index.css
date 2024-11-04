@@ -48,4 +48,8 @@
   .toggleSearchBar {
     @apply translate-y-[-130vh] opacity-0
   }
+
+  .gategory:hover {
+    @apply border-primary text-primary translate-y-[-5px]  
+  }
 }
