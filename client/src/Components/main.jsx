@@ -2,17 +2,19 @@ import React from "react";
 
 const Main = () => {
   return (
-    <section className="w-full bg-[#f1f3f9] flex justify-center">
-      <div className="container relative w-[98%] md:w-full flex flex-col md:flex-row items-center justify-between gap-10 pt-7">
+    <section className="w-full bg-[#f1f3f9] flex justify-center overflow-hidden">
+      <div className="container relative w-[97%] md:w-full flex flex-col md:flex-row items-center justify-between gap-10 pt-7">
         <img
           src="./images/hero-2-shape-4.png.webp"
           alt=""
-          className="absolute left-[30%] top-0"
+          className="absolute translate-x-[30%] top-0 md:flex hidden"
         />
         <div className="flex flex-col gap-2 items-start">
           <p className="text-[17px] text-primary">Keep Learning</p>
-          <p className="text-7xl text-title font-medium">Best digital</p>
-          <div className="text-7xl text-title font-medium flex gap-[5px]">
+          <p className="text-5xl xl:text-7xl text-title font-medium">
+            Best digital
+          </p>
+          <div className="text-5xl xl:text-7xl text-title font-medium flex gap-[5px]">
             <p className="text-primary relative flex justify-center">
               Online{" "}
               <img
@@ -31,7 +33,11 @@ const Main = () => {
           </button>
         </div>
         <div>
-          <img src="./images/hero-2-thumb-1.png.webp" alt="" className="z-10" />
+          <img
+            src="./images/hero-2-thumb-1.png.webp"
+            alt=""
+            className="z-10 md:flex hidden"
+          />
         </div>
       </div>
     </section>

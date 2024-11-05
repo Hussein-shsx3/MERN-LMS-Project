@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Header from "../Components/header";
 import Main from "../Components/main";
 import TopCategories from "../Components/topCategories";
+import OurCourses from "../Components/ourCourses";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -15,6 +16,7 @@ const Home = () => {
       <Header />
       <Main />
       <TopCategories />
+      <OurCourses />
     </section>
   );
 };

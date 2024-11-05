@@ -47,8 +47,8 @@ export const createCourse = async (req, res) => {
 export const getAllCourses = async (req, res, next) => {
   try {
     const courses = await Course.find()
-      .populate("teacher", "name")
-      .populate("students", "name");
+      .populate("teacher")
+      .populate("students", "firstName");
     res.status(200).json(courses);
   } catch (err) {
     next(err);

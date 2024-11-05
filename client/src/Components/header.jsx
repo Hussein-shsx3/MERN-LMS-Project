@@ -99,12 +99,12 @@ const Header = () => {
   return (
     <div
       id="header"
-      className="relative w-full flex items-center justify-center z-20 transition-all duration-300 backdrop-blur-2xl bg-white/30"
+      className="relative w-[97%] md:w-full flex items-center justify-center z-20 transition-all duration-300 backdrop-blur-2xl bg-white/30"
     >
       <header className="container w-full shadow-sm">
         <div
           id="searchBar"
-          className="absolute toggleSearchBar w-full h-[100dvh] z-[1] transition-all duration-500 backdrop-blur-sm bg-white/30"
+          className="absolute left-0 toggleSearchBar w-full h-[100dvh] z-[1] transition-all duration-500 backdrop-blur-sm bg-white/30"
         >
           <i
             className="bx bx-x absolute text-2xl text-text border-[1px] rounded-full h-[47px] w-[47px] flex justify-center items-center top-6 md:top-10 xl:top-7 right-8 md:right-14 xl:right-12 transition-all duration-300 hover:rotate-45"
@@ -251,7 +251,7 @@ const Header = () => {
                 <XMarkIcon aria-hidden="true" className="h-6 w-6" />
               </button>
             </div>
-            <div className="mt-6 flow-root">
+            <div className="mt-6 flow-root translate-y-10">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
                   <Disclosure as="div" className="-mx-3">
