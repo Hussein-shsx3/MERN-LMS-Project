@@ -23,7 +23,7 @@ const OurCourses = () => {
   }, [dispatch]);
 
   return (
-    <section className="w-full flex flex-col items-center justify-center py-9">
+    <section className="w-full flex flex-col items-center justify-center py-9 ">
       <div className="container relative w-[95%] md:w-full flex flex-col gap-2">
         <p className="text-primary text-lg" data-aos="fade-up">
           Our Courses

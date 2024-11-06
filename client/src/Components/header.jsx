@@ -137,7 +137,11 @@ const Header = () => {
           <div className="flex lg:flex-1">
             <a href="." className="">
               <span className="sr-only">Your Company</span>
-              <img alt="" src="./images/logo.png" className="h-7 w-auto" />
+              <img
+                alt=""
+                src="./images/logo-black-2-1.png"
+                className="h-7 w-auto"
+              />
             </a>
           </div>
           <PopoverGroup className="hidden lg:flex gap-0 lg:gap-x-12">
@@ -240,7 +244,11 @@ const Header = () => {
             <div className="flex items-center justify-between">
               <a href="." className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <img alt="" src="./images/logo.png" className="h-5 w-auto" />
+                <img
+                  alt=""
+                  src="./images/logo-black-2-1.png"
+                  className="h-5 w-auto"
+                />
               </a>
               <button
                 type="button"

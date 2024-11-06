@@ -19,7 +19,7 @@ const Subscribe = () => {
           </p>
           <p>Now</p>
         </div>
-        <p className="text-white text-lg mt-[-5px]">
+        <p className="text-white text-lg mt-[-5px]" data-aos="fade-up">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         </p>
         <div className="w-[95%] md:w-[60%] flex items-center justify-between p-3 border-[1px] border-blue-400 rounded-full gap-2 my-10">

@@ -4,6 +4,7 @@ import Main from "../Components/main";
 import TopCategories from "../Components/topCategories";
 import OurCourses from "../Components/ourCourses";
 import Subscribe from "../Components/subscribe";
+import Footer from "../Components/footer";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -13,12 +14,13 @@ const Home = () => {
     AOS.init({ duration: 1600, once: true });
   });
   return (
-    <section className="relative w-full flex flex-col items-center">
+    <section className="relative w-full flex flex-col items-center ">
       <Header />
       <Main />
       <TopCategories />
       <OurCourses />
       <Subscribe />
+      <Footer />
     </section>
   );
 };
