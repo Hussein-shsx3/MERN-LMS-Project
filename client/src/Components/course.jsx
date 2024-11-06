@@ -7,10 +7,10 @@ const Course = ({ course }) => {
     <Link
       id="course"
       to=""
-      className="flex w-full md:w-[48%] lg:w-[32%] sm:h-[500px] md:h-[450px] lg:h-[450px] xl:h-[500px] flex-col p-4 rounded-2xl  border-[1px] overflow-hidden"
+      className="flex w-full md:w-[48%] lg:w-[32%] h-[500px] sm:h-[565px] md:h-[450px] lg:h-[450px] xl:h-[500px] flex-col p-4 rounded-2xl  border-[1px] overflow-hidden"
     >
       <div className="w-full flex justify-between mb-4">
-        <div className="flex items-center gap-2">
+        <div className="flex w-full items-center gap-2">
           <img
             src={
               course.image.length === 0
@@ -26,7 +26,13 @@ const Course = ({ course }) => {
         </div>
         <i className="bx bx-bookmark rounded-full transition-all duration-300 bg-gray-100 hover:bg-primary text-primary hover:text-white w-8 h-8 flex justify-center items-center"></i>
       </div>
-      <img src={course.image} alt="" className="rounded-xl" />
+      <div className="w-full h-auto">
+        <img
+          src={course.image}
+          alt=""
+          className="rounded-xl w-full h-[210px] object-cover"
+        />
+      </div>
       <div className="courseHover flex flex-col w-full px-4 py-5 bg-white gap-3 transition-all duration-300">
         <p className="w-fit px-2 py-1 text-text text-[13px] rounded-sm bg-[#dcf2f4] text-[#17a2b8]">
           {course.category}
@@ -56,7 +62,7 @@ const Course = ({ course }) => {
         </div>
         <Link
           to=""
-          className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center translate-y-5 transition-all duration-300"
+          className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-all duration-300"
         >
           Preview This Course
         </Link>

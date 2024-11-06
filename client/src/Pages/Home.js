@@ -3,6 +3,7 @@ import Header from "../Components/header";
 import Main from "../Components/main";
 import TopCategories from "../Components/topCategories";
 import OurCourses from "../Components/ourCourses";
+import Subscribe from "../Components/subscribe";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -17,6 +18,7 @@ const Home = () => {
       <Main />
       <TopCategories />
       <OurCourses />
+      <Subscribe />
     </section>
   );
 };

@@ -6,7 +6,7 @@ import { fetchCourses } from "../Api/courseApi";
 const OurCourses = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
 
-  const categories = ["All Courses", "Art & Design", "Gym", "Video Edition"];
+  const categories = ["All Courses", "Web Design", "Gym", "Web Development"];
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -43,7 +43,7 @@ const OurCourses = () => {
               />
             </p>
           </div>
-          <div className="flex text-[15px] md:text-xl gap-7">
+          <div className="flex text-[12px] sm:text-[15px] md:text-xl gap-7">
             {categories.map((category) => (
               <div
                 key={category}
@@ -64,10 +64,16 @@ const OurCourses = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-wrap justify-between items-center gap-4 xl:gap-0 mt-7">
+        <div
+          className="flex flex-wrap items-center gap-4 mt-7"
+          data-aos="fade-up"
+        >
           {filteredCourses.length !== 0 ? (
             filteredCourses.map((course) => (
-              <Course key={course._id} course={course} />
+              <>
+                <Course key={course._id} course={course} />
+                <Course key={course._id} course={course} />
+              </>
             ))
           ) : (
             <p>No courses for this category</p>

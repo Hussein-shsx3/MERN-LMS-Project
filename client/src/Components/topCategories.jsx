@@ -52,7 +52,7 @@ const TopCategories = () => {
           Top Categories
         </p>
         <div
-          className="text-3xl md:text-5xl font-medium mb-9 flex gap-[5px]"
+          className="text-xl sm:text-3xl md:text-5xl font-medium mb-9 flex gap-[5px]"
           data-aos="fade-up"
         >
           <p>Most demanding</p>

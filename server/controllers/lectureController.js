@@ -4,7 +4,6 @@ import Course from "../models/Course.js";
 export const addLecture = async (req, res, next) => {
   const { courseId } = req.params;
   const { lectureNumber, title, videoUrl, isFree, duration } = req.body;
-  console.log("Incoming data:", req.body); // Log incoming request body
 
   try {
     const course = await Course.findById(courseId);

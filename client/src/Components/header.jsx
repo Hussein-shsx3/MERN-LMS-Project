@@ -99,7 +99,7 @@ const Header = () => {
   return (
     <div
       id="header"
-      className="relative w-[97%] md:w-full flex items-center justify-center z-20 transition-all duration-300 backdrop-blur-2xl bg-white/30"
+      className="relative w-full flex px-2 md:px-0 items-center justify-center z-20 transition-all duration-300 backdrop-blur-2xl bg-white/30"
     >
       <header className="container w-full shadow-sm">
         <div

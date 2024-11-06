@@ -74,7 +74,7 @@
   }
 
   #course:hover .Preview {
-    @apply translate-y-0
+    @apply opacity-[1]
   }
 
 }
