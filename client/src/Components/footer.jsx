@@ -137,4 +137,4 @@ const Footer = () => {
 };
 
 export default Footer;
-// <i class='bx bx-right-arrow-alt' ></i> <i class='bx bx-envelope'></i> <i class='bx bxl-instagram-alt' ></i> <i class='bx bxl-facebook' ></i>  <i class='bx bxl-linkedin' ></i>  <i class='bx bxl-youtube' ></i>
+

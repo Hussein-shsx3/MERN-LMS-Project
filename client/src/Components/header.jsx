@@ -122,7 +122,7 @@ const Header = () => {
                   onChange={handleSearch}
                 />
               </div>
-              <div className="scrollSearch w-full flex h-[54dvh] md:h-auto flex-wrap flex-row md:flex-col items-center md:items-start justify-start gap-4 md:gap-0 md:justify-between overflow-y-scroll md:overflow-hidden">
+              <div className="scrollSearch w-full flex h-[54dvh] md:h-auto flex-col md:flex-row items-center md:items-start justify-start gap-4 overflow-scroll md:overflow-hidden">
                 {coursesToDisplay.map((course, index) => (
                   <SearchBar course={course} />
                 ))}
@@ -146,7 +146,7 @@ const Header = () => {
           </div>
           <PopoverGroup className="hidden lg:flex gap-0 lg:gap-x-12">
             <Popover className="relative">
-              <PopoverButton className="flex items-center gap-x-1  text-title outline-none hover:text-primary">
+              <PopoverButton className="flex items-center gap-x-1 text-title outline-none hover:text-primary">
                 Categories
                 <ChevronDownIcon
                   aria-hidden="true"
