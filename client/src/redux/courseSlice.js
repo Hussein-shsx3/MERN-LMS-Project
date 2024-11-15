@@ -12,7 +12,8 @@ import {
 const initialState = {
   courses: [],
   course: null,
-  fetchStatus: "idle",
+  fetchStatus: "idle", // Status for fetching all courses
+  fetchCourseByIdStatus: "idle", // Separate status for fetching a course by ID
   createStatus: "idle",
   updateStatus: "idle",
   enrollStatus: "idle",
@@ -34,6 +35,7 @@ const courseSlice = createSlice({
         state[statusType] = "idle";
       } else {
         state.fetchStatus = "idle";
+        state.fetchCourseByIdStatus = "idle";
         state.createStatus = "idle";
         state.updateStatus = "idle";
         state.updateImageStatus = "idle";
@@ -61,15 +63,15 @@ const courseSlice = createSlice({
     // Fetch course by ID
     builder
       .addCase(fetchCourseById.pending, (state) => {
-        state.fetchStatus = "loading";
+        state.fetchCourseByIdStatus = "loading";
         state.error = null;
       })
       .addCase(fetchCourseById.fulfilled, (state, action) => {
-        state.fetchStatus = "succeeded";
+        state.fetchCourseByIdStatus = "succeeded";
         state.course = action.payload;
       })
       .addCase(fetchCourseById.rejected, (state, action) => {
-        state.fetchStatus = "failed";
+        state.fetchCourseByIdStatus = "failed";
         state.error = action.payload;
       });
 
