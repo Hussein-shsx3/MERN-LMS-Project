@@ -1,5 +1,8 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 // Create a reusable Axios instance for consistent configuration
 const api = axios.create({
@@ -9,9 +12,8 @@ const api = axios.create({
   },
 });
 
-// Add an interceptor to include token in headers dynamically
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); // Retrieve token securely
+  const token = cookies.get("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

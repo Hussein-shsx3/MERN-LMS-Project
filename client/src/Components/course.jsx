@@ -1,13 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 
 const Course = ({ course }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(""); // Add your course detail route here
+  };
+
   return (
-    <Link
+    <div
       id="course"
-      to=""
-      className="flex w-full md:w-[48%] lg:w-[32%] h-[500px] sm:h-[565px] md:h-[450px] lg:h-[450px] xl:h-[500px] flex-col p-4 rounded-2xl  border-[1px] overflow-hidden"
+      onClick={handleNavigate}
+      className="flex w-full md:w-[48%] lg:w-[32%] h-[500px] sm:h-[565px] md:h-[450px] lg:h-[450px] xl:h-[500px] flex-col p-4 rounded-2xl border-[1px] overflow-hidden cursor-pointer"
     >
       <div className="w-full flex justify-between mb-4">
         <div className="flex w-full items-center gap-2">
@@ -60,14 +66,17 @@ const Course = ({ course }) => {
             {course.price === 0 ? "Free" : course.price}
           </p>
         </div>
-        <Link
-          to=""
-          className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-all duration-300"
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate("");
+          }}
+          className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-all duration-300 cursor-pointer"
         >
           Preview This Course
-        </Link>
+        </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

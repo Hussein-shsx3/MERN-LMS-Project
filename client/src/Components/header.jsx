@@ -56,7 +56,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const user = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user);
   const courses = useSelector((state) => state.cart.courses);
   const AllCourses = useSelector((state) => state.course.courses);
   const dispatch = useDispatch();
@@ -124,7 +124,7 @@ const Header = () => {
               </div>
               <div className="scrollSearch w-full flex h-[54dvh] md:h-auto flex-col md:flex-row items-center md:items-start justify-start gap-4 overflow-scroll md:overflow-hidden">
                 {coursesToDisplay.map((course, index) => (
-                  <SearchBar course={course} />
+                  <SearchBar course={course} key={index} />
                 ))}
               </div>
             </div>
@@ -135,14 +135,14 @@ const Header = () => {
           className="flex w-full items-center justify-between py-6 gap-5"
         >
           <div className="flex lg:flex-1">
-            <a href="." className="">
+            <Link to="." className="">
               <span className="sr-only">Your Company</span>
               <img
                 alt=""
                 src="./images/logo-black-2-1.png"
                 className="h-7 w-auto"
               />
-            </a>
+            </Link>
           </div>
           <PopoverGroup className="hidden lg:flex gap-0 lg:gap-x-12">
             <Popover className="relative">
@@ -164,10 +164,10 @@ const Header = () => {
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50 text-title hover:text-primary"
                     >
                       <div className="flex-auto">
-                        <a href={item.href} className="block">
+                        <Link to={item.href} className="block">
                           {item.name}
                           <span className="absolute inset-0" />
-                        </a>
+                        </Link>
                         <p className="mt-1 text-gray-600">{item.description}</p>
                       </div>
                     </div>
@@ -215,7 +215,7 @@ const Header = () => {
                 </Link>
               ) : (
                 <Link
-                  to=""
+                  to="/login"
                   className="bg-primary text-white px-5 py-2 rounded-[20px]"
                 >
                   Login
@@ -242,14 +242,14 @@ const Header = () => {
           <div className="fixed inset-0 z-10" />
           <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="." className="-m-1.5 p-1.5">
+              <Link to="." className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
                   src="./images/logo-black-2-1.png"
                   className="h-5 w-auto"
                 />
-              </a>
+              </Link>
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
@@ -304,27 +304,22 @@ const Header = () => {
                 </div>
                 <div className="py-6">
                   {user !== null ? (
-                    <Link
-                      to="."
-                      className="flex flex-row items-center justify-between"
-                    >
-                      <>
-                        <img
-                          src={
-                            user.picture
-                              ? user.picture
-                              : "./images/profile-photo.png"
-                          }
-                          alt=""
-                          className="w-[38px] h-[38px] rounded-full"
-                        />
-                        <Link to="" className="hover:text-primary">
-                          log out
-                        </Link>
-                      </>
-                    </Link>
+                    <div className="flex flex-row items-center justify-between">
+                      <img
+                        src={
+                          user.picture
+                            ? user.picture
+                            : "./images/profile-photo.png"
+                        }
+                        alt=""
+                        className="w-[38px] h-[38px] rounded-full"
+                      />
+                      <Link to="" className="hover:text-primary">
+                        log out
+                      </Link>
+                    </div>
                   ) : (
-                    <Link to="" className="hover:text-primary">
+                    <Link to="/login" className="hover:text-primary">
                       Login
                     </Link>
                   )}

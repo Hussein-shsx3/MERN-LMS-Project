@@ -70,10 +70,7 @@ const OurCourses = () => {
         >
           {filteredCourses.length !== 0 ? (
             filteredCourses.map((course) => (
-              <>
                 <Course key={course._id} course={course} />
-                <Course key={course._id} course={course} />
-              </>
             ))
           ) : (
             <p>No courses for this category</p>
