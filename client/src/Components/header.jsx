@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../Api/userApi";
 import { fetchCourses } from "../Api/courseApi";
 import SearchBar from "./searchBar";
+import Cookies from "universal-cookie";
+import { logout } from "../redux/authSlice";
+
 import {
   Dialog,
   DialogPanel,
@@ -60,6 +63,10 @@ const Header = () => {
   const courses = useSelector((state) => state.cart.courses);
   const AllCourses = useSelector((state) => state.course.courses);
   const dispatch = useDispatch();
+  const cookies = new Cookies();
+  const token = cookies.get("token");
+
+  const nav = useNavigate();
 
   const toggleSearchBar = () => {
     const search = document.getElementById("searchBar");
@@ -77,12 +84,12 @@ const Header = () => {
     ? filteredCourses
     : AllCourses.slice(0, 4);
 
-  console.log(user);
-
   useEffect(() => {
-    dispatch(getUser());
+    if (token) {
+      dispatch(getUser());
+    }
     dispatch(fetchCourses());
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     function scroll() {
@@ -204,15 +211,33 @@ const Header = () => {
                 Enroll Now
               </button>
               {user !== null ? (
-                <Link to="." className="">
+                <div className="relative group">
                   <img
                     src={
                       user.picture ? user.picture : "./images/profile-photo.png"
                     }
-                    alt=""
-                    className="w-[38px] h-[38px] rounded-full"
+                    alt="Profile"
+                    className="w-[38px] h-[38px] rounded-full cursor-pointer"
                   />
-                </Link>
+                  {/* Dropdown Menu */}
+                  <div className="absolute left-[-10px] top-8 mt-2 w-[150px] bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        dispatch(logout());
+                        nav("/login");
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <Link
                   to="/login"

@@ -13,34 +13,39 @@ const Course = ({ course }) => {
     <div
       id="course"
       onClick={handleNavigate}
-      className="flex w-full md:w-[48%] lg:w-[32%] h-[500px] sm:h-[565px] md:h-[450px] lg:h-[450px] xl:h-[500px] flex-col p-4 rounded-2xl border-[1px] overflow-hidden cursor-pointer"
+      className="group flex flex-col w-full md:max-w-[420px] max-h-[500px] p-4 rounded-2xl border overflow-hidden cursor-pointer bg-white transition-all duration-300 hover:shadow-lg"
     >
-      <div className="w-full flex justify-between mb-4">
-        <div className="flex w-full items-center gap-2">
+      {/* Top Section */}
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center gap-2">
           <img
             src={
               course.image.length === 0
                 ? course.teacher.picture
                 : "./images/profile-photo.png"
             }
-            alt=""
-            className="w-10 h-10 rounded-full"
+            alt="teacher"
+            className="w-10 h-10 rounded-full object-cover"
           />
-          <p className="text-text text-[15px]">
+          <p className="text-text text-[15px] font-medium">
             {course.teacher.firstName} {course.teacher.lastName}
           </p>
         </div>
-        <i className="bx bx-bookmark rounded-full transition-all duration-300 bg-gray-100 hover:bg-primary text-primary hover:text-white w-8 h-8 flex justify-center items-center"></i>
+        <i className="bx bx-bookmark rounded-full bg-gray-100 hover:bg-primary text-primary hover:text-white w-8 h-8 flex justify-center items-center cursor-pointer transition-all duration-300"></i>
       </div>
-      <div className="w-full h-auto">
+
+      {/* Course Image */}
+      <div className="w-full h-[210px]">
         <img
           src={course.image}
-          alt=""
-          className="rounded-xl w-full h-[210px] object-cover"
+          alt="course"
+          className="rounded-xl w-full h-full object-cover"
         />
       </div>
-      <div className="courseHover flex flex-col w-full px-4 py-5 bg-white gap-3 transition-all duration-300">
-        <p className="w-fit px-2 py-1 text-text text-[13px] rounded-sm bg-[#dcf2f4] text-[#17a2b8]">
+
+      {/* Course Details */}
+      <div className="courseHover flex flex-col px-4 py-5 bg-white gap-3 transition-all duration-300 group-hover:bg-gray-50">
+        <p className="inline-block px-2 py-1 text-[13px] rounded-sm bg-[#dcf2f4] text-[#17a2b8]">
           {course.category}
         </p>
         <div className="flex text-[14px] text-gray-400 gap-4">
@@ -53,7 +58,7 @@ const Course = ({ course }) => {
             <p>{course.students.length} Student</p>
           </div>
         </div>
-        <p className="text-lg text-title font-medium hover:text-primary">
+        <p className="text-lg text-title font-medium hover:text-primary truncate">
           {course.title}
         </p>
         <hr className="w-full bg-gray-100 border-none h-[1px]" />
@@ -62,8 +67,8 @@ const Course = ({ course }) => {
             <p>0/0</p>
             <Rating name="size-small" size="small" value={4} readOnly />
           </div>
-          <p className="text-primary">
-            {course.price === 0 ? "Free" : course.price}
+          <p className="text-primary font-semibold">
+            {course.price === 0 ? "Free" : `$${course.price}`}
           </p>
         </div>
         <div
@@ -71,7 +76,7 @@ const Course = ({ course }) => {
             e.stopPropagation();
             navigate("");
           }}
-          className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-all duration-300 cursor-pointer"
+          className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         >
           Preview This Course
         </div>

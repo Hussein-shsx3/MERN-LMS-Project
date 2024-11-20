@@ -43,7 +43,7 @@ const OurCourses = () => {
               />
             </p>
           </div>
-          <div className="flex text-[12px] sm:text-[15px] md:text-xl gap-7">
+          <div className="flex text-[12px] sm:text-[15px] md:text-xl gap-7 courseHover transition-all duration-300">
             {categories.map((category) => (
               <div
                 key={category}
@@ -65,15 +65,17 @@ const OurCourses = () => {
           </div>
         </div>
         <div
-          className="flex flex-wrap items-center gap-4 mt-7"
+          className="flex flex-wrap items-stretch justify-center lg:justify-start gap-3 mt-7"
           data-aos="fade-up"
         >
           {filteredCourses.length !== 0 ? (
             filteredCourses.map((course) => (
-                <Course key={course._id} course={course} />
+              <Course key={course._id} course={course} />
             ))
           ) : (
-            <p>No courses for this category</p>
+            <p className="text-center text-gray-500">
+              No courses for this category
+            </p>
           )}
         </div>
       </div>
