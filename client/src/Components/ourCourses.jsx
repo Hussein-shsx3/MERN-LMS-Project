@@ -6,7 +6,7 @@ import { fetchCourses } from "../Api/courseApi";
 const OurCourses = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
 
-  const categories = ["All Courses", "Web Design", "Gym", "Web Development"];
+  const categories = ["All Courses", "Web Design", "Data Science", "Web Development"];
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);

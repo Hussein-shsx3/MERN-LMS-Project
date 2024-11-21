@@ -90,6 +90,13 @@
     background-size: cover;
   }
 
+  .custom-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+  }
+
   /** Loader **/
 
   .loader,
