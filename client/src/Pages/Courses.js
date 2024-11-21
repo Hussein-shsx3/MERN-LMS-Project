@@ -53,14 +53,33 @@ const Courses = () => {
     return matchesSearch && matchesCategory && matchesLevel;
   });
 
+  const filterButton = () => {
+    document.getElementById("fBlur").classList.toggle("hidden");
+    document.getElementById("Filters").classList.toggle("hidden");
+  };
+
   return (
     <section>
       <Header />
       <PathHeader />
+      <div
+        id="fBlur"
+        className="hidden fixed top-0 w-full h-[100dvh] backdrop-blur-lg bg-black/30 z-100"
+      >
+        j
+      </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
         <div className="w-full flex flex-col lg:flex-row items-start justify-between gap-6">
           {/* Filters Section */}
-          <div className="w-full lg:w-[31%] p-4 rounded-lg flex flex-col gap-10 bg-gray-50 shadow-md">
+          <div
+            id="Filters"
+            className="hidden lg:flex fixed lg:relative right-0  transition-all duration-300 z-20 lg:z-0 bg-white top-0 h-[100dvh] lg:h-auto w-[65%] sm:w-[55%] md:w-[40%] lg:w-[31%] pt-16 px-5  lg:p-4 rounded-none lg:rounded-lg  flex-col gap-10shadow-md"
+          >
+            <i
+              className="bx bx-x absolute text-xl text-text border-[1px] rounded-full h-[40px] w-[40px] flex justify-center items-center top-4 right-5  transition-all duration-300 hover:rotate-45"
+              onClick={filterButton}
+            ></i>
+
             {/* Search Bar */}
             <div className="relative w-full flex h-[45px] rounded-md">
               <input
@@ -128,9 +147,22 @@ const Courses = () => {
               </div>
             </div>
           </div>
-
+          <div className="w-full flex lg:hidden justify-between items-center my-5">
+            <p className="text-text">
+              We found{" "}
+              <span className="text-title">{filteredCourses.length} </span>
+              courses available for you
+            </p>
+            <button
+              className="w-[100px] h-[45px] border-[1px] hover:border-primary rounded-full transition-all duration-300 flex justify-center items-center gap-1 text-title hover:text-primary"
+              onClick={filterButton}
+            >
+              <i className="bx bx-filter text-xl"></i>
+              <p>Filter</p>
+            </button>
+          </div>
           {/* Courses Section */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 ">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 ">
             {filteredCourses.map((course) => (
               <Course key={course.id} course={course} />
             ))}
