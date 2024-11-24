@@ -61,7 +61,7 @@ const Courses = () => {
   return (
     <section>
       <Header />
-      <PathHeader />
+      <PathHeader title="All Courses" />
       <div
         id="fBlur"
         className="hidden fixed top-0 w-full h-[100dvh] backdrop-blur-lg bg-black/30 z-100"
@@ -163,8 +163,8 @@ const Courses = () => {
           </div>
           {/* Courses Section */}
           <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 ">
-            {filteredCourses.map((course) => (
-              <Course key={course.id} course={course} />
+            {filteredCourses.map((course, index) => (
+              <Course key={index} course={course} />
             ))}
           </div>
         </div>

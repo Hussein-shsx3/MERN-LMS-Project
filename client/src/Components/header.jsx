@@ -106,7 +106,7 @@ const Header = () => {
   return (
     <div
       id="header"
-      className="relative w-full flex px-2 md:px-0 items-center justify-center z-20 transition-all duration-300 backdrop-blur-2xl bg-white/30"
+      className="relative w-full flex px-2 md:px-0 items-center justify-center z-10 transition-all duration-300 backdrop-blur-2xl bg-white/30"
     >
       <header className="container w-full shadow-sm">
         <div
@@ -146,7 +146,7 @@ const Header = () => {
               <span className="sr-only">Your Company</span>
               <img
                 alt=""
-                src="./images/logo-black-2-1.png"
+                src="../images/logo-black-2-1.png"
                 className="h-7 w-auto"
               />
             </Link>
@@ -185,7 +185,7 @@ const Header = () => {
             <Link to="/" className=" text-title hover:text-primary">
               Home
             </Link>
-            <Link to="#" className=" text-title hover:text-primary">
+            <Link to="/courses" className=" text-title hover:text-primary">
               All Courses
             </Link>
             <Link to="#" className=" text-title hover:text-primary">
@@ -271,7 +271,7 @@ const Header = () => {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="./images/logo-black-2-1.png"
+                  src="../images/logo-black-2-1.png"
                   className="h-5 w-auto"
                 />
               </Link>
@@ -315,7 +315,7 @@ const Header = () => {
                     Home
                   </Link>
                   <Link
-                    to=""
+                    to="/courses"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base/7 text-title hover:bg-gray-50 hover:text-primary"
                   >
                     All Courses

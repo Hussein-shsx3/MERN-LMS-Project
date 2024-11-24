@@ -5,6 +5,7 @@ import Home from "./Pages/Home";
 import Courses from "./Pages/Courses";
 import SignIn from "./Pages/signIn";
 import SignUp from "./Pages/signUp";
+import DispalyCourse from "./Pages/DispalyCourse";
 
 import { Provider } from "react-redux";
 import { storeApp } from "./Store";
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/courses",
     element: <Courses />,
+  },
+  {
+    path: "/courses/:courseId",
+    element: <DispalyCourse />,
   },
   {
     path: "/login",

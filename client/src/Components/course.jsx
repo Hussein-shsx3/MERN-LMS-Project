@@ -6,7 +6,7 @@ const Course = ({ course }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(""); // Add your course detail route here
+    navigate(`/courses/${course._id}`);
   };
 
   return (
