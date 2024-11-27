@@ -31,6 +31,24 @@ const DispalyCourse = () => {
         category={course?.category}
         lastApdate={course?.updatedAt}
       />
+      <div className="container w-full my-10">
+        <div className="w-full flex flex-col gap-5">
+          <p className="text-title text-2xl font-medium">About Course</p>
+          <p className="text-text w-full md:w-[55%] mb-5">
+            {course?.description}
+          </p>
+          <p className="text-title text-2xl font-medium">
+            What Will You Learn?
+          </p>
+          <ul className="list-disc ml-5">
+            {course?.whatWillYouLearn.map((text, index) => (
+              <li key={index} className="text-text w-full md:w-[55%] my-2">
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <Footer />
     </section>
   );
