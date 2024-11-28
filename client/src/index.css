@@ -97,6 +97,10 @@
     margin-bottom: 0.5rem;
   }
 
+  .socialIcons{
+    @apply text-gray-400 hover:text-primary
+  }
+
   /** Loader **/
 
   .loader,

@@ -61,7 +61,7 @@ export const getCourse = async (req, res, next) => {
 
   try {
     const course = await Course.findById(courseId)
-      .populate("teacher", "firstName lastName")
+      .populate("teacher")
       .populate("students", "firstName lastName")
       .exec();
 
