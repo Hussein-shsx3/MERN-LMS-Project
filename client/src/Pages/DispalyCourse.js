@@ -3,11 +3,12 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
 import Instructor from "../Components/instructor";
+import CourseDetails from "../Components/courseDetails";
 import { fetchCourseById } from "../Api/courseApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 
-const DispalyCourse = () => {
+const DisplayCourse = () => {
   const { courseId } = useParams();
   const course = useSelector((state) => state.course.course);
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ const DispalyCourse = () => {
     setIsCurriculumOpen((prev) => !prev);
   };
 
-  // Helper function to format the duration as mm:ss
   const formatDuration = (duration) => {
     const minutes = Math.floor(duration / 60);
     const seconds = duration % 60;
@@ -40,10 +40,9 @@ const DispalyCourse = () => {
         teacher={`${course?.teacher?.firstName} ${course?.teacher?.lastName}`}
         image={course?.teacher?.picture}
         category={course?.category}
-        lastApdate={course?.updatedAt}
+        lastUpdate={course?.updatedAt}
       />
       <div className="container w-full my-12">
-        {/* About Course */}
         <div className="w-full flex flex-col gap-4">
           <p className="text-title text-2xl font-medium">About Course</p>
           <p className="text-text w-full lg:w-[55%] mb-5">
@@ -61,7 +60,6 @@ const DispalyCourse = () => {
           </ul>
         </div>
 
-        {/* Course Curriculum */}
         <div className="w-full lg:w-[55%] my-14">
           <p className="text-title text-2xl font-medium mb-4">
             Course Curriculum
@@ -91,13 +89,13 @@ const DispalyCourse = () => {
                       <div className="text-title flex flex-row items-center">
                         <i className="bx bxl-youtube text-[22px] text-gray-400 mr-2"></i>
                         <span className="mr-1">
-                          {lecture.title.includes("Video")
+                          {lecture?.title?.includes("Video")
                             ? "Video:"
-                            : lecture.title.includes("Audio")
+                            : lecture?.title?.includes("Audio")
                             ? "Audio:"
                             : "Lesson:"}{" "}
+                          {lecture?.title || "Untitled"}
                         </span>
-                        {lecture.title}
                       </div>
                       <div className="flex items-center gap-4 text-text">
                         <span className="text-sm">
@@ -118,10 +116,19 @@ const DispalyCourse = () => {
           teacher={`${course?.teacher?.firstName} ${course?.teacher?.lastName}`}
           image={course?.teacher?.picture}
         />
+        <CourseDetails
+          videoUrl={course?.lectures?.[0]?.videoUrl || ""}
+          price={course?.price || "Free"}
+          lectures={course?.lectures?.length || 0}
+          duration={course?.duration || "00:00"}
+          skillLevel={course?.skillLevel || "All Levels"}
+          language={course?.language || "Unknown"}
+          deadline={course?.enrollmentDeadline || "N/A"}
+        />
       </div>
       <Footer />
     </section>
   );
 };
 
-export default DispalyCourse;
+export default DisplayCourse;
