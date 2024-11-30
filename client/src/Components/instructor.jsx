@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Instructor = ({ teacher, image }) => {
   return (
-    <div className="w-full lg:w-[55%] my-14">
+    <div className="w-full my-14">
       <h2 className="text-2xl font-medium mb-6">Your Instructors</h2>
       <div className="flex items-start gap-5">
         {/* Profile Picture */}

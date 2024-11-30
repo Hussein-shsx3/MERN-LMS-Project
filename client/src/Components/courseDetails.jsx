@@ -13,8 +13,12 @@ const CourseDetails = ({
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
     : videoUrl;
 
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  const formattedDuration = `${hours}h ${minutes}m`;
+
   return (
-    <div className="px-4 py-5 rounded-md shadow-md w-full lg:w-[30%] authShadow">
+    <div className="px-4 py-5 rounded-md shadow-md w-full h-fit lg:w-[30%] authShadow relative top-20 lg:sticky">
       {/* Video Container */}
       <div className="mb-6 relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
@@ -28,34 +32,41 @@ const CourseDetails = ({
       </div>
       {/* Details List */}
       <ul className="text-text px-4">
-        <li className="mb-3 flex justify-between text-title text-3xl font-medium">
+        <li className="flex justify-between text-title text-3xl font-medium">
           <span>${price}.00</span>
         </li>
         <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
           Add to cart
         </li>
-        <li className="mb-3 flex justify-between text-title text-lg">
-          <span className="font-medium">Number of Lectures:</span>
+        <li className="flex justify-between text-title text-lg mb-4">
+          <span className="font-medium">This course includes:</span>
         </li>
-        <li className="mb-3 flex justify-between">
-          <span className="font-medium">Number of Lectures:</span>
+        <li className="flex justify-between">
+          <span className="flex items-center gap-2">
+            <i className="bx bx-play-circle text-lg"></i>Lectures
+          </span>
           <span>{lectures}</span>
         </li>
-        <li className="mb-3 flex justify-between">
-          <span className="font-medium">Duration:</span>
-          <span>{duration}</span>
+        <hr className="border-none bg-gray-100 w-full h-[1px] rounded-full my-4" />
+        <li className="flex justify-between">
+          <span className="flex items-center gap-2">
+            <i className="bx bx-time-five text-lg"></i>Duration
+          </span>
+          <span>{formattedDuration}</span>
         </li>
-        <li className="mb-3 flex justify-between">
-          <span className="font-medium">Skill Level:</span>
+        <hr className="border-none bg-gray-100 w-full h-[1px] rounded-full my-4" />
+        <li className="flex justify-between">
+          <span className="flex items-center gap-2">
+            <i class="bx bx-signal-5 text-lg"></i>Skill Level
+          </span>
           <span>{skillLevel}</span>
         </li>
-        <li className="mb-3 flex justify-between">
-          <span className="font-medium">Language:</span>
+        <hr className="border-none bg-gray-100 w-full h-[1px] rounded-full my-4" />
+        <li className="flex justify-between">
+          <span className="flex items-center gap-2">
+            <i className="bx bx-globe text-lg"></i>Language
+          </span>
           <span>{language}</span>
-        </li>
-        <li className="mb-3 flex justify-between">
-          <span className="font-medium">Enrollment Deadline:</span>
-          <span>{deadline}</span>
         </li>
       </ul>
     </div>
