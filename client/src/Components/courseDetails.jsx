@@ -1,4 +1,3 @@
-// CourseDetails Component
 import React from "react";
 
 const CourseDetails = ({
@@ -15,21 +14,28 @@ const CourseDetails = ({
     : videoUrl;
 
   return (
-    <div className="px-6 py-7 rounded-md shadow-md w-full lg:w-[30%] authShadow">
-      <div className="mb-6">
+    <div className="px-4 py-5 rounded-md shadow-md w-full lg:w-[30%] authShadow">
+      {/* Video Container */}
+      <div className="mb-6 relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
           src={embedUrl}
-          className="w-full h-full rounded-md"
+          className="absolute top-0 left-0 w-full h-full rounded-md"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title="Course Preview"
         ></iframe>
       </div>
-      <ul className="text-text">
-        <li className="mb-3 flex justify-between">
-          <span className="font-medium">Price:</span>
-          <span>${price}</span>
+      {/* Details List */}
+      <ul className="text-text px-4">
+        <li className="mb-3 flex justify-between text-title text-3xl font-medium">
+          <span>${price}.00</span>
+        </li>
+        <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
+          Add to cart
+        </li>
+        <li className="mb-3 flex justify-between text-title text-lg">
+          <span className="font-medium">Number of Lectures:</span>
         </li>
         <li className="mb-3 flex justify-between">
           <span className="font-medium">Number of Lectures:</span>
