@@ -4,6 +4,7 @@ import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
 import Instructor from "../Components/instructor";
 import CourseDetails from "../Components/courseDetails";
+import RelatedCourses from "../Components/relatedCourses";
 import { fetchCourseById } from "../Api/courseApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
@@ -126,7 +127,7 @@ const DisplayCourse = () => {
           deadline={course?.enrollmentDeadline || "N/A"}
         />
       </div>
-
+      <RelatedCourses currentCourse={course} />
       <Footer />
     </section>
   );

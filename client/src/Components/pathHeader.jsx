@@ -56,7 +56,7 @@ const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
               <img
                 src={image ? image : "../images/profile-photo.png"}
                 alt=""
-                className="rounded-full w-11 h-11"
+                className="rounded-full w-11 h-11 object-cover"
               />
               <div className="flex items-center gap-6 md:gap-10">
                 <div className="flex flex-col">

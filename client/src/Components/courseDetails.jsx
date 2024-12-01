@@ -7,7 +7,6 @@ const CourseDetails = ({
   duration,
   skillLevel,
   language,
-  deadline,
 }) => {
   const embedUrl = videoUrl.includes("youtu.be")
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
@@ -32,12 +31,18 @@ const CourseDetails = ({
       </div>
       {/* Details List */}
       <ul className="text-text px-4">
-        <li className="flex justify-between text-title text-3xl font-medium">
-          <span>${price}.00</span>
+        <li className="flex justify-between text-title text-3xl font-medium mb-2">
+          <span>{price === "Free" ? price : `$${price}.00`}</span>
         </li>
-        <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
-          Add to cart
-        </li>
+        {price === "Free" ? (
+          <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
+            Enroll Now
+          </li>
+        ) : (
+          <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
+            Add to cart
+          </li>
+        )}
         <li className="flex justify-between text-title text-lg mb-4">
           <span className="font-medium">This course includes:</span>
         </li>

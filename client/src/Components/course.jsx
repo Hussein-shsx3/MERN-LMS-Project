@@ -22,7 +22,7 @@ const Course = ({ course }) => {
             src={
               course.image.length === 0
                 ? course.teacher.picture
-                : "./images/profile-photo.png"
+                : "../images/profile-photo.png"
             }
             alt="teacher"
             className="w-10 h-10 rounded-full object-cover"
