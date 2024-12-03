@@ -83,7 +83,7 @@ const DisplayCourse = () => {
                   {course?.lectures.map((lecture) => (
                     <li key={lecture.lectureNumber}>
                       <Link
-                        to=""
+                        to={`/course/${course._id}/lecture/${lecture.lectureNumber}`}
                         className="flex justify-between items-center px-4 py-3"
                       >
                         <div className="text-title flex flex-row items-center">
@@ -125,6 +125,7 @@ const DisplayCourse = () => {
           skillLevel={course?.skillLevel || "All Levels"}
           language={course?.language || "Unknown"}
           deadline={course?.enrollmentDeadline || "N/A"}
+          courseId={course?._id}
         />
       </div>
       <RelatedCourses currentCourse={course} />

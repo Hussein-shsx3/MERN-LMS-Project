@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
   // Format the date to "Month Day, Year"
@@ -11,6 +11,8 @@ const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
       day: "numeric",
     });
   };
+
+  const { lectureNumber } = useParams();
 
   return (
     <section className="w-full bg-[#f2f8fd] flex flex-col justify-center items-center py-16 px-4 md:px-0 overflow-hidden">
@@ -26,12 +28,19 @@ const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
           </Link>
           <span className="font-light"> / </span>
           <p className="font-light">{title}</p>
+          {lectureNumber ? <span className="font-light"> / </span> : ""}
+          {lectureNumber ? (
+            <span className="font-light"> Lecture {+lectureNumber + 1} </span>
+          ) : (
+            ""
+          )}
         </div>
 
         {/* Category display only if path is not 'All Courses', 'Register' or 'Login' */}
         {title !== "All Courses" &&
           title !== "Register" &&
-          title !== "Login" && (
+          title !== "Login" &&
+          category && (
             <p className="mt-10 px-5 py-1 w-fit bg-fuchsia-500 text-white rounded-md text-[14px]">
               {category}
             </p>
@@ -51,7 +60,8 @@ const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
         {/* Teacher, Category, Last Updated display only if path is not 'All Courses', 'Register' or 'Login' */}
         {title !== "All Courses" &&
           title !== "Register" &&
-          title !== "Login" && (
+          title !== "Login" &&
+          category && (
             <div className="flex flex-wrap w-full items-center gap-3 mt-3">
               <img
                 src={image ? image : "../images/profile-photo.png"}

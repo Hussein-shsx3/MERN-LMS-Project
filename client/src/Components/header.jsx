@@ -146,7 +146,7 @@ const Header = () => {
               <span className="sr-only">Your Company</span>
               <img
                 alt=""
-                src="../images/logo-black-2-1.png"
+                src="/images/logo-black-2-1.png"
                 className="h-7 w-auto"
               />
             </Link>
@@ -271,7 +271,7 @@ const Header = () => {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="../images/logo-black-2-1.png"
+                  src="/images/logo-black-2-1.png"
                   className="h-5 w-auto"
                 />
               </Link>

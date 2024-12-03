@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CourseDetails = ({
   videoUrl,
@@ -7,6 +8,7 @@ const CourseDetails = ({
   duration,
   skillLevel,
   language,
+  courseId,
 }) => {
   const embedUrl = videoUrl.includes("youtu.be")
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
@@ -35,9 +37,12 @@ const CourseDetails = ({
           <span>{price === "Free" ? price : `$${price}.00`}</span>
         </li>
         {price === "Free" ? (
-          <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
+          <Link
+            to={`/course/${courseId}/lecture/0`}
+            className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5"
+          >
             Enroll Now
-          </li>
+          </Link>
         ) : (
           <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
             Add to cart
