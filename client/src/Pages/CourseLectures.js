@@ -31,7 +31,6 @@ const CourseLectures = () => {
       <div className="container w-full my-12 flex items-center justify-center">
         <Lectures Course={course} />
       </div>
-
       <Footer />
     </section>
   );

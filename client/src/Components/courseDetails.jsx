@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const CourseDetails = ({
   videoUrl,
@@ -10,6 +12,7 @@ const CourseDetails = ({
   language,
   courseId,
 }) => {
+  const user = useSelector((state) => state.auth.user);
   const embedUrl = videoUrl.includes("youtu.be")
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
     : videoUrl;
@@ -18,8 +21,15 @@ const CourseDetails = ({
   const minutes = duration % 60;
   const formattedDuration = `${hours}h ${minutes}m`;
 
+  const enrollAlert = () => {
+    if (user === null) {
+      toast.info("You need to login first");
+    }
+  };
+
   return (
     <div className="px-4 py-5 rounded-md shadow-md w-full h-fit lg:w-[30%] authShadow relative top-20 lg:sticky">
+      <ToastContainer />
       {/* Video Container */}
       <div className="mb-6 relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
@@ -38,13 +48,17 @@ const CourseDetails = ({
         </li>
         {price === "Free" ? (
           <Link
-            to={`/course/${courseId}/lecture/0`}
+            to={user !== null ? `/course/${courseId}/lecture/0` : ""}
+            onClick={enrollAlert}
             className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5"
           >
             Enroll Now
           </Link>
         ) : (
-          <li className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5">
+          <li
+            onClick={enrollAlert}
+            className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5"
+          >
             Add to cart
           </li>
         )}

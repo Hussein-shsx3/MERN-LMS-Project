@@ -5,6 +5,7 @@ import TopCategories from "../Components/topCategories";
 import OurCourses from "../Components/ourCourses";
 import Subscribe from "../Components/subscribe";
 import Footer from "../Components/footer";
+import "react-toastify/dist/ReactToastify.css";
 
 import AOS from "aos";
 import "aos/dist/aos.css";

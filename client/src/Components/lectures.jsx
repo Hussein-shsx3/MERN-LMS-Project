@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import LectureTitles from "./lectureTitles";
 
-const Lectures = ({ Course }) => {
+const Lectures = ({ Course, linkWork }) => {
   const videoUrl = Course ? Course.lectures[0].videoUrl : "";
   const embedUrl = videoUrl.includes("youtu.be")
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
@@ -10,14 +10,6 @@ const Lectures = ({ Course }) => {
   const [isCurriculumOpen, setIsCurriculumOpen] = useState(true);
   const toggleCurriculum = () => {
     setIsCurriculumOpen((prev) => !prev);
-  };
-
-  const formatDuration = (duration) => {
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
   };
 
   return (
@@ -52,36 +44,7 @@ const Lectures = ({ Course }) => {
               ></i>
             </button>
             {isCurriculumOpen && (
-              <ul className="divide-y">
-                {Course?.lectures.map((lecture) => (
-                  <li key={lecture.lectureNumber}>
-                    <Link
-                      to={`/course/${Course._id}/lecture/${lecture.lectureNumber}`}
-                      className="flex justify-between items-center px-4 py-3"
-                    >
-                      <div className="text-title flex flex-row items-center">
-                        <i className="bx bxl-youtube text-[22px] text-gray-400 mr-2"></i>
-                        <span className="mr-1">
-                          {lecture?.title?.includes("Video")
-                            ? "Video:"
-                            : lecture?.title?.includes("Audio")
-                            ? "Audio:"
-                            : "Lesson:"}{" "}
-                          {lecture?.title || "Untitled"}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-4 text-text">
-                        <span className="text-sm">
-                          {formatDuration(lecture.duration)}
-                        </span>
-                        {!lecture.isFree && (
-                          <i className="bx bx-lock-alt text-lg"></i>
-                        )}
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <LectureTitles Course={Course} display={true} />
             )}
           </div>
         </div>
