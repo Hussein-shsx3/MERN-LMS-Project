@@ -20,7 +20,18 @@ const LectureTitles = ({ Course, display }) => {
 
   return (
     <ul className="divide-y">
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="z-100 mt-20" // Custom z-index
+      />
       {Course?.lectures.map((lecture) => (
         <li key={lecture.lectureNumber}>
           <Link

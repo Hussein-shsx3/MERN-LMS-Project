@@ -5,6 +5,7 @@ import TopCategories from "../Components/topCategories";
 import OurCourses from "../Components/ourCourses";
 import Subscribe from "../Components/subscribe";
 import Footer from "../Components/footer";
+import ScrollToTop from "../scrollToTop";
 import "react-toastify/dist/ReactToastify.css";
 
 import AOS from "aos";
@@ -16,6 +17,7 @@ const Home = () => {
   });
   return (
     <section className="relative w-full flex flex-col items-center ">
+      <ScrollToTop />
       <Header />
       <Main />
       <TopCategories />

@@ -5,6 +5,7 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
 import Course from "../Components/course";
+import ScrollToTop from "../scrollToTop";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const Courses = () => {
 
   return (
     <section>
+      <ScrollToTop />
       <Header />
       <PathHeader title="All Courses" />
       <div

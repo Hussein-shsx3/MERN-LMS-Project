@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -13,6 +13,8 @@ const CourseDetails = ({
   courseId,
 }) => {
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
+
   const embedUrl = videoUrl.includes("youtu.be")
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
     : videoUrl;
@@ -21,16 +23,28 @@ const CourseDetails = ({
   const minutes = duration % 60;
   const formattedDuration = `${hours}h ${minutes}m`;
 
-  const enrollAlert = () => {
+  const handleEnroll = () => {
     if (user === null) {
-      toast.info("You need to login first");
+      toast.info("You need to login first to enroll in this course!");
+    } else {
+      navigate(`/course/${courseId}/lecture/0`);
     }
   };
 
   return (
     <div className="px-4 py-5 rounded-md shadow-md w-full h-fit lg:w-[30%] authShadow relative top-20 lg:sticky">
-      <ToastContainer />
-      {/* Video Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="z-100 mt-20" // Custom z-index
+      />
       <div className="mb-6 relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
           src={embedUrl}
@@ -41,26 +55,31 @@ const CourseDetails = ({
           title="Course Preview"
         ></iframe>
       </div>
-      {/* Details List */}
       <ul className="text-text px-4">
         <li className="flex justify-between text-title text-3xl font-medium mb-2">
           <span>{price === "Free" ? price : `$${price}.00`}</span>
         </li>
         {price === "Free" ? (
-          <Link
-            to={user !== null ? `/course/${courseId}/lecture/0` : ""}
-            onClick={enrollAlert}
+          <button
+            onClick={handleEnroll}
             className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5"
           >
             Enroll Now
-          </Link>
+          </button>
         ) : (
-          <li
-            onClick={enrollAlert}
+          <button
+            onClick={() => {
+              if (!user) {
+                toast.info("You need to login first to purchase this course!");
+                setTimeout(() => navigate("/login"), 2000);
+              } else {
+                toast.success("Added to cart!");
+              }
+            }}
             className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5"
           >
             Add to cart
-          </li>
+          </button>
         )}
         <li className="flex justify-between text-title text-lg mb-4">
           <span className="font-medium">This course includes:</span>
@@ -81,7 +100,7 @@ const CourseDetails = ({
         <hr className="border-none bg-gray-100 w-full h-[1px] rounded-full my-4" />
         <li className="flex justify-between">
           <span className="flex items-center gap-2">
-            <i class="bx bx-signal-5 text-lg"></i>Skill Level
+            <i className="bx bx-signal-5 text-lg"></i>Skill Level
           </span>
           <span>{skillLevel}</span>
         </li>

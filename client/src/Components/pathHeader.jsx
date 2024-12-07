@@ -50,7 +50,7 @@ const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
         <p
           className={`text-${
             title === "All Courses" || title === "Register" || title === "Login"
-              ? "6xl"
+              ? "5xl"
               : "4xl mt-2"
           } font-semibold`}
         >

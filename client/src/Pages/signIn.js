@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
+import ScrollToTop from "../scrollToTop";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../Api/authApi";
 import { clearStatus } from "../redux/authSlice";
@@ -29,8 +30,9 @@ const SignIn = () => {
 
   return (
     <section className="w-full bg-background flex flex-col items-center">
+      <ScrollToTop />
       <Header />
-      <PathHeader title={"Login"}/>
+      <PathHeader title={"Login"} />
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-xl flex flex-col items-center justify-center py-12 px-10 gap-2 my-16 authShadow"

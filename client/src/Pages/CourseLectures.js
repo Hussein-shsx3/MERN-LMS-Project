@@ -3,6 +3,7 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
 import Lectures from "../Components/lectures";
+import ScrollToTop from "../scrollToTop";
 import { useParams, Link } from "react-router-dom";
 import { fetchCourseById } from "../Api/courseApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ const CourseLectures = () => {
 
   return (
     <section className="flex flex-col items-center">
+      <ScrollToTop />
       <Header />
       <PathHeader
         title={course?.title || "Course Details"}
