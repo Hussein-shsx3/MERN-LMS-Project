@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { enrollInCourse } from "../Api/courseApi";
 
 const CourseDetails = ({
   videoUrl,
@@ -12,7 +13,9 @@ const CourseDetails = ({
   language,
   courseId,
 }) => {
-  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
   const embedUrl = videoUrl.includes("youtu.be")
@@ -24,9 +27,23 @@ const CourseDetails = ({
   const formattedDuration = `${hours}h ${minutes}m`;
 
   const handleEnroll = () => {
-    if (user === null) {
+    if (!token) {
       toast.info("You need to login first to enroll in this course!");
+      setTimeout(() => navigate("/login"), 2000);
+      return;
+    }
+
+    const isEnrolled = user.coursesEnrolled?.some(
+      (enrolledCourseId) => enrolledCourseId === courseId
+    );
+    if (isEnrolled) {
+      toast.info("You are already enrolled in this course!");
+      setTimeout(() => {
+        navigate(`/course/${courseId}/lecture/0`);
+      }, 2000);
     } else {
+      dispatch(enrollInCourse(courseId));
+      toast.success("Successfully enrolled in the course!");
       navigate(`/course/${courseId}/lecture/0`);
     }
   };
@@ -43,7 +60,7 @@ const CourseDetails = ({
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        className="z-100 mt-20" // Custom z-index
+        className="z-100 mt-20"
       />
       <div className="mb-6 relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
@@ -69,7 +86,7 @@ const CourseDetails = ({
         ) : (
           <button
             onClick={() => {
-              if (!user) {
+              if (!token) {
                 toast.info("You need to login first to purchase this course!");
                 setTimeout(() => navigate("/login"), 2000);
               } else {

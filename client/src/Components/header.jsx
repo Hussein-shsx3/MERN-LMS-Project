@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../Api/userApi";
 import { fetchCourses } from "../Api/courseApi";
+import { logout } from "../redux/authSlice";
 import SearchBar from "./searchBar";
 import Cookies from "universal-cookie";
-import { logout } from "../redux/authSlice";
 
 import {
   Dialog,
@@ -211,16 +211,16 @@ const Header = () => {
                 Enroll Now
               </button>
               {user !== null ? (
-                <div className="relative group">
+                <div className="relative group h-full">
                   <img
                     src={
-                      user.picture ? user.picture : "./images/profile-photo.png"
+                      user.picture ? user.picture : "/images/profile-photo.png"
                     }
                     alt="Profile"
-                    className="w-[38px] h-[38px] rounded-full cursor-pointer"
+                    className="w-[38px] h-[38px] rounded-full cursor-pointer object-cover"
                   />
                   {/* Dropdown Menu */}
-                  <div className="absolute left-[-10px] top-8 mt-2 w-[150px] bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+                  <div className="absolute left-[-10px] top-6 mt-2 w-[150px] bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                     <Link
                       to="/profile"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -334,12 +334,19 @@ const Header = () => {
                         src={
                           user.picture
                             ? user.picture
-                            : "./images/profile-photo.png"
+                            : "/images/profile-photo.png"
                         }
                         alt=""
                         className="w-[38px] h-[38px] rounded-full"
                       />
-                      <Link to="" className="hover:text-primary">
+                      <Link
+                        to=""
+                        onClick={() => {
+                          dispatch(logout());
+                          nav("/login");
+                        }}
+                        className="hover:text-primary"
+                      >
                         log out
                       </Link>
                     </div>

@@ -1,12 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
+import { useSelector } from "react-redux";
 
 const Course = ({ course }) => {
+  const { _id: courseId } = course;
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
 
   const handleNavigate = () => {
-    navigate(`/courses/${course._id}`);
+    if (user) {
+      const isEnrolled = user.coursesEnrolled?.some(
+        (enrolledCourseId) => enrolledCourseId === courseId
+      );
+
+      if (isEnrolled) {
+        navigate(`/course/${courseId}/lecture/0`);
+        return;
+      }
+    }
+
+    navigate(`/courses/${courseId}`);
   };
 
   return (
