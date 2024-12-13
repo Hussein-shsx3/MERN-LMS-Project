@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCourses } from "../Api/courseApi";
-import { getUser } from "../Api/userApi";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
@@ -19,7 +18,6 @@ const Courses = () => {
 
   useEffect(() => {
     dispatch(fetchCourses());
-    dispatch(getUser());
   }, [dispatch]);
 
   // Handle category filter toggle

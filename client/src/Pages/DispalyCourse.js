@@ -10,7 +10,6 @@ import ScrollToTop from "../scrollToTop";
 import { fetchCourseById } from "../Api/courseApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getUser } from "../Api/userApi";
 
 const DisplayCourse = () => {
   const { courseId } = useParams();
@@ -18,16 +17,15 @@ const DisplayCourse = () => {
   const dispatch = useDispatch();
   const [isCurriculumOpen, setIsCurriculumOpen] = useState(true);
 
-  useEffect(() => {
-    if (courseId) {
-      dispatch(fetchCourseById(courseId));
-      dispatch(getUser());
-    }
-  }, [courseId, dispatch]);
-
   const toggleCurriculum = () => {
     setIsCurriculumOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (courseId) {
+      dispatch(fetchCourseById(courseId));
+    }
+  }, [courseId, dispatch]);
 
   return (
     <section className="relative w-full flex flex-col items-center">

@@ -4,22 +4,42 @@ import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
 import Lectures from "../Components/lectures";
 import ScrollToTop from "../scrollToTop";
-import { useParams } from "react-router-dom";
-import { fetchCourseById } from "../Api/courseApi";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../Api/userApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useGetUser } from "../Api/userApi";
+import { useSelector } from "react-redux";
 
 const CourseLectures = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
+
   const course = useSelector((state) => state.course.course);
-  const dispatch = useDispatch();
+
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(
+    ["user"], 
+    useGetUser 
+  );
 
   useEffect(() => {
-    if (courseId) {
-      dispatch(fetchCourseById(courseId));
-      dispatch(getUser());
+    if (!user && !isLoading) {
+      navigate(`/courses/${courseId}`);
+    } else if (user && !user.coursesEnrolled?.includes(courseId)) {
+      navigate(`/courses/${courseId}`);
     }
-  }, [courseId, dispatch]);
+  }, [user, isLoading, courseId, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <section className="flex flex-col items-center">

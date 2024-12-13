@@ -1,12 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { useGetUser } from "../Api/userApi";
 
 const Course = ({ course }) => {
   const { _id: courseId } = course;
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: useGetUser,
+  });
 
   const handleNavigate = () => {
     if (user) {
@@ -23,6 +33,14 @@ const Course = ({ course }) => {
     navigate(`/courses/${courseId}`);
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div
       id="course"
@@ -33,11 +51,7 @@ const Course = ({ course }) => {
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
           <img
-            src={
-              course.image.length === 0
-                ? course.teacher.picture
-                : "../images/profile-photo.png"
-            }
+            src={course.image ? course.image : "../images/profile-photo.png"}
             alt="teacher"
             className="w-10 h-10 rounded-full object-cover"
           />
@@ -51,7 +65,7 @@ const Course = ({ course }) => {
       {/* Course Image */}
       <div className="w-full h-[210px]">
         <img
-          src={course.image}
+          src={course.image ? course.image : "../images/placeholder-image.png"}
           alt="course"
           className="rounded-xl w-full h-full object-cover"
         />
@@ -88,7 +102,7 @@ const Course = ({ course }) => {
         <div
           onClick={(e) => {
             e.stopPropagation();
-            navigate("");
+            navigate(`/courses/${courseId}/preview`);
           }}
           className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         >

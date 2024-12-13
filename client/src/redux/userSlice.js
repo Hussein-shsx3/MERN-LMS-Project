@@ -1,9 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUsers, getUser, updateUser, deleteUser } from "../Api/userApi"; // Adjust the path to your API functions
+import { updateUser, deleteUser } from "../Api/userApi"; // Adjust the path to your API functions
 
 const initialState = {
-  users: [],
-  user: null,
   fetchStatus: "idle",
   updateStatus: "idle",
   deleteStatus: "idle",
@@ -14,9 +12,20 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    // Clear user data on logout
+    clearUser: (state) => {
+      state.fetchStatus = "idle";
+      state.updateStatus = "idle";
+      state.deleteStatus = "idle";
+      state.error = null;
+    },
+
+    // Clear error message
     clearError: (state) => {
       state.error = null;
     },
+
+    // Clear all status (useful to reset the state)
     clearStatus: (state) => {
       state.fetchStatus = "idle";
       state.updateStatus = "idle";
@@ -24,36 +33,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Fetch all users
-    builder
-      .addCase(getAllUsers.pending, (state) => {
-        state.fetchStatus = "loading";
-        state.error = null;
-      })
-      .addCase(getAllUsers.fulfilled, (state, action) => {
-        state.fetchStatus = "succeeded";
-        state.users = action.payload;
-      })
-      .addCase(getAllUsers.rejected, (state, action) => {
-        state.fetchStatus = "failed";
-        state.error = action.payload;
-      });
-
-    // Fetch a single user
-    builder
-      .addCase(getUser.pending, (state) => {
-        state.fetchStatus = "loading";
-        state.error = null;
-      })
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.fetchStatus = "succeeded";
-        state.user = action.payload;
-      })
-      .addCase(getUser.rejected, (state, action) => {
-        state.fetchStatus = "failed";
-        state.error = action.payload;
-      });
-
     // Update a user
     builder
       .addCase(updateUser.pending, (state) => {
@@ -63,6 +42,7 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.updateStatus = "succeeded";
         state.user = action.payload;
+        // Update user in the users list if necessary
         state.users = state.users.map((user) =>
           user._id === action.payload._id ? action.payload : user
         );
@@ -91,6 +71,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearError, clearStatus } = userSlice.actions;
+export const { clearError, clearStatus, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

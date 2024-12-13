@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../Api/userApi";
 import { fetchCourses } from "../Api/courseApi";
 import { logout } from "../redux/authSlice";
+import { clearStatus } from "../redux/userSlice";
 import SearchBar from "./searchBar";
-import Cookies from "universal-cookie";
 
 import {
   Dialog,
@@ -59,12 +58,10 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const courses = useSelector((state) => state.cart.courses);
   const AllCourses = useSelector((state) => state.course.courses);
   const dispatch = useDispatch();
-  const cookies = new Cookies();
-  const token = cookies.get("token");
 
   const nav = useNavigate();
 
@@ -84,12 +81,15 @@ const Header = () => {
     ? filteredCourses
     : AllCourses.slice(0, 4);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearStatus());
+    nav("/login");
+  };
+
   useEffect(() => {
-    if (token) {
-      dispatch(getUser());
-    }
     dispatch(fetchCourses());
-  }, [dispatch, token]);
+  }, [dispatch]);
 
   useEffect(() => {
     function scroll() {
@@ -228,10 +228,7 @@ const Header = () => {
                       Profile
                     </Link>
                     <button
-                      onClick={() => {
-                        dispatch(logout());
-                        nav("/login");
-                      }}
+                      onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Logout
@@ -341,10 +338,7 @@ const Header = () => {
                       />
                       <Link
                         to=""
-                        onClick={() => {
-                          dispatch(logout());
-                          nav("/login");
-                        }}
+                        onClick={handleLogout}
                         className="hover:text-primary"
                       >
                         log out

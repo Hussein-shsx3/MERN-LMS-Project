@@ -7,21 +7,16 @@ import Subscribe from "../Components/subscribe";
 import Footer from "../Components/footer";
 import ScrollToTop from "../scrollToTop";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
-import { getUser } from "../Api/userApi";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
-  
+
   useEffect(() => {
     AOS.init({ duration: 1600, once: true });
-  });
+  }, []);
+
   return (
     <section className="relative w-full flex flex-col items-center ">
       <ScrollToTop />

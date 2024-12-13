@@ -28,8 +28,8 @@ const authSlice = createSlice({
       state.token = null;
       state.status = "idle";
       state.error = null;
-      cookies.remove("token");
-      cookies.remove("role");
+      cookies.remove("token", { path: "/" });
+      cookies.remove("role", { path: "/" });
     },
     clearStatus: (state) => {
       state.status = "idle";
