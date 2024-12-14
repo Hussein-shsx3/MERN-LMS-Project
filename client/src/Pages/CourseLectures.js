@@ -5,7 +5,6 @@ import PathHeader from "../Components/pathHeader";
 import Lectures from "../Components/lectures";
 import ScrollToTop from "../scrollToTop";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { useGetUser } from "../Api/userApi";
 import { useSelector } from "react-redux";
 
@@ -15,31 +14,19 @@ const CourseLectures = () => {
 
   const course = useSelector((state) => state.course.course);
 
-  const {
-    data: user,
-    isLoading,
-    isError,
-    error,
-  } = useQuery(
-    ["user"], 
-    useGetUser 
-  );
+  const { data: user, isLoading } = useGetUser();
 
   useEffect(() => {
-    if (!user && !isLoading) {
+    if (isLoading) return;
+
+    if (!user) {
       navigate(`/courses/${courseId}`);
-    } else if (user && !user.coursesEnrolled?.includes(courseId)) {
+    } else if (user && user.coursesEnrolled?.includes(courseId)) {
+      navigate(`/course/${courseId}/lecture/0`);
+    } else {
       navigate(`/courses/${courseId}`);
     }
   }, [user, isLoading, courseId, navigate]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
 
   return (
     <section className="flex flex-col items-center">

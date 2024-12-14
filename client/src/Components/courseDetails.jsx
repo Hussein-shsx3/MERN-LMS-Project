@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { enrollInCourse } from "../Api/courseApi";
+import { useGetUser } from "../Api/userApi";
 
 const CourseDetails = ({
   videoUrl,
@@ -15,7 +16,7 @@ const CourseDetails = ({
 }) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.user.user);
+  const { data: user } = useGetUser();
   const navigate = useNavigate();
 
   const embedUrl = videoUrl.includes("youtu.be")

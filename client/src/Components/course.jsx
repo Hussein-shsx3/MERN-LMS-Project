@@ -1,22 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import { useQuery } from "@tanstack/react-query";
 import { useGetUser } from "../Api/userApi";
 
 const Course = ({ course }) => {
   const { _id: courseId } = course;
   const navigate = useNavigate();
 
-  const {
-    data: user,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: useGetUser,
-  });
+  const { data: user } = useGetUser();
 
   const handleNavigate = () => {
     if (user) {
@@ -33,14 +24,6 @@ const Course = ({ course }) => {
     navigate(`/courses/${courseId}`);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
-
   return (
     <div
       id="course"
@@ -51,7 +34,11 @@ const Course = ({ course }) => {
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
           <img
-            src={course.image ? course.image : "../images/profile-photo.png"}
+            src={
+              course.teacher.picture
+                ? course.teacher.picture
+                : "../images/profile-photo.png"
+            }
             alt="teacher"
             className="w-10 h-10 rounded-full object-cover"
           />

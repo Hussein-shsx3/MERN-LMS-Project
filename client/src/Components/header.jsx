@@ -5,6 +5,8 @@ import { fetchCourses } from "../Api/courseApi";
 import { logout } from "../redux/authSlice";
 import { clearStatus } from "../redux/userSlice";
 import SearchBar from "./searchBar";
+import { useGetUser } from "../Api/userApi";
+import Cookies from "universal-cookie";
 
 import {
   Dialog,
@@ -58,7 +60,11 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { user } = useSelector((state) => state.auth);
+  const cookies = new Cookies();
+  const token = cookies.get("token");
+
+  const { data: user } = useGetUser();
+
   const courses = useSelector((state) => state.cart.courses);
   const AllCourses = useSelector((state) => state.course.courses);
   const dispatch = useDispatch();
@@ -210,11 +216,13 @@ const Header = () => {
               <button className="min-w-[90px] bg-primary text-white px-1 xl:px-5 py-2 rounded-[20px]">
                 Enroll Now
               </button>
-              {user !== null ? (
+              {user !== undefined && token.length > 0 ? (
                 <div className="relative group h-full">
                   <img
                     src={
-                      user.picture ? user.picture : "/images/profile-photo.png"
+                      user?.picture
+                        ? user?.picture
+                        : "/images/profile-photo.png"
                     }
                     alt="Profile"
                     className="w-[38px] h-[38px] rounded-full cursor-pointer object-cover"
@@ -325,12 +333,12 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="py-6">
-                  {user !== null ? (
+                  {user !== undefined && token.length > 0 ? (
                     <div className="flex flex-row items-center justify-between">
                       <img
                         src={
-                          user.picture
-                            ? user.picture
+                          user?.picture
+                            ? user?.picture
                             : "/images/profile-photo.png"
                         }
                         alt=""

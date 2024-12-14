@@ -4,17 +4,17 @@ import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
 
 const cookies = new Cookies();
-const token = cookies.get("token");
 
 // Create a reusable Axios instance for consistent configuration
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    "Content-Type": "application/json", // Default headers for all requests
+    "Content-Type": "application/json",
   },
 });
 
 api.interceptors.request.use((config) => {
+  const token = cookies.get("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -25,23 +25,29 @@ api.interceptors.request.use((config) => {
 
 // Fetch all users (admin-only)
 export const useGetAllUsers = () =>
-  useQuery(["getAllUsers"], async () => {
-    if (!token) throw new Error("Authentication token is missing.");
-    const { data } = await api.get("/api/user/getAllUsers");
-    return data;
+  useQuery({
+    queryKey: ["getAllUsers"],
+    queryFn: async () => {
+      const token = cookies.get("token");
+      if (!token) throw new Error("Authentication token is missing.");
+      const { data } = await api.get("/api/user/getAllUsers");
+      return data;
+    },
+    enabled: !!cookies.get("token"),
   });
 
 // Fetch a single user
 export const useGetUser = () =>
   useQuery({
-    queryKey: ['getUser'],
+    queryKey: ["getUser"],
     queryFn: async () => {
-      if (!token) throw new Error('Authentication token is missing.');
-      const { data } = await api.get('/api/user/getUser');
+      const token = cookies.get("token");
+      if (!token) throw new Error("Authentication token is missing.");
+      const { data } = await api.get("/api/user/getUser");
       return data;
     },
+    enabled: !!cookies.get("token"),
   });
-
 
 /** Redux Toolkit APIs */
 
@@ -49,6 +55,7 @@ export const useGetUser = () =>
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (userData, thunkAPI) => {
+    const token = cookies.get("token");
     if (!token) {
       return thunkAPI.rejectWithValue("Authentication token is missing.");
     }
@@ -67,6 +74,7 @@ export const updateUser = createAsyncThunk(
 export const updateUserImage = createAsyncThunk(
   "user/updateUserImage",
   async (imageFile, thunkAPI) => {
+    const token = cookies.get("token");
     if (!token) {
       return thunkAPI.rejectWithValue("Authentication token is missing.");
     }
@@ -88,6 +96,7 @@ export const updateUserImage = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (userId, thunkAPI) => {
+    const token = cookies.get("token");
     if (!token) {
       return thunkAPI.rejectWithValue("Authentication token is missing.");
     }
