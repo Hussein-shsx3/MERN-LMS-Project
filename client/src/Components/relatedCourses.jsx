@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Course from "./course";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCourses } from "../Api/courseApi";
+import { useFetchCourses } from "../Api/courseApi";
 
 const RelatedCourses = ({ currentCourse }) => {
   const [relatedCourses, setRelatedCourses] = useState([]);
-  const courses = useSelector((state) => state.course.courses);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCourses());
-  }, [dispatch]);
+  const { data: courses } = useFetchCourses();
 
   useEffect(() => {
     if (currentCourse?.category && courses?.length > 0) {

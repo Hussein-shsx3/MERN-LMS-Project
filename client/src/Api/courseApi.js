@@ -1,51 +1,48 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-// Retrieve the token once to avoid redundant calls
-const token = cookies.get("token");
-
-// Global Axios configuration for authorization headers
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
   },
 });
 
-// Fetch all courses
-export const fetchCourses = createAsyncThunk(
-  "course/fetchCourses",
-  async (_, thunkAPI) => {
-    try {
-      const response = await api.get("/api/course");
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data || "Unknown error occurred"
-      );
-    }
+api.interceptors.request.use((config) => {
+  const token = cookies.get("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  return config;
+});
+
+// Fetch all courses
+export const useFetchCourses = () =>
+  useQuery({
+    queryKey: ["courses"],
+    queryFn: async () => {
+      const { data } = await api.get("/api/course");
+      return data;
+    },
+  });
 
 // Fetch a single course by ID
-export const fetchCourseById = createAsyncThunk(
-  "course/fetchCourseById",
-  async (courseId, thunkAPI) => {
-    try {
-      const response = await api.get(`/api/course/${courseId}`);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data || "Unknown error occurred"
-      );
-    }
-  }
-);
+export const useFetchCourseById = (courseId) =>
+  useQuery({
+    queryKey: ["course", courseId],
+    queryFn: async () => {
+      const { data } = await api.get(`/api/course/${courseId}`);
+      return data;
+    },
+    enabled: !!courseId, // Ensures the query only runs if courseId is provided
+  });
 
-// Create a new course (admin only)
+// reduxThunks.js
+// Create a new course (Admin only)
 export const createCourse = createAsyncThunk(
   "course/createCourse",
   async (courseData, thunkAPI) => {

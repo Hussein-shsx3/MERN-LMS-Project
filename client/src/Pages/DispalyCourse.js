@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
@@ -7,25 +7,17 @@ import CourseDetails from "../Components/courseDetails";
 import RelatedCourses from "../Components/relatedCourses";
 import LectureTitles from "../Components/lectureTitles";
 import ScrollToTop from "../scrollToTop";
-import { fetchCourseById } from "../Api/courseApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useFetchCourseById } from "../Api/courseApi";
 import { useParams } from "react-router-dom";
 
 const DisplayCourse = () => {
   const { courseId } = useParams();
-  const Course = useSelector((state) => state.course.course);
-  const dispatch = useDispatch();
+  const { data: Course } = useFetchCourseById(courseId);
   const [isCurriculumOpen, setIsCurriculumOpen] = useState(true);
 
   const toggleCurriculum = () => {
     setIsCurriculumOpen((prev) => !prev);
   };
-
-  useEffect(() => {
-    if (courseId) {
-      dispatch(fetchCourseById(courseId));
-    }
-  }, [courseId, dispatch]);
 
   return (
     <section className="relative w-full flex flex-col items-center">

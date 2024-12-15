@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCourses } from "../Api/courseApi";
+import React, { useState } from "react";
+import { useFetchCourses } from "../Api/courseApi";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import PathHeader from "../Components/pathHeader";
@@ -8,17 +7,12 @@ import Course from "../Components/course";
 import ScrollToTop from "../scrollToTop";
 
 const Courses = () => {
-  const dispatch = useDispatch();
-  const { courses } = useSelector((state) => state.course);
+  const { data: courses } = useFetchCourses();
 
   // State for filters
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
-
-  useEffect(() => {
-    dispatch(fetchCourses());
-  }, [dispatch]);
 
   // Handle category filter toggle
   const handleCategoryChange = (category) => {
@@ -39,7 +33,7 @@ const Courses = () => {
   };
 
   // Filter courses based on search, categories, and levels
-  const filteredCourses = courses.filter((course) => {
+  const filteredCourses = (courses || []).filter((course) => {
     const matchesSearch = course.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -75,7 +69,7 @@ const Courses = () => {
           {/* Filters Section */}
           <div
             id="Filters"
-            className="hidden lg:flex fixed lg:relative right-0  transition-all duration-300 z-20 lg:z-0 bg-white top-0 h-[100dvh] lg:h-auto w-[65%] sm:w-[55%] md:w-[40%] lg:w-[31%] pt-16 px-5  lg:p-4 rounded-none lg:rounded-lg  flex-col gap-10shadow-md"
+            className="hidden lg:flex fixed lg:relative right-0  transition-all duration-300 z-20 lg:z-0 bg-white top-0 h-[100dvh] lg:h-auto w-[65%] sm:w-[55%] md:w-[40%] lg:w-[31%] pt-16 px-5  lg:p-4 rounded-none lg:rounded-lg  flex-col gap-10 shadow-md"
           >
             <i
               className="bx bx-x absolute text-xl text-text border-[1px] rounded-full h-[40px] w-[40px] flex justify-center items-center top-4 right-5  transition-all duration-300 hover:rotate-45"

@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  fetchCourses,
-  fetchCourseById,
   createCourse,
   enrollInCourse,
   deleteCourse,
@@ -12,8 +10,6 @@ import {
 const initialState = {
   courses: [],
   course: null,
-  fetchStatus: "idle", // Status for fetching all courses
-  fetchCourseByIdStatus: "idle", // Separate status for fetching a course by ID
   createStatus: "idle",
   updateStatus: "idle",
   enrollStatus: "idle",
@@ -34,8 +30,6 @@ const courseSlice = createSlice({
       if (statusType) {
         state[statusType] = "idle";
       } else {
-        state.fetchStatus = "idle";
-        state.fetchCourseByIdStatus = "idle";
         state.createStatus = "idle";
         state.updateStatus = "idle";
         state.updateImageStatus = "idle";
@@ -45,36 +39,6 @@ const courseSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Fetch all courses
-    builder
-      .addCase(fetchCourses.pending, (state) => {
-        state.fetchStatus = "loading";
-        state.error = null;
-      })
-      .addCase(fetchCourses.fulfilled, (state, action) => {
-        state.fetchStatus = "succeeded";
-        state.courses = action.payload;
-      })
-      .addCase(fetchCourses.rejected, (state, action) => {
-        state.fetchStatus = "failed";
-        state.error = action.payload;
-      });
-
-    // Fetch course by ID
-    builder
-      .addCase(fetchCourseById.pending, (state) => {
-        state.fetchCourseByIdStatus = "loading";
-        state.error = null;
-      })
-      .addCase(fetchCourseById.fulfilled, (state, action) => {
-        state.fetchCourseByIdStatus = "succeeded";
-        state.course = action.payload;
-      })
-      .addCase(fetchCourseById.rejected, (state, action) => {
-        state.fetchCourseByIdStatus = "failed";
-        state.error = action.payload;
-      });
-
     // Create a new course
     builder
       .addCase(createCourse.pending, (state) => {
