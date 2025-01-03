@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import LectureTitles from "./lectureTitles";
 
-const Lectures = ({ Course, linkWork }) => {
-  const videoUrl = Course ? Course.lectures[0].videoUrl : "";
+const Lectures = ({ course }) => {
+  console.log(course);
+  const videoUrl = course ? course.lectures[0].videoUrl : "";
   const embedUrl = videoUrl.includes("youtu.be")
     ? videoUrl.replace("youtu.be/", "youtube.com/embed/")
     : videoUrl;
@@ -44,7 +45,7 @@ const Lectures = ({ Course, linkWork }) => {
               ></i>
             </button>
             {isCurriculumOpen && (
-              <LectureTitles Course={Course} display={true} />
+              <LectureTitles Course={course} display={true} />
             )}
           </div>
         </div>

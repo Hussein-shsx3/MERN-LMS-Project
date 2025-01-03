@@ -6,14 +6,13 @@ import Lectures from "../Components/lectures";
 import ScrollToTop from "../scrollToTop";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "../Api/userApi";
-import { useSelector } from "react-redux";
+import { useFetchCourseById } from "../Api/courseApi";
 
 const CourseLectures = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
 
-  const course = useSelector((state) => state.course.course);
-
+  const { data: course } = useFetchCourseById(courseId);
   const { data: user, isLoading } = useGetUser();
 
   useEffect(() => {
@@ -21,10 +20,14 @@ const CourseLectures = () => {
 
     if (!user) {
       navigate(`/courses/${courseId}`);
-    } else if (user && user.coursesEnrolled?.includes(courseId)) {
-      navigate(`/course/${courseId}/lecture/0`);
     } else {
-      navigate(`/courses/${courseId}`);
+      const isEnrolled = user.coursesEnrolled?.some(
+        (enrolledCourse) => enrolledCourse._id === courseId
+      );
+
+      if (!isEnrolled) {
+        navigate(`/courses/${courseId}`);
+      }
     }
   }, [user, isLoading, courseId, navigate]);
 
@@ -40,7 +43,7 @@ const CourseLectures = () => {
         lastUpdate={course?.updatedAt}
       />
       <div className="container w-full my-12 flex items-center justify-center">
-        <Lectures Course={course} />
+        <Lectures course={course} />
       </div>
       <Footer />
     </section>

@@ -43,7 +43,7 @@ const Courses = () => {
       selectedCategories.includes(course.category);
 
     const matchesLevel =
-      selectedLevels.length === 0 || selectedLevels.includes(course.level);
+      selectedLevels.length === 0 || selectedLevels.includes(course.skillLevel);
 
     return matchesSearch && matchesCategory && matchesLevel;
   });

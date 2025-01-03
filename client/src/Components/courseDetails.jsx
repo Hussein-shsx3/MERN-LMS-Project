@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { enrollInCourse } from "../Api/courseApi";
 import { useGetUser } from "../Api/userApi";
+import { addCourse } from "../redux/cartSlice";
 
 const CourseDetails = ({
+  course,
   videoUrl,
   price,
   lectures,
@@ -16,6 +18,7 @@ const CourseDetails = ({
 }) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const cart = useSelector((state) => state.cart.courses);
   const { data: user } = useGetUser();
   const navigate = useNavigate();
 
@@ -46,6 +49,23 @@ const CourseDetails = ({
       dispatch(enrollInCourse(courseId));
       toast.success("Successfully enrolled in the course!");
       navigate(`/course/${courseId}/lecture/0`);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (!token) {
+      toast.info("You need to login first to purchase this course!");
+      setTimeout(() => navigate("/login"), 2000);
+      return;
+    }
+
+    const isInCart = cart.some((item) => item.id === course._id);
+
+    if (isInCart) {
+      toast.info("This course is already in your cart!");
+    } else {
+      dispatch(addCourse(course));
+      toast.success("Added to cart!");
     }
   };
 
@@ -86,14 +106,7 @@ const CourseDetails = ({
           </button>
         ) : (
           <button
-            onClick={() => {
-              if (!token) {
-                toast.info("You need to login first to purchase this course!");
-                setTimeout(() => navigate("/login"), 2000);
-              } else {
-                toast.success("Added to cart!");
-              }
-            }}
+            onClick={handleAddToCart}
             className="w-full h-[48px] bg-primary text-white text-lg hover:bg-slate-800 transition-all duration-300 rounded-md flex justify-center items-center mb-5"
           >
             Add to cart

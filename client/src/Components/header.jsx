@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
 import { clearStatus } from "../redux/userSlice";
 import { useGetUser } from "../Api/userApi";
@@ -63,6 +63,8 @@ const Header = () => {
 
   const cookies = new Cookies();
   const token = cookies.get("token");
+
+  const cartLength = useSelector((state) => state.cart.courses.length);
 
   const { data: user } = useGetUser();
   const dispatch = useDispatch();
@@ -197,21 +199,24 @@ const Header = () => {
             <Link to="/courses" className="text-title hover:text-primary">
               All Courses
             </Link>
-            <Link to="#" className="text-title hover:text-primary">
+            <Link to="/myCourses" className="text-title hover:text-primary">
               My Courses
             </Link>
           </PopoverGroup>
           <div className="flex items-center gap-4 lg:flex-1 lg:justify-end">
-            <div className="text-[25px] text-text flex flex-row items-center gap-3 mr-2">
+            <div className="text-[26px] text-text flex flex-row items-center gap-3 mr-2">
               <i
                 className="bx bx-search cursor-pointer hover:text-primary"
                 onClick={toggleSearchBar}
               ></i>
+              <button className="relative py-2 rounded-full">
+                <i className="bx bx-cart-alt text-[26px] text-text"></i>
+                <span className="absolute top-1 right-[-8px] bg-primary text-white text-[13px] rounded-full w-[22px] h-[22px] flex justify-center items-center">
+                  {cartLength}
+                </span>
+              </button>
             </div>
             <div className="hidden lg:flex items-center gap-2 xl:gap-4 text-sm xl:text-base">
-              <button className="min-w-[90px] bg-primary text-white px-1 xl:px-5 py-2 rounded-[20px]">
-                Enroll Now
-              </button>
               {user && token ? (
                 <div className="relative group h-full">
                   <img
@@ -317,7 +322,7 @@ const Header = () => {
                 All Courses
               </Link>
               <Link
-                to="#"
+                to="/myCourses"
                 className="block rounded-lg px-3 py-2 text-base text-title hover:bg-gray-50 hover:text-primary"
               >
                 My Courses

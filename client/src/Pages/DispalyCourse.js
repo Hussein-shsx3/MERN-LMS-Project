@@ -76,6 +76,7 @@ const DisplayCourse = () => {
           />
         </div>
         <CourseDetails
+          course={Course}
           videoUrl={Course?.lectures?.[0]?.videoUrl || ""}
           price={Course?.price || "Free"}
           lectures={Course?.lectures?.length || 0}
