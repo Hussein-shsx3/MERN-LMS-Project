@@ -7,6 +7,7 @@ import { useGetUser } from "../Api/userApi";
 import { useFetchCourses } from "../Api/courseApi";
 import Cookies from "universal-cookie";
 import SearchBar from "./searchBar";
+import { removeCourse } from "../redux/cartSlice";
 
 import {
   Dialog,
@@ -60,18 +61,23 @@ const products = [
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isCartOpen, setCartOpen] = useState(false);
 
   const cookies = new Cookies();
   const token = cookies.get("token");
 
-  const cartLength = useSelector((state) => state.cart.courses.length);
+  const cartCourses = useSelector((state) => state.cart.courses);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
 
   const { data: user } = useGetUser();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   // Fetch courses using React Query
   const { data: courses } = useFetchCourses();
+
+  const toggleCart = () => {
+    setCartOpen((prev) => !prev);
+  };
 
   // Filter courses based on the search term
   const filteredCourses = courses?.filter((course) =>
@@ -209,12 +215,83 @@ const Header = () => {
                 className="bx bx-search cursor-pointer hover:text-primary"
                 onClick={toggleSearchBar}
               ></i>
-              <button className="relative py-2 rounded-full">
+              <button
+                className="relative py-2 rounded-full"
+                onClick={toggleCart}
+              >
                 <i className="bx bx-cart-alt text-[26px] text-text"></i>
                 <span className="absolute top-1 right-[-8px] bg-primary text-white text-[13px] rounded-full w-[22px] h-[22px] flex justify-center items-center">
-                  {cartLength}
+                  {cartCourses.length}
                 </span>
               </button>
+              {isCartOpen && (
+                <div className="fixed top-0 right-0 w-full max-w-sm h-[100dvh] bg-white shadow-lg z-40">
+                  {/* Cart Header */}
+                  <div className="flex justify-between items-center p-4 border-b">
+                    <h2 className="text-lg text-title font-semibold">Shopping Cart</h2>
+                    <button
+                      className="text-2xl text-gray-500 hover:text-gray-800 transition-all duration-300 hover:rotate-90"
+                      onClick={toggleCart}
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Cart Items */}
+                  <div className="p-4 space-y-4">
+                    {cartCourses.length > 0 ? (
+                      cartCourses.map((course, index) => (
+                        <div key={index} className="flex items-center">
+                          {/* Course Thumbnail */}
+                          <div className="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
+                            <img
+                              src={course.image}
+                              alt={course.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          {/* Course Details */}
+                          <div className="ml-4 flex-1">
+                            <h3 className="text-sm font-medium">
+                              {course.title}
+                            </h3>
+                            <p className="text-sm text-gray-500">
+                              1 × ${course.price.toFixed(2)}
+                            </p>
+                          </div>
+
+                          {/* Remove Button */}
+                          <button
+                            className="ml-4 text-lg text-gray-500 hover:text-red-500"
+                            onClick={() => dispatch(removeCourse(course))}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-center text-lg text-gray-500">
+                        Your cart is empty.
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Cart Footer */}
+                  <div className="p-4 border-t flex flex-col items-center mt-40">
+                    <div className="w-full flex justify-between items-center mb-4">
+                      <span className="text-lg font-medium text-title">Subtotal:</span>
+                      <span className="text-lg font-medium text-title">${totalPrice}</span>
+                    </div>
+                    <button className="w-[90%] text-[16px] bg-primary text-white py-3 rounded-full mb-3 hover:bg-black transition-all duration-300">
+                      View Cart
+                    </button>
+                    <button className="w-[90%] text-primary text-[16px] bg-transparent py-3 rounded-full mb-3 border-primary border-[1px] hover:bg-black hover:text-white transition-all duration-300">
+                      Checkout
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="hidden lg:flex items-center gap-2 xl:gap-4 text-sm xl:text-base">
               {user && token ? (

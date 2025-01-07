@@ -4,8 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LectureTitles = ({ Course, display }) => {
-  const alertShow = () => {
-    if (display === false) {
+  const alertShow = (e) => {
+    if (!display) {
+      e.preventDefault(); // Prevent navigation
       toast.info("You need to Enroll the course first");
     }
   };
@@ -17,8 +18,7 @@ const LectureTitles = ({ Course, display }) => {
       .toString()
       .padStart(2, "0")}`;
   };
-  
-  
+
   return (
     <ul className="divide-y">
       <ToastContainer
