@@ -16,6 +16,7 @@ import SignUp from "./Pages/signUp";
 import DispalyCourse from "./Pages/DispalyCourse";
 import CourseLectures from "./Pages/CourseLectures";
 import MyCourses from "./Pages/myCourses";
+import Cart from "./Pages/Cart";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/myCourses",
     element: <MyCourses />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
   {
     path: "/login",

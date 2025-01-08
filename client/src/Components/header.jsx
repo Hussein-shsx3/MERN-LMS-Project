@@ -283,9 +283,9 @@ const Header = () => {
                       <span className="text-lg font-medium text-title">Subtotal:</span>
                       <span className="text-lg font-medium text-title">${totalPrice}</span>
                     </div>
-                    <button className="w-[90%] text-[16px] bg-primary text-white py-3 rounded-full mb-3 hover:bg-black transition-all duration-300">
+                    <Link to="/cart" className="w-[90%] text-[16px] text-center bg-primary text-white py-3 rounded-full mb-3 hover:bg-black transition-all duration-300">
                       View Cart
-                    </button>
+                    </Link>
                     <button className="w-[90%] text-primary text-[16px] bg-transparent py-3 rounded-full mb-3 border-primary border-[1px] hover:bg-black hover:text-white transition-all duration-300">
                       Checkout
                     </button>
