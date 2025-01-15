@@ -97,7 +97,7 @@
     margin-bottom: 0.5rem;
   }
 
-  .socialIcons{
+  .socialIcons {
     @apply text-gray-400 hover:text-primary
   }
 
@@ -139,6 +139,7 @@
   }
 
   @keyframes bblFadInOut {
+
     0%,
     80%,
     100% {
@@ -148,5 +149,9 @@
     40% {
       box-shadow: 0 2.5em 0 0;
     }
+  }
+
+  .profileLinks {
+    @apply w-[35px] h-[35px] text-white text-2xl rounded-full border-[1px] border-white flex justify-center items-center hover:bg-white hover:text-black transition-all duration-300
   }
 }

@@ -17,6 +17,8 @@ import DispalyCourse from "./Pages/DispalyCourse";
 import CourseLectures from "./Pages/CourseLectures";
 import MyCourses from "./Pages/myCourses";
 import Cart from "./Pages/Cart";
+import Profile from "./Pages/Profile";
+import AboutMe from "./Components/aboutMe";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,16 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/profile/:userId",
+    element: <Profile />,
+    children: [
+      {
+        path: "/profile/:userId",
+        element: <AboutMe />,
+      },
+    ],
   },
   {
     path: "/login",

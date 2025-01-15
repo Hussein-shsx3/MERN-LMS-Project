@@ -49,6 +49,19 @@ export const useGetUser = () =>
     enabled: !!cookies.get("token"),
   });
 
+// Fetch a single user by id without token
+export const useGetUserById = (userId) =>
+  useQuery({
+    queryKey: ["getUserById", userId], 
+    queryFn: async () => {
+      if (!userId) throw new Error("User ID is required.");
+      const { data } = await api.get(`/api/user/getUserById/${userId}`); 
+      return data;
+    },
+    enabled: !!userId, 
+  });
+
+
 /** Redux Toolkit APIs */
 
 // Update user data (text fields)

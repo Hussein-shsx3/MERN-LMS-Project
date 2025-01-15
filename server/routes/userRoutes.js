@@ -5,6 +5,7 @@ import {
   updateUser,
   deleteUser,
   updateUserImage,
+  getUserById,
 } from "../controllers/userController.js";
 import { auth } from "../middleware/tokenMiddleware.js";
 import { isAdmin } from "../middleware/adminMiddleware.js";
@@ -15,6 +16,8 @@ const router = express.Router();
 router.get("/getAllUsers", auth, isAdmin, getAllUsers);
 
 router.get("/getUser", auth, getUser);
+
+router.get("/getUserById/:userId", getUserById);
 
 router.put("/", auth, updateUser);
 

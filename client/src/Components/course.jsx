@@ -23,13 +23,15 @@ const Course = ({ course }) => {
   };
 
   return (
-    <Link
+    <div
       id="course"
-      to={getPath()}
-      className="group flex flex-col w-full md:max-w-[420px] max-h-[500px] p-4 rounded-2xl border overflow-hidden cursor-pointer bg-white transition-all duration-300 hover:shadow-lg"
+      className="group flex flex-col w-full md:max-w-[420px] max-h-[500px] p-4 rounded-2xl border overflow-hidden bg-white transition-all duration-300 hover:shadow-lg"
     >
       <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-2">
+        <Link
+          to={`/profile/${course?.teacher._id}`}
+          className="flex items-center gap-2"
+        >
           <img
             src={course.teacher?.picture || "../images/profile-photo.png"}
             alt="teacher"
@@ -38,17 +40,17 @@ const Course = ({ course }) => {
           <p className="text-text text-[15px] font-medium">
             {course.teacher?.firstName} {course.teacher?.lastName}
           </p>
-        </div>
+        </Link>
         <i className="bx bx-bookmark rounded-full bg-gray-100 hover:bg-primary text-primary hover:text-white w-8 h-8 flex justify-center items-center cursor-pointer transition-all duration-300"></i>
       </div>
 
-      <div className="w-full h-[210px]">
+      <Link to={getPath()} className="w-full h-[210px] cursor-pointer">
         <img
           src={course.image || "../images/placeholder-image.png"}
           alt="course"
           className="rounded-xl w-full h-full object-cover"
         />
-      </div>
+      </Link>
 
       <div className="courseHover flex flex-col px-4 py-5 bg-white gap-3 transition-all duration-300 group-hover:bg-gray-50">
         <p className="inline-block px-2 py-1 text-[13px] rounded-sm bg-[#dcf2f4] text-[#17a2b8]">
@@ -77,11 +79,14 @@ const Course = ({ course }) => {
             {course.price === 0 ? "Free" : `$${course.price}`}
           </p>
         </div>
-        <div className="Preview bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <Link
+          to={getPath()}
+          className="Preview cursor-pointer bg-primary hover:bg-title text-white flex justify-center items-center w-[95%] rounded-full h-[40px] mt-2 self-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        >
           Preview This Course
-        </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

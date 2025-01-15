@@ -26,6 +26,21 @@ export const getUser = async (req, res, next) => {
   }
 };
 
+// Get one user by Id
+export const getUserById = async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId).populate("coursesEnrolled");
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Update user
 export const updateUser = async (req, res, next) => {
   try {
