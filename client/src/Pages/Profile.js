@@ -18,24 +18,24 @@ const Profile = () => {
       <div className="container w-full flex space-x-4 p-4">
         <Link
           to="/about-me"
-          className="text-[15px] font-medium text-gray-700 hover:text-blue-500 transition"
+          className="text-[17px] font-medium text-title hover:text-blue-500 transition"
         >
           About Me
         </Link>
         <Link
           to="/edit-profile"
-          className="text-[15px] font-medium text-gray-700 hover:text-blue-500 transition"
+          className="text-[17px] font-medium text-title hover:text-blue-500 transition"
         >
           Edit Profile
         </Link>
         <Link
           to="/edit-profile-picture"
-          className="text-[15px] font-medium text-gray-700 hover:text-blue-500 transition"
+          className="text-[17px] font-medium text-title hover:text-blue-500 transition"
         >
           Edit Profile Picture
         </Link>
       </div>
-      <Outlet />
+      <Outlet User={user} />
       <Footer />
     </section>
   );

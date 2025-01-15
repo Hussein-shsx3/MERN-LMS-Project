@@ -28,7 +28,7 @@ export const getUser = async (req, res, next) => {
 
 // Get one user by Id
 export const getUserById = async (req, res, next) => {
-  const userId = req.params.id;
+  const { userId } = req.params;
   try {
     const user = await User.findById(userId).populate("coursesEnrolled");
     if (!user) {
