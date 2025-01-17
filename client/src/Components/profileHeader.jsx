@@ -5,7 +5,7 @@ import { useFetchCourses } from "../Api/courseApi";
 const ProfileHeader = ({ User }) => {
   const { data: courses } = useFetchCourses();
   const filteredCourses = courses?.filter(
-    (course) => course.teacher._id === User._id
+    (course) => course.teacher._id === User?._id
   );
   return (
     <div className="w-full min-h-[270px] container flex flex-col md:flex-row justify-between items-end gap-4 p-10 bg-primary m-10 rounded-2xl">

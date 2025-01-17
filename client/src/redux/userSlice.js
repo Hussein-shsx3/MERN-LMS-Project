@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateUser, deleteUser } from "../Api/userApi"; // Adjust the path to your API functions
+import { updateUser, deleteUser, updateUserImage } from "../Api/userApi";
 
 const initialState = {
   fetchStatus: "idle",
   updateStatus: "idle",
   deleteStatus: "idle",
+  updateImageStatus: "idle", // Add status for updating the user image
   error: null,
+  user: null,
+  users: [],
 };
 
 const userSlice = createSlice({
@@ -17,6 +20,7 @@ const userSlice = createSlice({
       state.fetchStatus = "idle";
       state.updateStatus = "idle";
       state.deleteStatus = "idle";
+      state.updateImageStatus = "idle"; // Reset image update status
       state.error = null;
     },
 
@@ -25,11 +29,12 @@ const userSlice = createSlice({
       state.error = null;
     },
 
-    // Clear all status (useful to reset the state)
+    // Clear all statuses
     clearStatus: (state) => {
       state.fetchStatus = "idle";
       state.updateStatus = "idle";
       state.deleteStatus = "idle";
+      state.updateImageStatus = "idle"; // Reset image update status
     },
   },
   extraReducers: (builder) => {
@@ -42,8 +47,7 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.updateStatus = "succeeded";
         state.user = action.payload;
-        // Update user in the users list if necessary
-        state.users = state.users.map((user) =>
+        state.users = state.users?.map((user) =>
           user._id === action.payload._id ? action.payload : user
         );
       })
@@ -66,6 +70,21 @@ const userSlice = createSlice({
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.deleteStatus = "failed";
+        state.error = action.payload;
+      });
+
+    // Update user image
+    builder
+      .addCase(updateUserImage.pending, (state) => {
+        state.updateImageStatus = "loading";
+        state.error = null;
+      })
+      .addCase(updateUserImage.fulfilled, (state, action) => {
+        state.updateImageStatus = "succeeded";
+        state.user = action.payload;
+      })
+      .addCase(updateUserImage.rejected, (state, action) => {
+        state.updateImageStatus = "failed";
         state.error = action.payload;
       });
   },

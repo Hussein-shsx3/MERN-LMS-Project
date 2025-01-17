@@ -19,6 +19,8 @@ import MyCourses from "./Pages/myCourses";
 import Cart from "./Pages/Cart";
 import Profile from "./Pages/Profile";
 import AboutMe from "./Components/aboutMe";
+import EditProfile from "./Components/editProfile";
+import EditProfileImage from "./Components/editProfileImage";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId",
         element: <AboutMe />,
+      },
+      {
+        path: "/profile/:userId/editProfile",
+        element: <EditProfile />,
+      },
+      {
+        path: "/profile/:userId/editProfileImage",
+        element: <EditProfileImage />,
       },
     ],
   },
