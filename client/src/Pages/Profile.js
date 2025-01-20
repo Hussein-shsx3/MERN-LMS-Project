@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../Components/header";
 import Footer from "../Components/footer";
+import ScrollToTop from "../scrollToTop";
 import ProfileHeader from "../Components/profileHeader";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useGetUserById, useGetUser } from "../Api/userApi";
@@ -11,6 +12,7 @@ const Profile = () => {
   const { data: myProfile } = useGetUser();
   return (
     <section className="relative w-full flex flex-col items-center bg-[#f2f8fd]">
+      <ScrollToTop />
       <Header />
       <ProfileHeader User={user} />
       {myProfile?._id === user?._id && (

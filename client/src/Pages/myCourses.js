@@ -5,6 +5,7 @@ import PathHeader from "../Components/pathHeader";
 import Course from "../Components/course";
 import { useGetUser } from "../Api/userApi";
 import Cookies from "universal-cookie";
+import ScrollToTop from "../scrollToTop";
 
 const MyCourses = () => {
   const cookies = new Cookies();
@@ -34,6 +35,7 @@ const MyCourses = () => {
 
   return (
     <section>
+      <ScrollToTop />
       <Header />
       <PathHeader title={"My Courses"} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
