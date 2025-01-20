@@ -228,7 +228,9 @@ const Header = () => {
                 <div className="fixed top-0 right-0 w-full max-w-sm h-[100dvh] bg-white shadow-lg z-40">
                   {/* Cart Header */}
                   <div className="flex justify-between items-center p-4 border-b">
-                    <h2 className="text-lg text-title font-semibold">Shopping Cart</h2>
+                    <h2 className="text-lg text-title font-semibold">
+                      Shopping Cart
+                    </h2>
                     <button
                       className="text-2xl text-gray-500 hover:text-gray-800 transition-all duration-300 hover:rotate-90"
                       onClick={toggleCart}
@@ -280,10 +282,17 @@ const Header = () => {
                   {/* Cart Footer */}
                   <div className="p-4 border-t flex flex-col items-center mt-40">
                     <div className="w-full flex justify-between items-center mb-4">
-                      <span className="text-lg font-medium text-title">Subtotal:</span>
-                      <span className="text-lg font-medium text-title">${totalPrice}</span>
+                      <span className="text-lg font-medium text-title">
+                        Subtotal:
+                      </span>
+                      <span className="text-lg font-medium text-title">
+                        ${totalPrice}
+                      </span>
                     </div>
-                    <Link to="/cart" className="w-[90%] text-[16px] text-center bg-primary text-white py-3 rounded-full mb-3 hover:bg-black transition-all duration-300">
+                    <Link
+                      to="/cart"
+                      className="w-[90%] text-[16px] text-center bg-primary text-white py-3 rounded-full mb-3 hover:bg-black transition-all duration-300"
+                    >
                       View Cart
                     </Link>
                     <button className="w-[90%] text-primary text-[16px] bg-transparent py-3 rounded-full mb-3 border-primary border-[1px] hover:bg-black hover:text-white transition-all duration-300">
@@ -296,18 +305,20 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-2 xl:gap-4 text-sm xl:text-base">
               {user && token ? (
                 <div className="relative group h-full">
-                  <img
-                    src={
-                      user?.picture
-                        ? user?.picture
-                        : "/images/profile-photo.png"
-                    }
-                    alt="Profile"
-                    className="w-[38px] h-[38px] rounded-full cursor-pointer object-cover"
-                  />
+                  <Link to={user ? `/profile/${user._id}` : ""}>
+                    <img
+                      src={
+                        user?.picture
+                          ? user?.picture
+                          : "/images/profile-photo.png"
+                      }
+                      alt="Profile"
+                      className="w-[38px] h-[38px] rounded-full cursor-pointer object-cover"
+                    />
+                  </Link>
                   <div className="absolute left-[-10px] top-6 mt-2 w-[150px] bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                     <Link
-                      to="/profile"
+                      to={`/profile/${user._id}`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Profile

@@ -11,7 +11,7 @@ const ProfileHeader = ({ User }) => {
     <div className="w-full min-h-[270px] container flex flex-col md:flex-row justify-between items-end gap-4 p-10 bg-primary m-10 rounded-2xl">
       <div className="flex flex-row translate-y-0 md:translate-y-16">
         <img
-          src={"/images/profile-photo.png"}
+          src={User ? `${User.picture}` : "/images/profile-photo.png"}
           alt="Profile"
           className="w-[145px] h-[145px] rounded-full object-cover border-white border-[5px]"
         />
