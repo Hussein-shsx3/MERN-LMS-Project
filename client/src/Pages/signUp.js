@@ -110,7 +110,9 @@ const Register = () => {
             Register
           </button>
         )}
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {error?.message && (
+          <p className="text-red-500 text-sm mt-2">{error.message}</p>
+        )}
       </form>
       <Footer />
     </section>

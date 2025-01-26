@@ -75,7 +75,7 @@ const OurCourses = () => {
           className="flex flex-wrap items-stretch justify-center lg:justify-start gap-3 mt-7"
           data-aos="fade-up"
         >
-          {filteredCourses.length > 0 ? (
+          {filteredCourses?.length > 0 ? (
             filteredCourses.map((course) => (
               <Course key={course._id} course={course} />
             ))

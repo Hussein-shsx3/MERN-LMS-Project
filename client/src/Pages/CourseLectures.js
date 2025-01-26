@@ -12,12 +12,15 @@ const CourseLectures = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
 
-  const { data: course } = useFetchCourseById(courseId);
-  const { data: user, isLoading } = useGetUser();
+  // Fetch the course and user data
+  const { data: course, isLoading: isCourseLoading } =
+    useFetchCourseById(courseId);
+  const { data: user, isLoading: isUserLoading } = useGetUser();
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isCourseLoading || isUserLoading) return;
 
+    // If the user is not logged in, redirect them to the course details page
     if (!user) {
       navigate(`/courses/${courseId}`);
     } else {
@@ -25,11 +28,19 @@ const CourseLectures = () => {
         (enrolledCourse) => enrolledCourse._id === courseId
       );
 
-      if (!isEnrolled) {
+      const isOwner = course?.teacher?._id === user._id; // Check if the user is the course owner
+
+      // If the user is neither enrolled nor the owner, redirect them
+      if (!isEnrolled && !isOwner) {
         navigate(`/courses/${courseId}`);
       }
     }
-  }, [user, isLoading, courseId, navigate]);
+  }, [user, course, isCourseLoading, isUserLoading, courseId, navigate]);
+
+  // Display a loading message while fetching data
+  if (isCourseLoading || isUserLoading) {
+    return <p className="text-center">Loading...</p>;
+  }
 
   return (
     <section className="flex flex-col items-center">

@@ -64,7 +64,7 @@ const PathHeader = ({ title, teacher, category, lastApdate, image }) => {
           category && (
             <div className="flex flex-wrap w-full items-center gap-3 mt-3">
               <img
-                src={image ? image : "../images/profile-photo.png"}
+                src={image ? image : "/images/profile-photo.png"}
                 alt=""
                 className="rounded-full w-11 h-11 object-cover"
               />

@@ -77,7 +77,7 @@ const EditProfile = () => {
   }, [myProfile, user, userId, nav]);
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full container flex flex-col justify-between gap-5 m-10">
       <ToastContainer />
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -181,7 +181,7 @@ const EditProfile = () => {
                     value={formData.bio}
                     onChange={handleChange}
                     rows="4"
-                    className={`$"inputStyles" w-full outline-none p-2 resize-none`}
+                    className="inputStyles w-full outline-none p-2 resize-none"
                     placeholder="Write a short bio about yourself..."
                   />
                 </div>

@@ -305,7 +305,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-2 xl:gap-4 text-sm xl:text-base">
               {user && token ? (
                 <div className="relative group h-full">
-                  <Link to={user ? `/profile/${user._id}` : ""}>
+                  <Link to={user ? `/profile/${user._id}` : "/"}>
                     <img
                       src={
                         user?.picture

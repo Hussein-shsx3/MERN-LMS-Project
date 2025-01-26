@@ -95,7 +95,9 @@ const EditProfileImage = () => {
   return (
     <div className="max-w-lg mt-5 mx-auto p-10 bg-gradient-to-b from-white to-gray-50 shadow-xl rounded-2xl">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900">Edit Profile Image</h2>
+        <h2 className="text-3xl font-medium text-gray-900">
+          Edit Profile Image
+        </h2>
         <p className="mt-2 text-gray-600">
           Choose a new profile picture to represent you
         </p>

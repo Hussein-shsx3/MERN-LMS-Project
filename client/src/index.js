@@ -21,6 +21,8 @@ import Profile from "./Pages/Profile";
 import AboutMe from "./Components/aboutMe";
 import EditProfile from "./Components/editProfile";
 import EditProfileImage from "./Components/editProfileImage";
+import AddNewCourse from "./Components/addNewCourse";
+import MyCoursesDashboard from "./Components/myCoursesDashboard";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId/editProfileImage",
         element: <EditProfileImage />,
+      },
+      {
+        path: "/profile/:userId/addNewCourse",
+        element: <AddNewCourse />,
+      },
+      {
+        path: "/profile/:userId/myCoursesDashboard",
+        element: <MyCoursesDashboard />,
       },
     ],
   },

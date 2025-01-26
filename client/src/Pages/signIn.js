@@ -16,7 +16,7 @@ const SignIn = () => {
 
   const { status, error } = useSelector((state) => state.auth);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
   };
@@ -45,8 +45,11 @@ const SignIn = () => {
           </Link>
         </div>
         <div className="w-full flex flex-col justify-center mt-5 gap-2">
-          <p className="text-title text-sm font-medium">Email Address</p>
+          <label className="text-title text-sm font-medium" htmlFor="email">
+            Email Address
+          </label>
           <input
+            id="email"
             type="email"
             className="w-full h-[47px] outline-none border-[2px] border-gray-100 focus:border-indigo-200 rounded-md px-4 text-text text-[14px]"
             placeholder="Email Address"
@@ -55,8 +58,11 @@ const SignIn = () => {
           />
         </div>
         <div className="w-full flex flex-col justify-center mt-4 gap-2">
-          <p className="text-title text-sm font-medium">Password</p>
+          <label className="text-title text-sm font-medium" htmlFor="password">
+            Password
+          </label>
           <input
+            id="password"
             type="password"
             className="w-full h-[47px] outline-none border-[2px] border-gray-100 focus:border-indigo-200 rounded-md px-4 text-text text-[14px]"
             placeholder="Password"
@@ -69,11 +75,16 @@ const SignIn = () => {
             <span className="loader"></span>
           </div>
         ) : (
-          <button className="bg-primary w-full h-[47px] rounded-md text-white font-medium mt-6">
-            Register
+          <button
+            type="submit"
+            className="bg-primary w-full h-[47px] rounded-md text-white font-medium mt-6"
+          >
+            Login
           </button>
         )}
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {error?.message && (
+          <p className="text-red-500 text-sm mt-2">{error.message}</p>
+        )}
       </form>
       <Footer />
     </section>
