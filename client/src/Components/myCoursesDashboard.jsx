@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
-import { useFetchCourses } from "../Api/courseApi";
+import React, { useState, useEffect } from "react";
+import { useFetchCourses, deleteCourse } from "../Api/courseApi";
 import { useGetUserById, useGetUser } from "../Api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const MyCoursesDashboard = () => {
   const { userId } = useParams();
   const nav = useNavigate();
+  const dispatch = useDispatch();
+
+  // State to handle the delete modal
+  const [showModal, setShowModal] = useState(false);
+  const [courseToDelete, setCourseToDelete] = useState(null);
 
   // Fetch user and course data
   const { data: user } = useGetUserById(userId);
@@ -44,8 +51,40 @@ const MyCoursesDashboard = () => {
     (course) => course.teacher._id === myProfile._id
   );
 
+  const openDeleteModal = (courseId) => {
+    setCourseToDelete(courseId);
+    setShowModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowModal(false);
+    setCourseToDelete(null);
+  };
+
+  const handleDelete = async () => {
+    try {
+      dispatch(deleteCourse(courseToDelete));
+      toast.success("Course deleted successfully.");
+      setShowModal(false);
+    } catch (err) {
+      toast.warning("Failed to delete the course. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-8">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="z-100 mt-20" // Custom z-index
+      />
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-10">
           My Courses
@@ -95,16 +134,30 @@ const MyCoursesDashboard = () => {
                       View
                     </button>
                     <button
-                      onClick={() => nav(`/courses/${course._id}/edit`)}
+                      onClick={() =>
+                        nav(
+                          `/profile/${myProfile._id}/editCourse/${course._id}`
+                        )
+                      }
                       className="flex-grow bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full hover:from-green-600 hover:to-green-700 transition-all"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => nav(`/courses/${course._id}/add-lecture`)}
+                      onClick={() =>
+                        nav(
+                          `/profile/${myProfile._id}/addLecture/${course._id}`
+                        )
+                      }
                       className="flex-grow bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full hover:from-purple-600 hover:to-purple-700 transition-all"
                     >
                       Add Lecture
+                    </button>
+                    <button
+                      onClick={() => openDeleteModal(course._id)}
+                      className="flex-grow bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full hover:from-red-600 hover:to-red-700 transition-all"
+                    >
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -113,6 +166,35 @@ const MyCoursesDashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">
+              Confirm Delete
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this course? This action cannot be
+              undone.
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={closeDeleteModal}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-full hover:bg-gray-300 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -23,6 +23,8 @@ import EditProfile from "./Components/editProfile";
 import EditProfileImage from "./Components/editProfileImage";
 import AddNewCourse from "./Components/addNewCourse";
 import MyCoursesDashboard from "./Components/myCoursesDashboard";
+import EditCourse from "./Components/editCourse";
+import AddLecture from "./Components/addLecture";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +76,14 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId/myCoursesDashboard",
         element: <MyCoursesDashboard />,
+      },
+      {
+        path: "/profile/:userId/editCourse/:courseId",
+        element: <EditCourse />,
+      },
+      {
+        path: "/profile/:userId/addLecture/:courseId",
+        element: <EditCourse />,
       },
     ],
   },
