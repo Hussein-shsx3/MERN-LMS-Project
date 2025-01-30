@@ -25,6 +25,7 @@ import AddNewCourse from "./Components/addNewCourse";
 import MyCoursesDashboard from "./Components/myCoursesDashboard";
 import EditCourse from "./Components/editCourse";
 import AddLecture from "./Components/addLecture";
+import EditLecture from "./Components/editLecture";
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId/addLecture/:courseId",
         element: <AddLecture />,
+      },
+      {
+        path: "/profile/:userId/editLecture/:courseId/:lectureNumber",
+        element: <EditLecture />,
       },
     ],
   },

@@ -54,7 +54,7 @@ const Profile = () => {
           {(myProfile?.role === "teacher" || myProfile?.role === "admin") && (
             <Link
               to={`/profile/${userId}/myCoursesDashboard`}
-              className={getLinkClass(`/profile/${userId}/MyCoursesDashboard`)}
+              className={getLinkClass(`/profile/${userId}/myCoursesDashboard`)}
             >
               My Courses
             </Link>
