@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
+import Header from "../Components/Header/header";
+import Footer from "../Components/Footer/footer";
 import PathHeader from "../Components/pathHeader";
 import Instructor from "../Components/instructor";
 import CourseDetails from "../Components/courseDetails";

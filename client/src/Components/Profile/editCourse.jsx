@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { useFetchCourseById } from "../Api/courseApi";
-import { updateCourse } from "../Api/courseApi";
+import { useFetchCourseById } from "../../Api/courseApi";
+import { updateCourse } from "../../Api/courseApi";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
 

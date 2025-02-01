@@ -18,14 +18,15 @@ import CourseLectures from "./Pages/CourseLectures";
 import MyCourses from "./Pages/myCourses";
 import Cart from "./Pages/Cart";
 import Profile from "./Pages/Profile";
-import AboutMe from "./Components/aboutMe";
-import EditProfile from "./Components/editProfile";
-import EditProfileImage from "./Components/editProfileImage";
-import AddNewCourse from "./Components/addNewCourse";
-import MyCoursesDashboard from "./Components/myCoursesDashboard";
-import EditCourse from "./Components/editCourse";
-import AddLecture from "./Components/addLecture";
-import EditLecture from "./Components/editLecture";
+import AboutMe from "./Components/Profile/aboutMe";
+import EditProfile from "./Components/Profile/editProfile";
+import EditProfileImage from "./Components/Profile/editProfileImage";
+import AddNewCourse from "./Components/Profile/addNewCourse";
+import MyCoursesDashboard from "./Components/Profile/myCoursesDashboard";
+import EditCourse from "./Components/Profile/editCourse";
+import AddLecture from "./Components/Profile/addLecture";
+import EditLecture from "./Components/Profile/editLecture";
+import EditCourseImage from "./Components/Profile/editCourseImage";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId/editLecture/:courseId/:lectureNumber",
         element: <EditLecture />,
+      },
+      {
+        path: "/profile/:userId/editCourseImage/:courseId",
+        element: <EditCourseImage />,
       },
     ],
   },

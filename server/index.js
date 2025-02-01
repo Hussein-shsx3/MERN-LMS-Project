@@ -8,6 +8,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import lectureRoutes from "./routes/lectureRoutes.js";
+import contactRoutes from "./routes/contactRoute.js"
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/course", courseRoutes);
 app.use("/api/lecture", lectureRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.use(errorHandler);
 app.use(notFound);

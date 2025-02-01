@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useFetchCourses } from "../Api/courseApi";
+import { useFetchCourses } from "../../Api/courseApi";
 
 const ProfileHeader = ({ User }) => {
   const { data: courses } = useFetchCourses();

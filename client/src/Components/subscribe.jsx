@@ -4,12 +4,12 @@ const Subscribe = () => {
   return (
     <section className="bg-primary w-full flex justify-center items-center py-16">
       <form className="container flex flex-col justify-center items-center">
-        <div
-          className="text-white text-2xl md:text-5xl mb-9 flex gap-[5px]"
-          data-aos="fade-up"
-        >
+        <div className="text-white text-2xl md:text-5xl mb-9 flex gap-[5px]">
           <p>Get Started With</p>
-          <p className="text-[#ffc221] relative flex justify-center">
+          <p
+            className="text-[#ffc221] relative flex justify-center"
+            data-aos="fade-up"
+          >
             Acadia
             <img
               src="./images/hero-2-svg-1.svg"
@@ -19,7 +19,7 @@ const Subscribe = () => {
           </p>
           <p>Now</p>
         </div>
-        <p className="text-white text-lg mt-[-5px]" data-aos="fade-up">
+        <p className="text-white text-lg mt-[-5px]">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         </p>
         <div className="w-[95%] md:w-[60%] flex items-center justify-between p-3 border-[1px] border-blue-400 rounded-full gap-2 my-10">

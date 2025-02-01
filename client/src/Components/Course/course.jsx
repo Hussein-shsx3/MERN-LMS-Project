@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import { useGetUser } from "../Api/userApi";
+import { useGetUser } from "../../Api/userApi";
 
 const Course = ({ course }) => {
   const { _id: courseId } = course;

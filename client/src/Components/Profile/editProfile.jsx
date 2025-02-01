@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetUserById, useGetUser, updateUser } from "../Api/userApi";
+import { useGetUserById, useGetUser, updateUser } from "../../Api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { clearStatus } from "../redux/userSlice";
+import { clearStatus } from "../../redux/userSlice";
 import {
   Github,
   Youtube,

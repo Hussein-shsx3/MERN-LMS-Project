@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
+import Header from "../Components/Header/header";
+import Footer from "../Components/Footer/footer";
 import ScrollToTop from "../scrollToTop";
-import ProfileHeader from "../Components/profileHeader";
+import ProfileHeader from "../Components/Profile/profileHeader";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom";
 import { useGetUserById, useGetUser } from "../Api/userApi";
 

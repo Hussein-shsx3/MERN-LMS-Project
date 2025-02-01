@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
+import Header from "../Components/Header/header";
+import Footer from "../Components/Footer/footer";
 import PathHeader from "../Components/pathHeader";
 import ScrollToTop from "../scrollToTop";
 import { Link, useNavigate } from "react-router-dom";

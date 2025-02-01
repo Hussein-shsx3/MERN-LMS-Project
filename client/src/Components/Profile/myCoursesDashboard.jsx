@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useFetchCourses, deleteCourse } from "../Api/courseApi";
-import { useGetUserById, useGetUser } from "../Api/userApi";
+import { useFetchCourses, deleteCourse } from "../../Api/courseApi";
+import { useGetUserById, useGetUser } from "../../Api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -152,6 +152,16 @@ const MyCoursesDashboard = () => {
                       className="flex-grow bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full hover:from-purple-600 hover:to-purple-700 transition-all"
                     >
                       Add Lecture
+                    </button>
+                    <button
+                      onClick={() =>
+                        nav(
+                          `/profile/${myProfile._id}/editCourseImage/${course._id}`
+                        )
+                      }
+                      className="flex-grow bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-4 py-2 rounded-full hover:from-yellow-600 hover:to-yellow-700 transition-all"
+                    >
+                      Edit Image
                     </button>
                     <button
                       onClick={() => openDeleteModal(course._id)}

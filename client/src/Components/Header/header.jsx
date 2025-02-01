@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/authSlice";
-import { clearStatus } from "../redux/userSlice";
-import { useGetUser } from "../Api/userApi";
-import { useFetchCourses } from "../Api/courseApi";
+import { logout } from "../../redux/authSlice";
+import { clearStatus } from "../../redux/userSlice";
+import { useGetUser } from "../../Api/userApi";
+import { useFetchCourses } from "../../Api/courseApi";
 import Cookies from "universal-cookie";
-import SearchBar from "./searchBar";
-import { removeCourse } from "../redux/cartSlice";
+import SearchBar from "../searchBar";
+import { removeCourse } from "../../redux/cartSlice";
 
 import {
   Dialog,

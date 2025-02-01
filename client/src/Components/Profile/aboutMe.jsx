@@ -1,8 +1,8 @@
 import React from "react";
-import { useFetchCourses } from "../Api/courseApi";
-import Course from "./course";
+import { useFetchCourses } from "../../Api/courseApi";
+import Course from "../Course/course";
 import { useParams } from "react-router-dom";
-import { useGetUserById } from "../Api/userApi";
+import { useGetUserById } from "../../Api/userApi";
 
 const AboutMe = () => {
   const { userId } = useParams();

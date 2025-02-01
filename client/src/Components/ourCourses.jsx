@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Course from "./course";
+import Course from "./Course/course";
 import { useFetchCourses } from "../Api/courseApi";
 
 const OurCourses = () => {
@@ -31,16 +31,14 @@ const OurCourses = () => {
   return (
     <section className="w-full flex flex-col items-center justify-center py-9">
       <div className="container relative w-[95%] md:w-full flex flex-col gap-2">
-        <p className="text-primary text-lg" data-aos="fade-up">
-          Our Courses
-        </p>
+        <p className="text-primary text-lg">Our Courses</p>
         <div className="w-full flex flex-col xl:flex-row justify-between xl:items-center gap-0 xl:gap-0">
-          <div
-            className="text-2xl md:text-5xl font-medium mb-9 flex gap-[5px]"
-            data-aos="fade-up"
-          >
+          <div className="text-2xl md:text-5xl font-medium mb-9 flex gap-[5px]">
             <p>Most Popular </p>
-            <p className="text-primary relative flex justify-center">
+            <p
+              className="text-primary relative flex justify-center"
+              data-aos="fade-up"
+            >
               Courses
               <img
                 src="./images/hero-2-svg-1.svg"
@@ -71,10 +69,7 @@ const OurCourses = () => {
             ))}
           </div>
         </div>
-        <div
-          className="flex flex-wrap items-stretch justify-center lg:justify-start gap-3 mt-7"
-          data-aos="fade-up"
-        >
+        <div className="flex flex-wrap items-stretch justify-center lg:justify-start gap-3 mt-7">
           {filteredCourses?.length > 0 ? (
             filteredCourses.map((course) => (
               <Course key={course._id} course={course} />

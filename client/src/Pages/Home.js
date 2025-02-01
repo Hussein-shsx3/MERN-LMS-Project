@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import Header from "../Components/header";
+import Header from "../Components/Header/header";
 import Main from "../Components/main";
 import TopCategories from "../Components/topCategories";
 import OurCourses from "../Components/ourCourses";
 import Subscribe from "../Components/subscribe";
-import Footer from "../Components/footer";
+import Footer from "../Components/Footer/footer";
 import ScrollToTop from "../scrollToTop";
 import "react-toastify/dist/ReactToastify.css";
 

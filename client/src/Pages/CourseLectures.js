@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
+import Header from "../Components/Header/header";
+import Footer from "../Components/Footer/footer";
 import PathHeader from "../Components/pathHeader";
 import Lectures from "../Components/lectures";
 import ScrollToTop from "../scrollToTop";

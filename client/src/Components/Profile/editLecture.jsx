@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useFetchCourseById } from "../Api/courseApi";
-import { updateLecture } from "../Api/lectureApi";
+import { useFetchCourseById } from "../../Api/courseApi";
+import { updateLecture } from "../../Api/lectureApi";
 
 const EditLecture = () => {
   const { courseId, lectureNumber } = useParams();

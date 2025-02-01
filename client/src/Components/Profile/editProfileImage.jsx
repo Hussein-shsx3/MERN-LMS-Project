@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetUserById, useGetUser, updateUserImage } from "../Api/userApi";
-import { clearStatus } from "../redux/userSlice";
+import { useGetUserById, useGetUser, updateUserImage } from "../../Api/userApi";
+import { clearStatus } from "../../redux/userSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Upload, Loader2, Camera } from "lucide-react";

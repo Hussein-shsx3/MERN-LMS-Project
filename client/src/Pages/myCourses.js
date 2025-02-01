@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
+import Header from "../Components/Header/header";
+import Footer from "../Components/Footer/footer";
 import PathHeader from "../Components/pathHeader";
-import Course from "../Components/course";
+import Course from "../Components/Course/course";
 import { useGetUser } from "../Api/userApi";
 import Cookies from "universal-cookie";
 import ScrollToTop from "../scrollToTop";

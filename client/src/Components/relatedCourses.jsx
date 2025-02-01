@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Course from "./course";
+import Course from "./Course/course";
 import { useFetchCourses } from "../Api/courseApi";
 
 const RelatedCourses = ({ currentCourse }) => {

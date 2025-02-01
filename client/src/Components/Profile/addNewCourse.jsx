@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Upload, X } from "lucide-react";
-import { useGetUserById, useGetUser } from "../Api/userApi";
+import { useGetUserById, useGetUser } from "../../Api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createCourse } from "../Api/courseApi";
+import { createCourse } from "../../Api/courseApi";
 
 const AddNewCourse = () => {
   const { userId } = useParams();

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useFetchCourses } from "../Api/courseApi";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
+import Header from "../Components/Header/header";
+import Footer from "../Components/Footer/footer";
 import PathHeader from "../Components/pathHeader";
-import Course from "../Components/course";
+import Course from "../Components/Course/course";
 import ScrollToTop from "../scrollToTop";
 
 const Courses = () => {
