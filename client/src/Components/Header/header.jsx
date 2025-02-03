@@ -208,6 +208,9 @@ const Header = () => {
             <Link to="/myCourses" className="text-title hover:text-primary">
               My Courses
             </Link>
+            <Link to="/contact" className="text-title hover:text-primary">
+              Contact Us
+            </Link>
           </PopoverGroup>
           <div className="flex items-center gap-4 lg:flex-1 lg:justify-end">
             <div className="text-[26px] text-text flex flex-row items-center gap-3 mr-2">
@@ -414,6 +417,12 @@ const Header = () => {
                 className="block rounded-lg px-3 py-2 text-base text-title hover:bg-gray-50 hover:text-primary"
               >
                 My Courses
+              </Link>
+              <Link
+                to="/contact"
+                className="block rounded-lg px-3 py-2 text-base text-title hover:bg-gray-50 hover:text-primary"
+              >
+                Contact Us
               </Link>
             </div>
             <div className="py-6">

@@ -17,6 +17,7 @@ import DispalyCourse from "./Pages/DispalyCourse";
 import CourseLectures from "./Pages/CourseLectures";
 import MyCourses from "./Pages/myCourses";
 import Cart from "./Pages/Cart";
+import Contact from "./Pages/Contact";
 import Profile from "./Pages/Profile";
 import AboutMe from "./Components/Profile/aboutMe";
 import EditProfile from "./Components/Profile/editProfile";
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
   },
   {
     path: "/profile/:userId",

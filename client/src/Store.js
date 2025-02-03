@@ -4,6 +4,7 @@ import courseSlice from "./redux/courseSlice";
 import lectureSlice from "./redux/lectureSlice";
 import userSlice from "./redux/userSlice";
 import cartSlice from "./redux/cartSlice";
+import contactSlice from "./redux/contactSlice";
 
 export const storeApp = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const storeApp = configureStore({
     lecture: lectureSlice,
     user: userSlice,
     cart: cartSlice,
+    contact: contactSlice,
   },
 });
