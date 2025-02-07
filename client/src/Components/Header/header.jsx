@@ -25,7 +25,6 @@ import {
   ChartPieIcon,
   CursorArrowRaysIcon,
   FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -35,26 +34,20 @@ const products = [
   {
     name: "Web Development",
     description: "Get a better understanding of your traffic",
-    href: "#",
+    href: "/courses/Web Development",
     icon: ChartPieIcon,
   },
   {
     name: "Data Science",
     description: "Speak directly to your customers",
-    href: "#",
+    href: "/courses/Data Science",
     icon: CursorArrowRaysIcon,
   },
   {
     name: "Mobile Development",
     description: "Your customers’ data will be safe and secure",
-    href: "#",
+    href: "/courses/Web Design",
     icon: FingerPrintIcon,
-  },
-  {
-    name: "Programming Languages",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
   },
 ];
 
@@ -202,7 +195,10 @@ const Header = () => {
             <Link to="/" className="text-title hover:text-primary">
               Home
             </Link>
-            <Link to="/courses" className="text-title hover:text-primary">
+            <Link
+              to="/courses/all"
+              className="text-title hover:text-primary"
+            >
               All Courses
             </Link>
             <Link to="/myCourses" className="text-title hover:text-primary">
@@ -407,7 +403,7 @@ const Header = () => {
                 Home
               </Link>
               <Link
-                to="/courses"
+                to="/courses/all"
                 className="block rounded-lg px-3 py-2 text-base text-title hover:bg-gray-50 hover:text-primary"
               >
                 All Courses
