@@ -115,7 +115,7 @@ const Header = () => {
       id="header"
       className="relative w-full flex px-2 md:px-0 items-center justify-center z-10 transition-all duration-300 backdrop-blur-2xl bg-white/30"
     >
-      <header className="container w-full shadow-sm">
+      <header className="container w-full">
         {/* Search Bar */}
         <div
           id="searchBar"

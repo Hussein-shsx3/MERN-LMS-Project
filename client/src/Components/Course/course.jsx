@@ -10,16 +10,14 @@ const Course = ({ course }) => {
   // Determine the path based on enrollment
   const getPath = () => {
     if (!user) {
-      return `/courses/${courseId}`;
+      return `/course/${courseId}`;
     }
 
     const isEnrolled = user.coursesEnrolled?.some(
       (enrolledCourse) => enrolledCourse._id === courseId
     );
 
-    return isEnrolled
-      ? `/course/${courseId}/lecture/0`
-      : `/courses/${courseId}`;
+    return isEnrolled ? `/course/${courseId}/lecture/0` : `/course/${courseId}`;
   };
 
   return (

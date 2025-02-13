@@ -1,8 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeCourse, clearCart } from "../redux/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const CartDetails = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { courses, totalPrice } = useSelector((state) => state.cart);
 
@@ -13,6 +15,12 @@ const CartDetails = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+  const handleProceedToCheckout = () => {
+    // Navigate to the Payment page when the user clicks the button
+    navigate("/payment");
+  };
+
   return (
     <div className="container w-full p-6 flex flex-col md:flex-row justify-around gap-5 my-24">
       <div className="w-full md:w-2/3">
@@ -96,7 +104,10 @@ const CartDetails = () => {
           <span>${totalPrice.toFixed(2)}</span>
         </div>
         <hr className="my-5 border-border" />
-        <button className="bg-black text-white w-full px-10 py-2 hover:bg-[#006b61] transition-all duration-200">
+        <button
+          onClick={handleProceedToCheckout}
+          className="bg-black text-white w-full px-10 py-2 hover:bg-[#006b61] transition-all duration-200"
+        >
           Proceed to Checkout
         </button>
       </div>

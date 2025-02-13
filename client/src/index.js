@@ -28,6 +28,7 @@ import EditCourse from "./Components/Profile/editCourse";
 import AddLecture from "./Components/Profile/addLecture";
 import EditLecture from "./Components/Profile/editLecture";
 import EditCourseImage from "./Components/Profile/editCourseImage";
+import Payment from "./Pages/Payment";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
     element: <Courses />,
   },
   {
-    path: "/courses/:courseId",
+    path: "/course/:courseId",
     element: <DispalyCourse />,
   },
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/payment",
+    element: <Payment />,
   },
   {
     path: "/contact",

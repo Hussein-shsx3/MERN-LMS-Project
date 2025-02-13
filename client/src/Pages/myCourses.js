@@ -12,11 +12,13 @@ const MyCourses = () => {
   const token = cookies.get("token");
   const { data: user, isLoading: userLoading } = useGetUser();
 
+  // While loading the user data, show a loading message
   if (userLoading) {
     return <div className="text-center py-10">Loading...</div>;
   }
 
-  if (!user || !token) {
+  // If no token or user, prompt the user to log in
+  if (!token || !user) {
     return (
       <section>
         <Header />
@@ -31,6 +33,7 @@ const MyCourses = () => {
     );
   }
 
+  // Extract enrolled courses from the user object
   const enrolledCourses = user?.coursesEnrolled || [];
 
   return (
