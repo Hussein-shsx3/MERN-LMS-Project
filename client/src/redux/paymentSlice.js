@@ -1,20 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createCheckoutSession } from "../Api/paymentApi"; 
 
-const initialState = {
-  loading: false,
-  sessionUrl: null,
-  error: null,
-};
-
 const paymentSlice = createSlice({
   name: "payment",
-  initialState,
+  initialState: {
+    loading: false,
+    sessionId: null,
+    error: null,
+  },
   reducers: {
-    // Optional: Action to reset payment state (useful after a redirect or on unmount)
-    resetPayment: (state) => {
+    clearPaymentState: (state) => {
       state.loading = false;
-      state.sessionUrl = null;
+      state.sessionId = null;
       state.error = null;
     },
   },
@@ -26,8 +23,7 @@ const paymentSlice = createSlice({
       })
       .addCase(createCheckoutSession.fulfilled, (state, action) => {
         state.loading = false;
-        // Assuming the API returns an object with a "url" property for the Stripe Checkout session
-        state.sessionUrl = action.payload.url;
+        state.sessionId = action.payload.sessionId;
       })
       .addCase(createCheckoutSession.rejected, (state, action) => {
         state.loading = false;
@@ -36,5 +32,5 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { resetPayment } = paymentSlice.actions;
+export const { clearPaymentState } = paymentSlice.actions;
 export default paymentSlice.reducer;

@@ -1,10 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeCourse, clearCart } from "../redux/cartSlice";
-import { useNavigate } from "react-router-dom";
+import CheckoutButton from "./CheckoutButton/CheckoutButton";
 
 const CartDetails = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { courses, totalPrice } = useSelector((state) => state.cart);
 
@@ -13,12 +12,12 @@ const CartDetails = () => {
   };
 
   const handleClearCart = () => {
-    dispatch(clearCart());
-  };
-
-  const handleProceedToCheckout = () => {
-    // Navigate to the Payment page when the user clicks the button
-    navigate("/payment");
+    const confirmClear = window.confirm(
+      "Are you sure you want to clear your cart?"
+    );
+    if (confirmClear) {
+      dispatch(clearCart());
+    }
   };
 
   return (
@@ -36,57 +35,54 @@ const CartDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course) => (
-              <tr
-                key={course.id}
-                className="bg-[#fdfdfd] text-start text-text text-sm"
-              >
-                <td className="px-2 md:px-4 py-4">
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="w-20 md:max-w-20 object-cover mx-auto"
-                  />
-                </td>
-                <td className="px-2 md:px-10 py-4 break-words">
-                  {course.title}
-                </td>
-                <td className="px-2 md:px-10 py-4 text-title">
-                  ${course.price.toFixed(2)}
-                </td>
-                <td className="px-2 md:px-10 py-4">1</td>
-                <td className="px-2 md:px-10 py-4 text-title">
-                  ${course.price.toFixed(2)}
-                </td>
-                <td className="px-2 md:px-10 py-4">
-                  <button
-                    className="text-text hover:text-title text-xs md:text-sm transition-all duration-200"
-                    onClick={() => handleRemoveCourse(course)}
-                  >
-                    X Remove
-                  </button>
+            {courses.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center py-6 text-text">
+                  Your cart is empty.
                 </td>
               </tr>
-            ))}
+            ) : (
+              courses.map((course) => (
+                <tr
+                  key={course._id || course.id}
+                  className="bg-[#fdfdfd] text-start text-text text-sm"
+                >
+                  <td className="px-2 md:px-4 py-4">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="w-16 md:w-20 object-cover mx-auto"
+                    />
+                  </td>
+                  <td className="px-2 md:px-10 py-4 break-words text-sm md:text-base">
+                    {course.title}
+                  </td>
+                  <td className="px-2 md:px-10 py-4 text-title text-sm md:text-base">
+                    ${course.price.toFixed(2)}
+                  </td>
+                  <td className="px-2 md:px-10 py-4">1</td>
+                  <td className="px-2 md:px-10 py-4 text-title text-sm md:text-base">
+                    ${course.price.toFixed(2)}
+                  </td>
+                  <td className="px-2 md:px-10 py-4">
+                    <button
+                      className="text-text hover:text-title text-xs md:text-sm transition-all duration-200"
+                      onClick={() => handleRemoveCourse(course)}
+                      aria-label={`Remove ${course.title} from cart`}
+                    >
+                      X Remove
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
         <div className="mt-6 flex flex-col md:flex-row justify-between items-start gap-4">
-          <div className="flex flex-col items-start gap-2 text-text w-full md:w-auto">
-            <label className="text-sm text-title">Coupon:</label>
-            <div className="flex flex-row gap-1 w-full">
-              <input
-                type="text"
-                placeholder="Enter Coupon Code"
-                className="px-5 py-3 border border-border text-sm text-text outline-none w-full md:w-auto"
-              />
-              <button className="bg-black text-white px-7 py-2 hover:bg-[#006b61] transition-all duration-200">
-                Apply
-              </button>
-            </div>
-          </div>
           <button
             className="bg-[#7fb5b0] text-white px-9 py-3 hover:bg-[#006b61] self-end transition-all duration-200 w-full md:w-auto"
             onClick={handleClearCart}
+            aria-label="Clear cart"
           >
             Clear Cart
           </button>
@@ -97,19 +93,14 @@ const CartDetails = () => {
         <hr className="my-5 border-border" />
         <div className="flex justify-between items-center text-title text-[13px] md:text-[15px] mb-5">
           <span>Subtotal:</span>
-          <span>${totalPrice.toFixed(2)}</span>
+          <span>${(totalPrice || 0).toFixed(2)}</span>
         </div>
         <div className="flex justify-between items-center mb-4 text-title font-medium text-[14px] md:text-[16px]">
           <span>Total:</span>
-          <span>${totalPrice.toFixed(2)}</span>
+          <span>${(totalPrice || 0).toFixed(2)}</span>
         </div>
         <hr className="my-5 border-border" />
-        <button
-          onClick={handleProceedToCheckout}
-          className="bg-black text-white w-full px-10 py-2 hover:bg-[#006b61] transition-all duration-200"
-        >
-          Proceed to Checkout
-        </button>
+        <CheckoutButton courses={courses} />
       </div>
     </div>
   );

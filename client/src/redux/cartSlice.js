@@ -34,12 +34,7 @@ const saveCartToLocalStorage = (state) => {
     expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000); // 1 hour
 
     const cartData = {
-      cart: state.courses.map((course) => ({
-        id: course._id,
-        title: course.title,
-        price: course.price,
-        image: course.image,
-      })),
+      cart: state.courses,
       expiresAt: expirationTime.getTime(),
     };
 
@@ -62,9 +57,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addCourse: (state, action) => {
-      state.courses.push(action.payload);
-      state.totalPrice += action.payload.price;
-      saveCartToLocalStorage(state);
+      const courseIndex = state.courses.findIndex(
+        (course) => course._id === action.payload._id
+      );
+      if (courseIndex === -1) {
+        state.courses.push(action.payload);
+        state.totalPrice += action.payload.price;
+        saveCartToLocalStorage(state);
+      }
     },
     removeCourse: (state, action) => {
       const removedCourse = state.courses.find(
@@ -87,4 +87,8 @@ const cartSlice = createSlice({
 });
 
 export const { addCourse, removeCourse, clearCart } = cartSlice.actions;
+
+// Selector to get course data for Stripe
+export const selectCourseData = (state) => state.cart.courses;
+
 export default cartSlice.reducer;

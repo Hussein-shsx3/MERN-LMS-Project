@@ -1,33 +1,62 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Cookies from "universal-cookie";
 
-// Create a reusable Axios instance for consistent configuration
+const cookies = new Cookies();
+
+// Create a reusable Axios instance
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL, // Set the base URL for all requests
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    "Content-Type": "application/json", // Default headers
+    "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
-// Create Checkout Session Thunk
+// Attach token to every request
+api.interceptors.request.use((config) => {
+  const token = cookies.get("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    console.warn("🔹 No token found in cookies. Request may fail.");
+  }
+
+  return config;
+});
+
+/** Create Stripe Checkout Session */
 export const createCheckoutSession = createAsyncThunk(
   "payment/createCheckoutSession",
-  async ({ courseId, courseName, price, userId }, thunkAPI) => {
+  async (courseData, { rejectWithValue }) => {
     try {
-      // Make a POST request to your backend to create a checkout session
-      const response = await api.post("/api/payments/create-checkout-session", {
-        courseId,
-        courseName,
-        price,
-        userId,
-      });
-      // Return the response data (e.g., the session URL)
+      console.log("🔹 Initiating Payment Request...");
+
+      const token = cookies.get("token");
+      if (!token) {
+        console.error("🔹 No token found. Authorization will fail.");
+        return rejectWithValue("No token found. Please log in.");
+      }
+
+      console.log("🔹 Token:", token);
+      console.log("🔹 Course Data:", courseData);
+
+      const response = await api.post(
+        "/api/payment/create-checkout-session",
+        courseData
+      );
+
+      console.log("🔹 Payment Response:", response.data);
       return response.data;
     } catch (error) {
-      // Handle errors by rejecting with a value
-      return thunkAPI.rejectWithValue(
-        error.response?.data || "An unknown error occurred"
+      console.error(
+        "🔹 Payment Error:",
+        error.response?.data || "Unknown Error"
       );
+
+      // Return a meaningful error message
+      return rejectWithValue(error.response?.data || "Payment request failed.");
     }
   }
 );
