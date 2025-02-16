@@ -29,6 +29,8 @@ import AddLecture from "./Components/Profile/addLecture";
 import EditLecture from "./Components/Profile/editLecture";
 import EditCourseImage from "./Components/Profile/editCourseImage";
 import Payment from "./Pages/Payment";
+import PaymentSuccessPage from "./Pages/PaymentSuccessPage";
+import PaymentCancelPage from "./Pages/PaymentCancelPage";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <Contact />,
+  },
+  {
+    path: "/payment-success",
+    element: <PaymentSuccessPage />,
+  },
+  {
+    path: "/payment-cancel",
+    element: <PaymentCancelPage />,
   },
   {
     path: "/profile/:userId",

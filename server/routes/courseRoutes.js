@@ -5,7 +5,6 @@ import {
   getCourse,
   updateCourse,
   deleteCourse,
-  enrollInCourse,
   updateCourseImage,
 } from "../controllers/courseController.js";
 import { isAdminOrTeacher } from "../middleware/adminOrTeacherMiddleware.js";
@@ -31,7 +30,5 @@ router.put(
 );
 
 router.delete("/:courseId", auth, isAdminOrTeacher, deleteCourse);
-
-router.post("/enroll/:courseId", auth, enrollInCourse);
 
 export default router;
