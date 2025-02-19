@@ -42,7 +42,7 @@ export const createCheckoutSession = async (req, res, next) => {
       customer_email: req.user.email,
       line_items: lineItems,
       metadata: {
-        userId: req.user.id, // User ID
+        userId: req.user._id, // User ID
         courses: JSON.stringify(courseMetadata), // Only include course IDs and titles
       },
     });
