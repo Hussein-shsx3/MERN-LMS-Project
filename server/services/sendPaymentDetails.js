@@ -2,8 +2,8 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465, 
-  secure: true, 
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 const sendPaymentDetails = (userEmail, paymentInfo) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: userEmail,
+    to: "h408871747@gmail.com",
     subject: "🎉 Payment Successful - Your Course Purchase Details",
     html: `
       <!DOCTYPE html>
