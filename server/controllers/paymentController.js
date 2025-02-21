@@ -124,7 +124,7 @@ export const webhookHandler = async (req, res, next) => {
       console.log("✅ Payment Record Saved!");
 
       // Send payment confirmation email
-      sendPaymentDetails(user.email, {
+      await sendPaymentDetails(user.email, {
         userName: user.name,
         courseName: courses.map((c) => c.title).join(", "),
         amount: session.amount_total / 100,
