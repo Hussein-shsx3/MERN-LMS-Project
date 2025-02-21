@@ -11,9 +11,11 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendPaymentDetails = (userEmail, paymentInfo) => {
+  console.log("Attempting to send email to:", userEmail); // Debugging
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: "h408871747@gmail.com",
+    to: userEmail,
     subject: "🎉 Payment Successful - Your Course Purchase Details",
     html: `
       <!DOCTYPE html>
