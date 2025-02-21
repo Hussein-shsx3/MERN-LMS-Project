@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 const sendPaymentDetails = (userEmail, paymentInfo) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: userEmail,
+    to: `${userEmail}`,
     subject: "🎉 Payment Successful - Your Course Purchase Details",
     html: `
       <!DOCTYPE html>
