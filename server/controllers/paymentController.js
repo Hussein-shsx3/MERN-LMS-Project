@@ -63,7 +63,7 @@ export const webhookHandler = async (req, res, next) => {
     let event;
     try {
       event = stripe.webhooks.constructEvent(
-        req.rawBody, // Make sure Express is not parsing the body before this
+        req.rawBody, 
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
@@ -79,7 +79,7 @@ export const webhookHandler = async (req, res, next) => {
       console.log("✅ Payment Successful:", session.id);
 
       const userId = session.metadata.userId;
-      const courses = JSON.parse(session.metadata.courses); // Parse the simplified metadata
+      const courses = JSON.parse(session.metadata.courses);
       console.log("📚 Courses Purchased:", courses);
 
       // Find user
@@ -94,28 +94,25 @@ export const webhookHandler = async (req, res, next) => {
       const courseIds = courses.map((course) => course._id);
       console.log("🆕 Enrolling User in Courses:", courseIds);
 
-      // Add to user's enrolled courses
       user.coursesEnrolled = [
         ...new Set([...user.coursesEnrolled, ...courseIds]),
       ];
       await user.save();
       console.log("✅ User Enrollment Updated!");
 
-      // Update courses with new student
       const updateResult = await Course.updateMany(
         { _id: { $in: courseIds } },
         { $addToSet: { students: userId } }
       );
       console.log("✅ Courses Updated:", updateResult);
 
-      // Save payment record
       const payment = new Payment({
         userId,
         courses: courses.map((course) => ({
           courseId: course._id,
           title: course.title,
         })),
-        totalAmount: session.amount_total / 100, // Convert cents to dollars
+        totalAmount: session.amount_total / 100,
         paymentStatus: "completed",
         paymentIntentId: session.id,
       });
@@ -124,14 +121,14 @@ export const webhookHandler = async (req, res, next) => {
       console.log("✅ Payment Record Saved!");
 
       // Send payment confirmation email
+      console.log("📨 Sending Payment Email to:", user.email);
       await sendPaymentDetails(user.email, {
         userName: user.name,
         courseName: courses.map((c) => c.title).join(", "),
         amount: session.amount_total / 100,
         transactionId: session.id,
       });
-
-      console.log("📩 Payment Email Sent to:", user.email);
+      console.log("📩 Payment Email Sent!");
     }
 
     res.status(200).json({ received: true });
