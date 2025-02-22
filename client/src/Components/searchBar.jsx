@@ -16,7 +16,7 @@ const SearchBar = ({ course }) => {
 
     return isEnrolled
       ? `/course/${courseId}/lecture/0`
-      : `/courses/${courseId}`;
+      : `/course/${courseId}`;
   };
   return (
     <Link

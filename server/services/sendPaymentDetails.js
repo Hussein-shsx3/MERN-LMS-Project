@@ -10,13 +10,23 @@ const transporter = nodemailer.createTransport({
 
 const sendPaymentDetails = (userEmail, paymentInfo) => {
   const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: "shsgaming48@gmail.com",
-    subject: "🎉 Payment Successful - Your Course Purchase Details",
+    from: {
+      name: "Your LMS Team", // Adding a proper sender name
+      address: process.env.EMAIL_USER,
+    },
+    to: userEmail,
+    subject: "Payment Confirmation - Course Purchase Details", // Removed emoji from subject
+    headers: {
+      "List-Unsubscribe": `<mailto:unsubscribe@yourlms.com?subject=unsubscribe>, <${process.env.UNSUBSCRIBE_URL}>`,
+      Precedence: "bulk",
+    },
     html: `
       <!DOCTYPE html>
-      <html>
+      <html lang="en">
         <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Payment Confirmation</title>
           <style>
             .email-container {
               max-width: 600px;
@@ -26,63 +36,58 @@ const sendPaymentDetails = (userEmail, paymentInfo) => {
               color: #333333;
             }
             .header {
-              background-color: #4CAF50;
+              background-color: #2C5282;  // More professional color
               color: white;
               padding: 20px;
               text-align: center;
-              border-radius: 5px 5px 0 0;
             }
             .content {
               padding: 20px;
               background-color: #ffffff;
-              border: 1px solid #dddddd;
             }
             .purchase-details {
-              background-color: #f9f9f9;
+              background-color: #f8fafc;
               padding: 15px;
-              border-radius: 5px;
               margin: 20px 0;
             }
             .detail-row {
               margin: 10px 0;
-              border-bottom: 1px solid #eeeeee;
               padding-bottom: 10px;
             }
             .footer {
               text-align: center;
               padding: 20px;
-              font-size: 14px;
+              font-size: 12px;
               color: #666666;
             }
             .button {
               display: inline-block;
               padding: 12px 24px;
-              background-color: #4CAF50;
+              background-color: #2C5282;
               color: white;
               text-decoration: none;
-              border-radius: 5px;
               margin: 20px 0;
             }
             .social-links {
               margin-top: 20px;
             }
             .social-links a {
+              color: #2C5282;
+              text-decoration: underline;
               margin: 0 10px;
-              color: #4CAF50;
-              text-decoration: none;
             }
           </style>
         </head>
         <body>
           <div class="email-container">
             <div class="header">
-              <h1>Payment Successful! 🎊</h1>
+              <h1>Payment Confirmation</h1>
             </div>
             
             <div class="content">
               <p>Dear ${paymentInfo.userName},</p>
               
-              <p>Thank you for purchasing our course! Your payment has been successfully processed, and we're excited to have you on board.</p>
+              <p>Thank you for your course purchase. Your payment has been successfully processed.</p>
               
               <div class="purchase-details">
                 <h2>Purchase Details</h2>
@@ -90,37 +95,64 @@ const sendPaymentDetails = (userEmail, paymentInfo) => {
                   <strong>Course:</strong> ${paymentInfo.courseName}
                 </div>
                 <div class="detail-row">
-                  <strong>Amount Paid:</strong> $${paymentInfo.amount}
+                  <strong>Amount:</strong> $${paymentInfo.amount}
                 </div>
                 <div class="detail-row">
                   <strong>Transaction ID:</strong> ${paymentInfo.transactionId}
                 </div>
                 <div class="detail-row">
-                  <strong>Purchase Date:</strong> ${new Date().toLocaleDateString()}
+                  <strong>Date:</strong> ${new Date().toLocaleDateString()}
                 </div>
               </div>
               
+              <p>To access your course:</p>
               <a href="${
                 process.env.COURSE_URL
-              }" class="button">Start Learning Now</a>
+              }" class="button">Access Your Course</a>
               
-              <p>If you have any questions or need assistance, our support team is here to help. You can reach us at <a href="mailto:support@yourlms.com">support@yourlms.com</a>.</p>
+              <p>If you need assistance, contact us at support@yourlms.com.</p>
               
               <div class="social-links">
-                <p>Follow us on social media for updates and tips:</p>
-                <a href="#">Facebook</a> |
-                <a href="#">Twitter</a> |
-                <a href="#">LinkedIn</a>
+                <p>Connect with us:</p>
+                <a href="${process.env.FACEBOOK_URL}">Facebook</a>
+                <a href="${process.env.TWITTER_URL}">Twitter</a>
+                <a href="${process.env.LINKEDIN_URL}">LinkedIn</a>
               </div>
             </div>
             
             <div class="footer">
-              <p>© ${new Date().getFullYear()} Your LMS Team. All rights reserved.</p>
-              <p>This email was sent to ${userEmail}. Please do not reply to this email.</p>
+              <p>© ${new Date().getFullYear()} Your LMS Team</p>
+              <p>You received this email because you purchased a course on Your LMS.</p>
+              <p>To unsubscribe from promotional emails, <a href="${
+                process.env.UNSUBSCRIBE_URL
+              }">click here</a></p>
             </div>
           </div>
         </body>
       </html>
+    `,
+    text: `
+      Payment Confirmation - Course Purchase
+
+      Dear ${paymentInfo.userName},
+
+      Thank you for your course purchase. Your payment has been successfully processed.
+
+      Purchase Details:
+      Course: ${paymentInfo.courseName}
+      Amount: $${paymentInfo.amount}
+      Transaction ID: ${paymentInfo.transactionId}
+      Date: ${new Date().toLocaleDateString()}
+
+      Access your course at: ${process.env.COURSE_URL}
+
+      Need help? Contact us at support@yourlms.com
+
+      © ${new Date().getFullYear()} Your LMS Team
+      
+      To unsubscribe from promotional emails, visit: ${
+        process.env.UNSUBSCRIBE_URL
+      }
     `,
   };
 
