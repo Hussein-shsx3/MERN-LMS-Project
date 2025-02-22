@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Course from "./Course/course";
 import { useFetchCourses } from "../Api/courseApi";
+import CourseLoadingSkeleton from "./Loading/CourseLoadingSkeleton";
 
 const OurCourses = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
@@ -19,7 +20,7 @@ const OurCourses = () => {
   // Fetch courses data
   const { data: AllCourses, isLoading, isError, error } = useFetchCourses();
 
-  if (isLoading) return <p>Loading courses...</p>;
+  if (isLoading) return <CourseLoadingSkeleton />;
   if (isError) return <p>Error: {error.message}</p>;
 
   // Filter courses based on selected category

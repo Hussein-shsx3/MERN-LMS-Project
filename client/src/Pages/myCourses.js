@@ -6,15 +6,25 @@ import Course from "../Components/Course/course";
 import { useGetUser } from "../Api/userApi";
 import Cookies from "universal-cookie";
 import ScrollToTop from "../scrollToTop";
+import CourseLoadingSkeleton from "../Components/Loading/CourseLoadingSkeleton";
 
 const MyCourses = () => {
   const cookies = new Cookies();
   const token = cookies.get("token");
   const { data: user, isLoading: userLoading } = useGetUser();
 
-  // While loading the user data, show a loading message
+  // While loading the user data, show a loading skeleton
   if (userLoading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return (
+      <section>
+        <Header />
+        <PathHeader title={"My Courses"} />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
+          <CourseLoadingSkeleton />
+        </div>
+        <Footer />
+      </section>
+    );
   }
 
   // If no token or user, prompt the user to log in

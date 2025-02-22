@@ -6,10 +6,10 @@ import Footer from "../Components/Footer/footer";
 import PathHeader from "../Components/pathHeader";
 import Course from "../Components/Course/course";
 import ScrollToTop from "../scrollToTop";
-
+import CoursesLoadingSkeleton from "../Components/Loading/CoursesLoadingSkeleton";
 const Courses = () => {
   const { categorie } = useParams();
-  const { data: courses } = useFetchCourses();
+  const { data: courses, isLoading } = useFetchCourses();
 
   // State for filters
   const [searchTerm, setSearchTerm] = useState("");
@@ -83,6 +83,10 @@ const Courses = () => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
+
+  if (isLoading) {
+    return <CoursesLoadingSkeleton isAllCategories={categorie === "all"} />;
+  }
 
   return (
     <section>
