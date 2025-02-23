@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeCourse, clearCart } from "../redux/cartSlice";
 import CheckoutButton from "./CheckoutButton/CheckoutButton";
+import { Trash2, X } from "lucide-react";
 
 const CartDetails = () => {
   const dispatch = useDispatch();
@@ -20,87 +21,150 @@ const CartDetails = () => {
     }
   };
 
+  if (courses.length === 0) {
+    return (
+      <div className="container mx-auto px-4 my-24">
+        <div className="flex flex-col items-center justify-center space-y-4 bg-white rounded-lg shadow-sm p-8">
+          <div className="text-gray-400">
+            <Trash2 size={48} />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-700">
+            Your cart is empty
+          </h2>
+          <p className="text-gray-500">Add some courses to get started!</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container w-full p-6 flex flex-col md:flex-row justify-around gap-5 my-24">
-      <div className="w-full md:w-2/3">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100 text-[13px] md:text-[15px] text-title">
-              <td className="px-2 md:px-10 py-3">Thumbnail</td>
-              <td className="px-2 md:px-10 py-3">Product</td>
-              <td className="px-2 md:px-10 py-3">Price</td>
-              <td className="px-2 md:px-10 py-3">Quantity</td>
-              <td className="px-2 md:px-10 py-3">Subtotal</td>
-              <td className="px-2 md:px-10 py-3">Remove</td>
-            </tr>
-          </thead>
-          <tbody>
-            {courses.length === 0 ? (
-              <tr>
-                <td colSpan="6" className="text-center py-6 text-text">
-                  Your cart is empty.
-                </td>
-              </tr>
-            ) : (
-              courses.map((course) => (
-                <tr
+    <div className="container mx-auto px-4 my-8 md:my-24">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Cart Items */}
+        <div className="w-full lg:w-2/3">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            {/* Desktop Table View */}
+            <div className="hidden md:block">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gray-50 text-sm text-gray-600">
+                    <th className="px-6 py-4 text-left">Course</th>
+                    <th className="px-6 py-4 text-right">Price</th>
+                    <th className="px-6 py-4 text-center w-24">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {courses.map((course) => (
+                    <tr
+                      key={course._id || course.id}
+                      className="border-t border-gray-100"
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={course.image}
+                            alt={course.title}
+                            className="w-20 h-20 object-cover rounded"
+                          />
+                          <div className="flex-1">
+                            <h3 className="font-medium text-gray-900">
+                              {course.title}
+                            </h3>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-right text-gray-900">
+                        ${course.price.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => handleRemoveCourse(course)}
+                          className="flex items-center justify-center w-full text-red-500 hover:text-red-700 transition-colors duration-200"
+                          aria-label={`Remove ${course.title} from cart`}
+                        >
+                          <X size={20} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4 p-4">
+              {courses.map((course) => (
+                <div
                   key={course._id || course.id}
-                  className="bg-[#fdfdfd] text-start text-text text-sm"
+                  className="bg-white rounded-lg border border-gray-100 p-4"
                 >
-                  <td className="px-2 md:px-4 py-4">
+                  <div className="flex space-x-4">
                     <img
                       src={course.image}
                       alt={course.title}
-                      className="w-16 md:w-20 object-cover mx-auto"
+                      className="w-24 h-24 object-cover rounded"
                     />
-                  </td>
-                  <td className="px-2 md:px-10 py-4 break-words text-sm md:text-base">
-                    {course.title}
-                  </td>
-                  <td className="px-2 md:px-10 py-4 text-title text-sm md:text-base">
-                    ${course.price.toFixed(2)}
-                  </td>
-                  <td className="px-2 md:px-10 py-4">1</td>
-                  <td className="px-2 md:px-10 py-4 text-title text-sm md:text-base">
-                    ${course.price.toFixed(2)}
-                  </td>
-                  <td className="px-2 md:px-10 py-4">
-                    <button
-                      className="text-text hover:text-title text-xs md:text-sm transition-all duration-200"
-                      onClick={() => handleRemoveCourse(course)}
-                      aria-label={`Remove ${course.title} from cart`}
-                    >
-                      X Remove
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-        <div className="mt-6 flex flex-col md:flex-row justify-between items-start gap-4">
-          <button
-            className="bg-[#7fb5b0] text-white px-9 py-3 hover:bg-[#006b61] self-end transition-all duration-200 w-full md:w-auto"
-            onClick={handleClearCart}
-            aria-label="Clear cart"
-          >
-            Clear Cart
-          </button>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-2">
+                        {course.title}
+                      </h3>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-900 font-medium">
+                          ${course.price.toFixed(2)}
+                        </span>
+                        <button
+                          onClick={() => handleRemoveCourse(course)}
+                          className="text-red-500 hover:text-red-700 transition-colors duration-200"
+                          aria-label={`Remove ${course.title} from cart`}
+                        >
+                          <X size={20} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Clear Cart Button */}
+            <div className="p-4 border-t border-gray-100 bg-gray-50">
+              <button
+                onClick={handleClearCart}
+                className="text-red-500 hover:text-red-700 transition-colors duration-200 flex items-center space-x-2"
+              >
+                <Trash2 size={20} />
+                <span>Clear Cart</span>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="w-full md:w-1/3 rounded-sm p-6 shadow-md shadow-slate-200 mt-6 md:mt-0">
-        <h3 className="text-xl text-title mb-4">Cart Totals</h3>
-        <hr className="my-5 border-border" />
-        <div className="flex justify-between items-center text-title text-[13px] md:text-[15px] mb-5">
-          <span>Subtotal:</span>
-          <span>${(totalPrice || 0).toFixed(2)}</span>
+
+        {/* Cart Summary */}
+        <div className="w-full lg:w-1/3">
+          <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">
+              Order Summary
+            </h3>
+
+            <div className="space-y-4">
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>Subtotal</span>
+                <span>${(totalPrice || 0).toFixed(2)}</span>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100">
+                <div className="flex justify-between text-base font-semibold text-gray-900">
+                  <span>Total</span>
+                  <span>${(totalPrice || 0).toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                <CheckoutButton courses={courses} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-between items-center mb-4 text-title font-medium text-[14px] md:text-[16px]">
-          <span>Total:</span>
-          <span>${(totalPrice || 0).toFixed(2)}</span>
-        </div>
-        <hr className="my-5 border-border" />
-        <CheckoutButton courses={courses} />
       </div>
     </div>
   );
