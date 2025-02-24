@@ -22,7 +22,7 @@ import Profile from "./Pages/Profile";
 import AboutMe from "./Components/Profile/aboutMe";
 import EditProfile from "./Components/Profile/editProfile";
 import EditProfileImage from "./Components/Profile/editProfileImage";
-import AddNewCourse from "./Components/Profile/addNewCourse";
+import AddNewCourse from "./Components/Profile/AddNewCourse/AddNewCourse";
 import MyCoursesDashboard from "./Components/Profile/myCoursesDashboard";
 import EditCourse from "./Components/Profile/editCourse";
 import AddLecture from "./Components/Profile/addLecture";

@@ -13,6 +13,7 @@ import {
   Mail,
   FileText,
   Loader2,
+  LinkIcon,
 } from "lucide-react";
 
 const EditProfile = () => {
@@ -76,217 +77,158 @@ const EditProfile = () => {
     }
   }, [myProfile, user, userId, nav]);
 
+  const InputField = ({ label, icon: Icon, ...props }) => (
+    <div className="relative">
+      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+        {Icon && <Icon className="w-4 h-4 text-gray-500" />}
+        {label}
+      </label>
+      <input
+        {...props}
+        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+      />
+    </div>
+  );
+
+  const SectionCard = ({ title, icon: Icon, children }) => (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="p-6">
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-3">
+          {Icon && <Icon className="w-6 h-6 text-blue-600" />}
+          {title}
+        </h3>
+        {children}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="w-full container flex flex-col justify-between gap-5 m-10">
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-            <h2 className="text-3xl font-bold text-white text-center">
-              Update Your Profile
-            </h2>
-            <p className="text-blue-100 text-center mt-2">
-              Customize your profile information and social presence
-            </p>
-          </div>
-
-          {/* Form Content */}
-          <div className="p-8">
-            {updateStatus === "failed" && (
-              <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-200">
-                <p className="text-red-600 text-sm">
-                  {error || "Profile update failed"}
-                </p>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Personal Information Section */}
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <User className="w-5 h-5 mr-2 text-blue-600" />
-                  Personal Information
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="firstName" className="labelStyles">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className="inputStyles"
-                      placeholder="Enter first name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="labelStyles">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className="inputStyles"
-                      placeholder="Enter last name"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact Information */}
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <Mail className="w-5 h-5 mr-2 text-blue-600" />
-                  Contact Information
-                </h3>
-
-                <div>
-                  <label htmlFor="email" className="labelStyles">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="inputStyles"
-                    placeholder="Enter email"
-                  />
-                </div>
-              </div>
-
-              {/* Bio Section */}
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <FileText className="w-5 h-5 mr-2 text-blue-600" />
-                  Biography
-                </h3>
-
-                <div>
-                  <label htmlFor="bio" className="labelStyles">
-                    About You
-                  </label>
-                  <textarea
-                    id="bio"
-                    name="bio"
-                    value={formData.bio}
-                    onChange={handleChange}
-                    rows="4"
-                    className="inputStyles w-full outline-none p-2 resize-none"
-                    placeholder="Write a short bio about yourself..."
-                  />
-                </div>
-              </div>
-
-              {/* Social Links */}
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Social Media Links
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label
-                      htmlFor="github"
-                      className="flex items-center text-sm font-medium text-gray-700 mb-1"
-                    >
-                      <Github className="w-4 h-4 mr-2" />
-                      GitHub
-                    </label>
-                    <input
-                      type="url"
-                      id="github"
-                      name="github"
-                      value={formData.github}
-                      onChange={handleChange}
-                      className="inputStyles"
-                      placeholder="GitHub profile URL"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="youtube"
-                      className="flex items-center text-sm font-medium text-gray-700 mb-1"
-                    >
-                      <Youtube className="w-4 h-4 mr-2" />
-                      YouTube
-                    </label>
-                    <input
-                      type="url"
-                      id="youtube"
-                      name="youtube"
-                      value={formData.youtube}
-                      onChange={handleChange}
-                      className="inputStyles"
-                      placeholder="YouTube channel URL"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="facebook"
-                      className="flex items-center text-sm font-medium text-gray-700 mb-1"
-                    >
-                      <Facebook className="w-4 h-4 mr-2" />
-                      Facebook
-                    </label>
-                    <input
-                      type="url"
-                      id="facebook"
-                      name="facebook"
-                      value={formData.facebook}
-                      onChange={handleChange}
-                      className="inputStyles"
-                      placeholder="Facebook profile URL"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="twitter"
-                      className="flex items-center text-sm font-medium text-gray-700 mb-1"
-                    >
-                      <Twitter className="w-4 h-4 mr-2" />
-                      Twitter
-                    </label>
-                    <input
-                      type="url"
-                      id="twitter"
-                      name="twitter"
-                      value={formData.twitter}
-                      onChange={handleChange}
-                      className="inputStyles"
-                      placeholder="Twitter profile URL"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={updateStatus === "loading"}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-6 rounded-xl shadow-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                {updateStatus === "loading" ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Updating Profile...</span>
-                  </>
-                ) : (
-                  <span>Update Profile</span>
-                )}
-              </button>
-            </form>
-          </div>
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+            Edit Your Profile
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Customize your profile information and manage your social presence
+          </p>
         </div>
+
+        {/* Error Message */}
+        {updateStatus === "failed" && (
+          <div className="p-4 bg-red-50 rounded-lg border border-red-200 text-red-700">
+            {error || "Profile update failed. Please try again."}
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <SectionCard title="Personal Information" icon={User}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <InputField
+                label="First Name"
+                name="firstName"
+                type="text"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Enter your first name"
+              />
+              <InputField
+                label="Last Name"
+                name="lastName"
+                type="text"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Enter your last name"
+              />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="Contact Information" icon={Mail}>
+            <InputField
+              label="Email Address"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email address"
+            />
+          </SectionCard>
+
+          <SectionCard title="Biography" icon={FileText}>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                About You
+              </label>
+              <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                rows="4"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none resize-none"
+                placeholder="Write a short bio about yourself..."
+              />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="Social Media Links" icon={LinkIcon}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <InputField
+                label="GitHub"
+                icon={Github}
+                name="github"
+                type="url"
+                value={formData.github}
+                onChange={handleChange}
+                placeholder="Your GitHub profile URL"
+              />
+              <InputField
+                label="YouTube"
+                icon={Youtube}
+                name="youtube"
+                type="url"
+                value={formData.youtube}
+                onChange={handleChange}
+                placeholder="Your YouTube channel URL"
+              />
+              <InputField
+                label="Facebook"
+                icon={Facebook}
+                name="facebook"
+                type="url"
+                value={formData.facebook}
+                onChange={handleChange}
+                placeholder="Your Facebook profile URL"
+              />
+              <InputField
+                label="Twitter"
+                icon={Twitter}
+                name="twitter"
+                type="url"
+                value={formData.twitter}
+                onChange={handleChange}
+                placeholder="Your Twitter profile URL"
+              />
+            </div>
+          </SectionCard>
+
+          <button
+            type="submit"
+            disabled={updateStatus === "loading"}
+            className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {updateStatus === "loading" ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span>Updating...</span>
+              </>
+            ) : (
+              <span>Save Changes</span>
+            )}
+          </button>
+        </form>
       </div>
     </div>
   );
