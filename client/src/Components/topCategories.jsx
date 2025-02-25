@@ -111,7 +111,7 @@ const TopCategories = () => {
           alt=""
           className="absolute right-0 w-full h-full z-[-1]"
         />
-        <div className="container w-full flex flex-col md:flex-row justify-between md:items-center gap-5 md:gap-0">
+        <div className="container w-full flex flex-col md:flex-row justify-between md:items-center gap-5 md:gap-0 px-3 md:px-0">
           <div className="flex items-center text-white gap-5">
             <img src="./images/icon-funfect-1.png" alt="" />
             <div className="flex flex-col text-xl">

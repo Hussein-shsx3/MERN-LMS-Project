@@ -80,7 +80,7 @@ const DisplayCourse = () => {
             <ContentLoading />
           ) : (
             <>
-              <div className="w-full flex flex-col gap-4">
+              <div className="w-full flex flex-col gap-4 px-3 md:px-0">
                 <p className="text-title text-2xl font-medium">About Course</p>
                 <p className="text-text w-full mb-5">
                   {course?.description || "No description available"}
