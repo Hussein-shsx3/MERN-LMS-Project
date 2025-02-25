@@ -105,7 +105,7 @@ const DisplayCourse = () => {
                 </ul>
               </div>
 
-              <div className="w-full my-14">
+              <div className="w-full my-14 px-3 md:px-0">
                 <p className="text-title text-2xl font-medium mb-4">
                   Course Curriculum
                 </p>
