@@ -10,7 +10,7 @@ const Instructor = ({ teacher, image }) => {
         <img
           src={image ? image : "../images/profile-photo.png"}
           alt=""
-          className="rounded-full w-16 h-16"
+          className="rounded-full w-16 h-16 object-cover"
         />
         <div>
           {/* Instructor Name and Role */}
