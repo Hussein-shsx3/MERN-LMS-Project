@@ -39,9 +39,6 @@ export const createCheckoutSession = createAsyncThunk(
         return rejectWithValue("No token found. Please log in.");
       }
 
-      console.log("🔹 Token:", token);
-      console.log("🔹 Course Data:", courseData);
-
       const response = await api.post(
         "/api/payment/create-checkout-session",
         courseData
