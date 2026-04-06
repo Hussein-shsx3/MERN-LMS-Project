@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { useEffect } from "react";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -33,6 +34,31 @@ import PaymentSuccessPage from "./Pages/PaymentSuccessPage";
 import PaymentCancelPage from "./Pages/PaymentCancelPage";
 
 const queryClient = new QueryClient();
+const apiBaseUrl = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
+
+const KeepAlivePinger = () => {
+  useEffect(() => {
+    if (!apiBaseUrl) return undefined;
+
+    const pingServer = async () => {
+      try {
+        await fetch(`${apiBaseUrl}/health`, {
+          method: "GET",
+          cache: "no-store",
+        });
+      } catch (error) {
+        console.error("Keep-alive request failed:", error);
+      }
+    };
+
+    pingServer();
+    const intervalId = setInterval(pingServer, 15 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return null;
+};
 
 const router = createBrowserRouter([
   {
@@ -136,6 +162,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <QueryClientProvider client={queryClient}>
     <Provider store={storeApp}>
+      <KeepAlivePinger />
       <RouterProvider router={router} />
     </Provider>
     <ReactQueryDevtools initialIsOpen={false} />
